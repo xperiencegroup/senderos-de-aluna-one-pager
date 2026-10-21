@@ -70,7 +70,7 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  const pill = `group inline-flex flex justify-center items-center gap-[10px] rounded-[30px] border-2 border-proposito px-[20px] py-[10px] text-sm font-medium text-proposito drop-shadow transition-colors duration-200 
+  const pill = `group inline-flex flex justify-center items-center gap-[10px] rounded-[30px] border-2 border-proposito px-[20px] py-[10px] button font-medium text-proposito drop-shadow transition-colors duration-200 
   hover:opacity-65 
   active:opacity-100 active:bg-proposito active:text-horizonte active:border-horizonte
   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-proposito focus-visible:ring-offset-2 focus-visible:ring-offset-proposito-4`;
@@ -116,7 +116,7 @@ export default function Navbar() {
         {/* CTA escritorio */}
         <a
           href={contacto.href}
-          className="hidden lg:inline-flex group w-[160px] justify-center items-center gap-[10px] rounded-[30px] bg-impulso border-2 border-beige px-[20px] py-[10px] text-sm font-medium text-beige transition-colors duration-200 hover:bg-impulso hover:opacity-65
+          className="hidden lg:inline-flex group w-[160px] justify-center items-center gap-[10px] rounded-[30px] bg-impulso border-2 border-beige px-[20px] py-[10px] button font-medium text-beige transition-colors duration-200 hover:bg-impulso hover:opacity-65
           active:text-impulso active:bg-beige active:border-impulso active:opacity-100
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-impulso focus-visible:ring-offset-2 focus-visible:ring-offset-horizonte-4"
         >
