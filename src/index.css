@@ -1,5 +1,8 @@
 @import "tailwindcss";
 @import "@fontsource/poppins";
+@import "@fontsource/poppins/500.css";
+@import "@fontsource/poppins/600.css";
+@import "@fontsource/poppins/800-italic.css";
 
 * {
   box-sizing: border-box;
@@ -64,6 +67,14 @@ img {
 @layer components {
   .button {
     @apply text-[13px];
+  }
+
+  .hero {
+    @apply text-[48px] leading-[120%];
+  }
+
+  .subtitle {
+    @apply text-[20px];
   }
 }
 

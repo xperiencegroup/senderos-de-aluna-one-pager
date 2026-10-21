@@ -78,7 +78,7 @@ export default function Navbar() {
   const pillActive = "bg-red-500 text-horizonte-4";
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-beige shadow-[0_2px_6px_rgba(0,0,0,0.12)]">
+    <header className="absolute top-0 z-50 w-full bg-beige shadow-[0_2px_6px_rgba(0,0,0,0.12)]">
       <nav
         aria-label="Navegación principal"
         className="mx-auto flex h-[74px] max-w-[1366px] items-center justify-between px-4 xl:px-[30px]"
