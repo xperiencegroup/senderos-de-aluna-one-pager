@@ -75,7 +75,7 @@ export default function Navbar() {
   active:opacity-100 active:bg-proposito active:text-horizonte active:border-horizonte
   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-proposito focus-visible:ring-offset-2 focus-visible:ring-offset-proposito-4`;
 
-  const pillActive = "bg-red-500 text-horizonte-4";
+  const pillActive = "text-horizonte-4";
 
   return (
     <header className="absolute top-0 z-50 w-full bg-beige shadow-[0_2px_6px_rgba(0,0,0,0.12)]">
