@@ -5,7 +5,7 @@ import senderosLogo from "@/assets/logos/main/logo_and_name.svg";
 
 export default function Hero() {
   return (
-    <div className="relative flex h-full min-h-[768px]">
+    <section id="nosotros" className="relative flex h-full min-h-[768px]">
       {/* background */}
       <div className="shrink-0 w-[484px] min-h-svh bg-beige" />
       {/* content */}
@@ -87,6 +87,6 @@ export default function Hero() {
           className="absolute inset-0 w-full h-full object-cover"
         />
       </div>
-    </div>
+    </section>
   );
 }
