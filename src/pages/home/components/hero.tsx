@@ -1,13 +1,30 @@
 import DownloadIcon from "@/assets/icons/components/download-icon";
 import heroBg from "@/assets/images/hero-background.jpg";
+// import formaAluna from "@/assets/icons/forma-aluna-hero.svg";
+import formaAluna from "@/assets/images/fondo-forma-hero.svg";
 
 import senderosLogo from "@/assets/logos/main/logo_and_name.svg";
 
 export default function Hero() {
   return (
-    <section id="nosotros" className="relative flex h-full min-h-[768px]">
-      {/* background */}
-      <div className="shrink-0 w-[484px] min-h-svh bg-beige" />
+    <section id="nosotros" className="relative flex h-full min-h-[768px] h-svh">
+      {/* Fondo */}
+      <img
+        src={heroBg}
+        alt="Imagen de Senderos de Aluna"
+        className="absolute inset-0 z-0 h-full w-full object-cover"
+      />
+
+      {/* Forma: ancho fijo, alto siempre 100% */}
+      <div className="absolute inset-y-0 left-0 top-0 z-10 w-[927px] max-w-full">
+        <img
+          src={formaAluna}
+          alt=""
+          aria-hidden="true"
+          className="h-full w-full object-fill"
+        />
+      </div>
+
       {/* content */}
       <div className="absolute z-10 left-[5%] top-1/2 -translate-y-1/2 flex flex-col gap-[50px]">
         <img
@@ -75,17 +92,6 @@ export default function Hero() {
             </span>
           </button>
         </div>
-      </div>
-
-      <div className="relative w-full min-h-svh bg-blue-800">
-        {/* Ícono de isotipo */}
-        {/* <img src={} alt="" /> */}
-
-        <img
-          src={heroBg}
-          alt="Imagen de Senderos de Aluna"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
       </div>
     </section>
   );
