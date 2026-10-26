@@ -7,7 +7,7 @@ import DownloadIcon from "@/assets/icons/components/download-icon";
 
 export default function Hero() {
   return (
-    <section id="nosotros" className="relative flex h-full min-h-[768px] h-svh">
+    <section id="inicio" className="relative flex h-full min-h-[768px] h-svh">
       {/* Fondo */}
       <img
         src={heroBg}
