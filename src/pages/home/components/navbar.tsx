@@ -43,12 +43,12 @@ const contacto = {
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState<string | null>(null);
 
   // Cierra el menú móvil al pasar a escritorio
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
-    const onChange = (e) => e.matches && setOpen(false);
+    const onChange = (e: MediaQueryListEvent) => e.matches && setOpen(false);
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
   }, []);
@@ -57,7 +57,8 @@ export default function Navbar() {
   useEffect(() => {
     const sections = links
       .map((l) => document.getElementById(l.id))
-      .filter(Boolean);
+      .filter((s): s is HTMLElement => s !== null);
+
     if (!sections.length) return;
 
     const observer = new IntersectionObserver(
@@ -66,7 +67,9 @@ export default function Navbar() {
       },
       { rootMargin: "-40% 0px -50% 0px" },
     );
+
     sections.forEach((s) => observer.observe(s));
+
     return () => observer.disconnect();
   }, []);
 
@@ -160,7 +163,7 @@ export default function Navbar() {
       >
         <div className="overflow-hidden">
           <ul className="flex flex-col gap-3 px-4 pb-6 pt-2 sm:px-6">
-            {links.map(({ id, label, href, icon }) => (
+            {links.map(({ id, label, href }) => (
               <li key={id}>
                 <a
                   href={href}
@@ -169,7 +172,6 @@ export default function Navbar() {
                   className={`${pill} w-full justify-start ${active === id ? pillActive : ""}`}
                   tabIndex={open ? 0 : -1}
                 >
-                  {/* <Icon>{icon}</Icon> */}
                   {label}
                 </a>
               </li>
