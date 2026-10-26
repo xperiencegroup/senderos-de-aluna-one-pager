@@ -1,9 +1,9 @@
-import DownloadIcon from "@/assets/icons/components/download-icon";
 import heroBg from "@/assets/images/hero-background.jpg";
-// import formaAluna from "@/assets/icons/forma-aluna-hero.svg";
 import formaAluna from "@/assets/images/fondo-forma-hero.svg";
-
 import senderosLogo from "@/assets/logos/main/logo_and_name.svg";
+
+import FillButton from "@/components/fill-button";
+import DownloadIcon from "@/assets/icons/components/download-icon";
 
 export default function Hero() {
   return (
@@ -55,42 +55,9 @@ export default function Hero() {
             etapa de la vida.
           </p>
 
-          <button
-            className="group relative self-start flex items-center cursor-pointer
-            overflow-hidden
-            [--icon-area:60px]
-            rounded-[30px] border-2 border-impulso bg-beige drop-shadow
-            transition-colors duration-300
-            active:border-beige
-            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-impulso focus-visible:ring-offset-2 focus-visible:ring-offset-beige"
-          >
-            {/* Capa de relleno: crece de izquierda a derecha */}
-            <span
-              aria-hidden="true"
-              className="absolute inset-y-0 left-0 w-0 rounded-full bg-impulso
-              transition-[width] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]
-              group-hover:w-[calc(100%-var(--icon-area))]
-              group-active:w-full
-              motion-reduce:transition-none"
-            />
-
-            {/* Texto */}
-            <span
-              className="button relative z-10 px-[20px] py-[10px] font-medium text-impulso
-              transition-colors duration-300
-              group-hover:text-beige group-active:text-beige"
-            >
-              Descargar Brochure
-            </span>
-
-            {/* Icono */}
-            <span className="relative z-10 px-[20px]">
-              <DownloadIcon
-                className="size-[20px] text-impulso transition-colors duration-200
-              group-active:text-beige group-active:delay-150"
-              />
-            </span>
-          </button>
+          <FillButton Icon={DownloadIcon} className="self-start">
+            Descargar Brochure
+          </FillButton>
         </div>
       </div>
     </section>
