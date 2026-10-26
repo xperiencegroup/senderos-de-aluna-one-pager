@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import PillButton from "@/components/pill-button";
 
 // íconos en componentes
 import ClickIcon from "@/assets/icons/components/click-icon";
@@ -97,23 +98,22 @@ export default function Navbar() {
 
         {/* Links escritorio */}
         <ul className="hidden flex-1 items-center justify-evenly lg:flex">
-          {links.map(({ id, label, href, icon }) => {
-            const IconComponent = icon;
-            return (
-              <li key={id}>
-                <a
-                  href={href}
-                  aria-current={active === id ? "page" : undefined}
-                  className={`${id === "proyecto" ? "w-[140px] xl:w-[160px]" : "w-[160px] xl:w-[194px]"} ${pill} ${active === id ? pillActive : ""}`}
-                >
-                  <div className="relative flex justify-center items-center size-[20px]">
-                    <IconComponent className="w-full h-full text-proposito group-active:text-horizonte" />
-                  </div>
-                  {label}
-                </a>
-              </li>
-            );
-          })}
+          {links.map(({ id, label, href, icon }) => (
+            <li key={id}>
+              <PillButton
+                href={href}
+                Icon={icon}
+                current={active === id}
+                className={
+                  id === "proyecto"
+                    ? "w-[140px] xl:w-[160px]"
+                    : "w-[160px] xl:w-[194px]"
+                }
+              >
+                {label}
+              </PillButton>
+            </li>
+          ))}
         </ul>
 
         {/* CTA escritorio */}
