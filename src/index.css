@@ -82,6 +82,10 @@ img {
   .subtitle {
     @apply text-[20px];
   }
+
+  .regular {
+    @apply text-[16px];
+  }
 }
 
 .drop-shadow {
