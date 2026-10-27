@@ -1,6 +1,7 @@
 import AboutUs from "./components/about-us";
 import Amenidades from "./components/amenidades";
 import Hero from "./components/hero";
+import Modelos from "./components/modelos";
 import PlanoConjunto from "./components/plano-conjunto";
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
       <AboutUs />
       <PlanoConjunto />
       <Amenidades />
+      <Modelos />
     </>
   );
 }
