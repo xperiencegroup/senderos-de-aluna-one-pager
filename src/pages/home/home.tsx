@@ -1,5 +1,6 @@
 import AboutUs from "./components/about-us";
 import Amenidades from "./components/amenidades";
+import CotizaTuCasa from "./components/cotiza-tu-casa";
 import ExploraCX from "./components/explora-cx";
 import Hero from "./components/hero";
 import Modelos from "./components/modelos";
@@ -14,6 +15,7 @@ export default function Home() {
       <Amenidades />
       <Modelos />
       <ExploraCX />
+      <CotizaTuCasa />
     </>
   );
 }
