@@ -5,6 +5,7 @@ import ExploraCX from "./components/explora-cx";
 import Hero from "./components/hero";
 import Modelos from "./components/modelos";
 import PlanoConjunto from "./components/plano-conjunto";
+import Ubicacion from "./components/ubicacion";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <Modelos />
       <ExploraCX />
       <CotizaTuCasa />
+      <Ubicacion />
     </>
   );
 }
