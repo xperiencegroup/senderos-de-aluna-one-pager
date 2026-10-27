@@ -1,5 +1,6 @@
 import AboutUs from "./components/about-us";
 import Amenidades from "./components/amenidades";
+import ExploraCX from "./components/explora-cx";
 import Hero from "./components/hero";
 import Modelos from "./components/modelos";
 import PlanoConjunto from "./components/plano-conjunto";
@@ -12,6 +13,7 @@ export default function Home() {
       <PlanoConjunto />
       <Amenidades />
       <Modelos />
+      <ExploraCX />
     </>
   );
 }
