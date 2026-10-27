@@ -5,7 +5,7 @@ import { CONTACTO_INFO, NAV_LINKS, SOCIAL_LINKS } from "@/const/nav-links";
 export default function Footer() {
   return (
     <div className="flex w-full min-h-[384px] justify-center">
-      <div className="flex flex-col w-full max-w-[1366px] justify-center border px-[83px]">
+      <div className="flex flex-col w-full max-w-[1366px] justify-center px-[83px]">
         <div className="w-full flex items-center justify-between">
           {/* senderos de aluna + xperience */}
           <div className="flex flex-col justify-between w-[274px] h-[226px]">
