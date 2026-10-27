@@ -1,46 +1,12 @@
 import { useState, useEffect } from "react";
 import PillButton from "@/components/pill-button";
+import { NAV_LINKS as links } from "@/const/nav-links";
+import { CONTACTO_DATA as contacto } from "@/const/nav-links";
 
-// íconos en componentes
-import ClickIcon from "@/assets/icons/components/click-icon";
-import WarehouseIcon from "@/assets/icons/components/warehouse-icon";
-import MathIcon from "@/assets/icons/components/math-icon";
-import PinIcon from "@/assets/icons/components/pin-icon";
-import PeopleIcon from "@/assets/icons/components/people-icon";
 import CallIcon from "@/assets/icons/components/call-icon";
 
 // íconos
 import isotipo from "@/assets/logos/main/isotipo.svg";
-
-const links = [
-  { id: "proyecto", label: "Proyecto", href: "#proyecto", icon: WarehouseIcon },
-  {
-    id: "xperiencia",
-    label: "Xperiencia",
-    href: "#xperiencia",
-    icon: ClickIcon,
-  },
-  {
-    id: "cotizador",
-    label: "Cotizador",
-    href: "#cotizador",
-    icon: MathIcon,
-  },
-  {
-    id: "ubicacion",
-    label: "Ubicación",
-    href: "#ubicacion",
-    icon: PinIcon,
-  },
-  { id: "nosotros", label: "Nosotros", href: "#nosotros", icon: PeopleIcon },
-];
-
-const contacto = {
-  id: "contacto",
-  label: "Contacto",
-  href: "#contacto",
-  icon: CallIcon,
-};
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
