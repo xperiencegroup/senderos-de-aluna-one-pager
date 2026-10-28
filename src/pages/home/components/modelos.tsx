@@ -1,61 +1,14 @@
-// import ArrowIcon from "@/assets/icons/arrowIcon.svg?react";
-import frontal75 from "@/assets/images/modelos/75/frontal.jpg";
-import frontal88 from "@/assets/images/modelos/88/frontal.jpg";
-import frontal96 from "@/assets/images/modelos/96/frontal.jpg";
-import frontal105 from "@/assets/images/modelos/105/frontal.jpg";
+import { useSearchParams } from "react-router";
+import { modelos } from "@/data/modelos";
 
 import FormaModelo from "@/assets/images/forma-modelo";
 
 import ArrowIcon from "@/assets/icons/components/arrow-icon";
 import logoIcon from "@/assets/icons/logo-opacity-bg.svg";
 
-type Variant = "green" | "beige";
-
-type Modelo = {
-  id: string;
-  nombre: string;
-  numero: string;
-  href: string;
-  image: string;
-  variant: Variant;
-};
-
-const modelos: Modelo[] = [
-  {
-    id: "aluna-75",
-    nombre: "ALUNA",
-    numero: "75",
-    href: "#modelo-75",
-    image: frontal75,
-    variant: "green",
-  },
-  {
-    id: "aluna-88",
-    nombre: "ALUNA",
-    numero: "88",
-    href: "#modelo-88",
-    image: frontal88,
-    variant: "beige",
-  },
-  {
-    id: "aluna-96",
-    nombre: "ALUNA",
-    numero: "96",
-    href: "#modelo-96",
-    image: frontal96,
-    variant: "green",
-  },
-  {
-    id: "aluna-105",
-    nombre: "ALUNA",
-    numero: "105",
-    href: "#modelo-105",
-    image: frontal105,
-    variant: "beige",
-  },
-];
-
 export default function Modelos() {
+  const [, setParams] = useSearchParams();
+
   return (
     <section
       id="modelos"
@@ -128,7 +81,10 @@ export default function Modelos() {
                     Aluna {modelo.numero}
                   </p>
 
-                  <button className="group flex size-[38px] justify-center items-center rounded-full drop-shadow border-1 border-beige bg-impulso transition-opacity hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-beige active:border-impulso">
+                  <button
+                    onClick={() => setParams({ modelo: modelo.id })}
+                    className="group flex size-[38px] justify-center items-center rounded-full drop-shadow border-1 border-beige bg-impulso transition-opacity hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-beige active:border-impulso"
+                  >
                     <ArrowIcon className="size-[15px] text-beige group-active:text-impulso" />
                   </button>
                 </div>
