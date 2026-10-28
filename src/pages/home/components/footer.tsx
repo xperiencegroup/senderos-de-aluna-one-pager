@@ -21,7 +21,8 @@ export default function Footer() {
             {NAV_LINKS.map((link) => {
               const Icon = link.icon;
               return (
-                <button
+                <a
+                  href={`${link.href}`}
                   key={link.id}
                   className="group flex items-center px-[20px] py-[8px] gap-[10px] rounded-[30px] button font-medium border transition-colors border-beige text-impulso active:text-beige bg-beige drop-shadow hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-impulso"
                 >
@@ -29,7 +30,7 @@ export default function Footer() {
                     <Icon className="absolute inset-0 w-full h-full" />
                   </span>
                   {link.label}
-                </button>
+                </a>
               );
             })}
           </div>
@@ -43,7 +44,13 @@ export default function Footer() {
             <div className="flex flex-col gap-[20px]">
               {CONTACTO_INFO.map((data, key) => {
                 return (
-                  <div key={key} className="flex items-center gap-[24px]">
+                  <a
+                    key={key}
+                    href={data.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-[24px]"
+                  >
                     <img src={data.icon} className="size-[44px]" />
                     <div className="flex flex-col">
                       <p className="subtitle-caps font-semibold text-origen">
@@ -51,7 +58,7 @@ export default function Footer() {
                       </p>
                       <p className="regular text-origen">{data.description}</p>
                     </div>
-                  </div>
+                  </a>
                 );
               })}
             </div>
@@ -62,12 +69,15 @@ export default function Footer() {
             <div className="flex items-center gap-[20px]">
               {SOCIAL_LINKS.map((social, index) => {
                 return (
-                  <div
+                  <a
                     key={index}
-                    className="relative flex justify-center items-center size-[44px]"
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative flex justify-center items-center size-[44px] hover:cursor-pointer"
                   >
                     <img src={social.icon} className="relative" />
-                  </div>
+                  </a>
                 );
               })}
             </div>

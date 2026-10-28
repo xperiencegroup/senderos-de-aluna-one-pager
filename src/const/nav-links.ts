@@ -61,7 +61,7 @@ export const CONTACTO_INFO = [
     title: "Dirección",
     description: "Aluna Residencial",
     icon: pinIcon,
-    href: null,
+    href: "https://maps.app.goo.gl/vop6Jp3xs2ucKQAv9",
   },
 ];
 
