@@ -15,13 +15,14 @@ import whatsappIcon from "@/assets/icons/footer/whatsapp-button.svg";
 import facebookIcon from "@/assets/icons/footer/facebook-button.svg";
 
 export const NAV_LINKS = [
-  { id: "proyecto", label: "Proyecto", href: "#proyecto", icon: WarehouseIcon },
+  { id: "nosotros", label: "Nosotros", href: "#nosotros", icon: PeopleIcon },
   {
     id: "xperiencia",
     label: "Xperiencia",
     href: "#xperiencia",
     icon: ClickIcon,
   },
+  { id: "proyecto", label: "Proyecto", href: "#proyecto", icon: WarehouseIcon },
   {
     id: "cotizador",
     label: "Cotizador",
@@ -34,7 +35,6 @@ export const NAV_LINKS = [
     href: "#ubicacion",
     icon: PinIcon,
   },
-  { id: "nosotros", label: "Nosotros", href: "#nosotros", icon: PeopleIcon },
 ];
 
 export const CONTACTO_DATA = {

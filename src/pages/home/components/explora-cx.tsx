@@ -10,7 +10,7 @@ import ClickIcon from "@/assets/icons/components/click-icon";
 
 export default function ExploraCX() {
   return (
-    <div className="relative w-full min-h-svh overflow-hidden">
+    <div id="xperiencia" className="relative w-full min-h-svh overflow-hidden">
       {/* bg image */}
       <img
         src={imageBackground}

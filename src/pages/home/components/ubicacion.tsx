@@ -5,7 +5,7 @@ import FillButton from "@/components/fill-button";
 
 export default function Ubicacion() {
   return (
-    <div>
+    <div id="ubicacion">
       {/* vive en la comunidad de aluna */}
       <div className="relative flex w-full min-h-[384px] h-[50svh] justify-center items-center overflow-hidden">
         {/* bg image */}

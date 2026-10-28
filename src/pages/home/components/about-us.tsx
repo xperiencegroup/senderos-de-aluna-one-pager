@@ -3,7 +3,7 @@ import conoceProyectoImage from "@/assets/images/conoce-proyecto.jpg";
 
 export default function AboutUs() {
   return (
-    <section>
+    <section id="nosotros">
       {/* historia */}
       <div className="flex gap-[40px] bg-impulso">
         <div className="relative shrink-0 w-full min-h-[50svh] max-xl:max-w-[712px] max-w-[55vw] rounded-br-[200px] overflow-hidden">

@@ -6,7 +6,7 @@ import FormularioCotiza from "@/components/formulario-cotiza";
 
 export default function CotizaTuCasa() {
   return (
-    <div className="relative w-full min-h-svh overflow-hidden">
+    <div id="cotizador" className="relative w-full min-h-svh overflow-hidden">
       {/* decoration */}
       <img
         src={logoDecoration}
