@@ -110,3 +110,19 @@ img {
 .drop-shadow {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.15);
 }
+
+/* EMBLA Carousel */
+.embla__viewport {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+}
+
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  padding-right: 10px;
+}
