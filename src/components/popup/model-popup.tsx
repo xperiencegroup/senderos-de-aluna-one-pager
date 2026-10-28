@@ -8,6 +8,7 @@ import type { Modelo } from "@/data/modelos";
 import type { EmblaCarouselType } from "embla-carousel";
 
 import DownloadIcon from "@/assets/icons/components/download-icon";
+import CloseIcon from "@/assets/icons/components/close-icon";
 
 type Props = {
   modelo: Modelo;
@@ -62,26 +63,29 @@ export default function ModelPopup({ modelo, onClose }: Props) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="model-popup-title"
-      className="fixed inset-0 z-[100] flex justify-center overflow-y-auto overscroll-contain bg-beige"
+      className="fixed inset-0 z-[100] flex justify-center overflow-y-auto overscroll-contain bg-beige scale-90"
     >
-      <div className="relative min-h-full w-full max-w-[1366px] px-[83px] py-[54px] bg-cyan-700">
-        {/*  */}
+      <div className="relative min-h-full w-full max-w-[1366px] px-[83px] py-[54px]">
+        {/* close button */}
+        <button
+          onClick={onClose}
+          className="group absolute right-[44px] top-[31px] flex size-[44px] justify-center items-center bg-proposito border-2 border-horizonte drop-shadow rounded-full transition-colors duration-100 hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-horizonte active:border-proposito"
+        >
+          <CloseIcon className="size-[20px] text-horizonte group-active:text-proposito" />
+        </button>
 
         {/* content */}
         <div className="flex w-full h-full items-center">
           <div className="flex w-full justify-between">
             {/* title, description and carrusel */}
-            <div className="flex flex-col justify-between w-[584px] h-[655px]">
+            <div className="flex flex-col justify-between w-[584px] h-[655px] gap-[7px]">
               {/* title */}
               <h2 className="hero font-semibold text-impulso">
                 {modelo.nombre} {modelo.numero}
               </h2>
 
               {/* descriotion */}
-              <p className="regular text-origen">
-                El modelo ideal para familias jóvenes o como primera inversión.
-                Maximiza la eficiencia del espacio.
-              </p>
+              <p className="regular text-origen">{modelo.description}</p>
 
               {/* carrusel */}
               <div className="flex flex-col w-full justify-between h-[505px]">
@@ -113,7 +117,13 @@ export default function ModelPopup({ modelo, onClose }: Props) {
                 Primer Nivel:
               </h3>
 
-              <div className="w-[210px] h-[349px] bg-red-500" />
+              <div className="relative flex justify-center items-center w-[210px] h-[349px]">
+                <img
+                  src={modelo.planos.nivel1.src}
+                  alt={modelo.planos.nivel1.alt}
+                  className="absolute inset-0 w-full h-full object-contain"
+                />
+              </div>
 
               {/* lista de características */}
               <ul className="flex flex-col w-full gap-[5px]">
@@ -126,7 +136,7 @@ export default function ModelPopup({ modelo, onClose }: Props) {
                       <span className="flex size-[25px] justify-center items-center p-[6px] bg-proposito rounded-full">
                         <img src={c.icon} className="size-full" />
                       </span>
-                      <span>{c.label}</span>
+                      <span className="whitespace-pre-line">{c.label}</span>
                     </li>
                   );
                 })}
@@ -139,7 +149,13 @@ export default function ModelPopup({ modelo, onClose }: Props) {
                 Segundo Nivel:
               </h3>
 
-              <div className="w-[210px] h-[349px] bg-red-500" />
+              <div className="relative flex justify-center items-center w-[210px] h-[349px]">
+                <img
+                  src={modelo.planos.nivel2.src}
+                  alt={modelo.planos.nivel2.alt}
+                  className="absolute inset-0 w-full h-full object-contain"
+                />
+              </div>
 
               {/* lista de características */}
               <ul className="flex flex-col w-full gap-[5px]">
@@ -152,7 +168,7 @@ export default function ModelPopup({ modelo, onClose }: Props) {
                       <span className="flex size-[25px] justify-center items-center p-[6px] bg-proposito rounded-full">
                         <img src={c.icon} className="size-full" />
                       </span>
-                      <span>{c.label}</span>
+                      <span className="whitespace-pre-line">{c.label}</span>
                     </li>
                   );
                 })}
