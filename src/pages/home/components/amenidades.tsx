@@ -71,7 +71,7 @@ export default function Amenidades() {
   const [selected, setSelected] = useState(amenidades[0]);
 
   return (
-    <div className="flex bg-beige">
+    <div id="amenidades" className="flex bg-beige">
       <div className="flex flex-col justify-center items-end w-full min-h-[100svh] py-[34px] pl-[30px]">
         <div className="flex flex-col gap-[30px] text-left bg-beige pr-[42px]">
           <h2 className="hero font-bold text-proposito">Amenidades</h2>

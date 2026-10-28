@@ -6,7 +6,7 @@ import AlunaIcon from "@/assets/icons/components/aluna-icon";
 
 export default function PlanoConjunto() {
   return (
-    <div className="flex relative w-full min-h-svh items-end">
+    <div id="plano" className="flex relative w-full min-h-svh items-end">
       <img
         src={masterplanImage}
         alt="Masterplan de Senderos de Aluna"
