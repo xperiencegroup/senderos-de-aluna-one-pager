@@ -1,8 +1,13 @@
-import type { Modelo } from "@/data/modelos";
 import { useEffect, useRef, useState } from "react";
 import { ModelCarousel } from "./model-carousel";
+
+import FillButton from "../fill-button";
 import ModelThumbnails from "./model-thumbnail";
+
+import type { Modelo } from "@/data/modelos";
 import type { EmblaCarouselType } from "embla-carousel";
+
+import DownloadIcon from "@/assets/icons/components/download-icon";
 
 type Props = {
   modelo: Modelo;
@@ -59,11 +64,14 @@ export default function ModelPopup({ modelo, onClose }: Props) {
       aria-labelledby="model-popup-title"
       className="fixed inset-0 z-[100] flex justify-center overflow-y-auto overscroll-contain bg-beige"
     >
-      <div className="relative min-h-full w-full max-w-[1366px] px-[83px] py-[54px] bg-cyan-600">
+      <div className="relative min-h-full w-full max-w-[1366px] px-[83px] py-[54px] bg-cyan-700">
+        {/*  */}
+
+        {/* content */}
         <div className="flex w-full h-full items-center">
           <div className="flex w-full justify-between">
             {/* title, description and carrusel */}
-            <div className="flex flex-col justify-between w-[584px] h-[655px] bg-beige">
+            <div className="flex flex-col justify-between w-[584px] h-[655px]">
               {/* title */}
               <h2 className="hero font-semibold text-impulso">
                 {modelo.nombre} {modelo.numero}
@@ -98,8 +106,68 @@ export default function ModelPopup({ modelo, onClose }: Props) {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col w-[280px] h-[584px] bg-beige"></div>
-            <div className="flex flex-col w-[280px] h-[587px] bg-beige"></div>
+
+            {/* Primer nivel */}
+            <div className="flex flex-col w-[280px] h-fit items-center gap-[15px]">
+              <h3 className="subtitle font-bold italic text-impulso">
+                Primer Nivel:
+              </h3>
+
+              <div className="w-[210px] h-[349px] bg-red-500" />
+
+              {/* lista de características */}
+              <ul className="flex flex-col w-full gap-[5px]">
+                {modelo.caracteristicas.nivel1.map((c, index) => {
+                  return (
+                    <li
+                      key={index}
+                      className="flex items-center gap-[10px] text-icon text-origen font-medium"
+                    >
+                      <span className="flex size-[25px] justify-center items-center p-[6px] bg-proposito rounded-full">
+                        <img src={c.icon} className="size-full" />
+                      </span>
+                      <span>{c.label}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
+            {/* Segundo Nivel */}
+            <div className="flex flex-col w-[280px] h-fit items-center gap-[15px]">
+              <h3 className="subtitle font-bold italic text-impulso">
+                Segundo Nivel:
+              </h3>
+
+              <div className="w-[210px] h-[349px] bg-red-500" />
+
+              {/* lista de características */}
+              <ul className="flex flex-col w-full gap-[5px]">
+                {modelo.caracteristicas.nivel2.map((c, index) => {
+                  return (
+                    <li
+                      key={index}
+                      className="flex items-center gap-[10px] text-icon text-origen font-medium"
+                    >
+                      <span className="flex size-[25px] justify-center items-center p-[6px] bg-proposito rounded-full">
+                        <img src={c.icon} className="size-full" />
+                      </span>
+                      <span>{c.label}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              <div className="flex h-[78px] justify-center items-center">
+                <FillButton
+                  Icon={DownloadIcon}
+                  variant="proposito"
+                  className="w-full text-proposito border-proposito"
+                >
+                  Descargar Ficha Técnica
+                </FillButton>
+              </div>
+            </div>
           </div>
         </div>
       </div>

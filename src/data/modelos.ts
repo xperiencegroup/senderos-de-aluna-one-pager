@@ -32,6 +32,15 @@ import aluna105_04 from "@/assets/images/modelos/105/renders/04.jpg";
 import aluna105_05 from "@/assets/images/modelos/105/renders/05.jpg";
 import aluna105_06 from "@/assets/images/modelos/105/renders/06.jpg";
 
+// icons
+import banoIcon from "@/assets/icons/modelo/bano.svg";
+import camaIcon from "@/assets/icons/modelo/cama.svg";
+import cocheraIcon from "@/assets/icons/modelo/cochera.svg";
+import estudioIcon from "@/assets/icons/modelo/estudio.svg";
+import jardinIcon from "@/assets/icons/modelo/jardin.svg";
+import lavadoraIcon from "@/assets/icons/modelo/lavadora.svg";
+import salaIcon from "@/assets/icons/modelo/sala.svg";
+
 type Variant = "green" | "beige";
 
 export type ModeloImage = {
@@ -49,8 +58,14 @@ export type Modelo = {
   description: string;
   images: ModeloImage[]; // renders del carrusel
   caracteristicas: {
-    nivel1: string[];
-    nivel2: string[];
+    nivel1: {
+      icon: string;
+      label: string;
+    }[];
+    nivel2: {
+      icon: string;
+      label: string;
+    }[];
   };
 };
 
@@ -80,17 +95,17 @@ export const modelos: Modelo[] = [
     ]),
     caracteristicas: {
       nivel1: [
-        "2 Parqueos",
-        "Sala - Comedor - Cocina",
-        "Baño Completo",
-        "Estudio",
-        "Lavandería",
-        "Pasillo Lateral - Jardín",
+        { icon: cocheraIcon, label: "2 Parqueos" },
+        { icon: salaIcon, label: "Sala - Comedor - Cocina" },
+        { icon: banoIcon, label: "Baño Completo" },
+        { icon: estudioIcon, label: "Estudio" },
+        { icon: lavadoraIcon, label: "Lavandería" },
+        { icon: jardinIcon, label: "Pasillo Lateral - Jardín" },
       ],
       nivel2: [
-        "Dormitorio Principal",
-        "Dormitorio Secundario",
-        "Baño Completo",
+        { icon: camaIcon, label: "Dormitorio Principal" },
+        { icon: camaIcon, label: "Dormitorio Secundario" },
+        { icon: banoIcon, label: "Baño Completo" },
       ],
     },
   },
@@ -112,17 +127,17 @@ export const modelos: Modelo[] = [
     ]),
     caracteristicas: {
       nivel1: [
-        "2 Parqueos",
-        "Sala - Comedor - Cocina",
-        "Baño Completo",
-        "Estudio",
-        "Lavandería",
-        "Pasillo Lateral - Jardín",
+        { icon: cocheraIcon, label: "2 Parqueos" },
+        { icon: salaIcon, label: "Sala - Comedor - Cocina" },
+        { icon: banoIcon, label: "Baño Completo" },
+        { icon: estudioIcon, label: "Estudio" },
+        { icon: lavadoraIcon, label: "Lavandería" },
+        { icon: jardinIcon, label: "Pasillo Lateral - Jardín" },
       ],
       nivel2: [
-        "Dormitorio Principal",
-        "Dormitorio Secundario",
-        "Baño Completo",
+        { icon: camaIcon, label: "Dormitorio Principal" },
+        { icon: camaIcon, label: "Dormitorio Secundario" },
+        { icon: banoIcon, label: "Baño Completo" },
       ],
     },
   },
@@ -144,17 +159,17 @@ export const modelos: Modelo[] = [
     ]),
     caracteristicas: {
       nivel1: [
-        "2 Parqueos",
-        "Sala - Comedor - Cocina",
-        "Baño Completo",
-        "Estudio",
-        "Lavandería",
-        "Pasillo Lateral - Jardín",
+        { icon: cocheraIcon, label: "2 Parqueos" },
+        { icon: salaIcon, label: "Sala - Comedor - Cocina" },
+        { icon: banoIcon, label: "Baño Completo" },
+        { icon: estudioIcon, label: "Estudio" },
+        { icon: lavadoraIcon, label: "Lavandería" },
+        { icon: jardinIcon, label: "Pasillo Lateral - Jardín" },
       ],
       nivel2: [
-        "Dormitorio Principal",
-        "Dormitorio Secundario",
-        "Baño Completo",
+        { icon: camaIcon, label: "Dormitorio Principal" },
+        { icon: camaIcon, label: "Dormitorio Secundario" },
+        { icon: banoIcon, label: "Baño Completo" },
       ],
     },
   },
@@ -177,17 +192,17 @@ export const modelos: Modelo[] = [
     ]),
     caracteristicas: {
       nivel1: [
-        "2 Parqueos",
-        "Sala - Comedor - Cocina",
-        "Baño Completo",
-        "Estudio",
-        "Lavandería",
-        "Pasillo Lateral - Jardín",
+        { icon: cocheraIcon, label: "2 Parqueos" },
+        { icon: salaIcon, label: "Sala - Comedor - Cocina" },
+        { icon: banoIcon, label: "Baño Completo" },
+        { icon: estudioIcon, label: "Estudio" },
+        { icon: lavadoraIcon, label: "Lavandería" },
+        { icon: jardinIcon, label: "Pasillo Lateral - Jardín" },
       ],
       nivel2: [
-        "Dormitorio Principal",
-        "Dormitorio Secundario",
-        "Baño Completo",
+        { icon: camaIcon, label: "Dormitorio Principal" },
+        { icon: camaIcon, label: "Dormitorio Secundario" },
+        { icon: banoIcon, label: "Baño Completo" },
       ],
     },
   },

@@ -105,6 +105,10 @@ img {
   .caption {
     @apply text-[11px];
   }
+
+  .text-icon {
+    @apply text-[14px];
+  }
 }
 
 .drop-shadow {
