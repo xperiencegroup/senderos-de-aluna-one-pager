@@ -14,6 +14,11 @@ import instagramIcon from "@/assets/icons/footer/instagram-button.svg";
 import whatsappIcon from "@/assets/icons/footer/whatsapp-button.svg";
 import facebookIcon from "@/assets/icons/footer/facebook-button.svg";
 
+// proyecto dropdown icons
+import AmenidadesIcon from "@/assets/icons/components/amenidades-icon";
+import ModelosIcon from "@/assets/icons/components/modelos-icon";
+import PlanoIcon from "@/assets/icons/components/plano-icon";
+
 export const NAV_LINKS = [
   { id: "nosotros", label: "Nosotros", href: "#nosotros", icon: PeopleIcon },
   {
@@ -35,6 +40,17 @@ export const NAV_LINKS = [
     href: "#ubicacion",
     icon: PinIcon,
   },
+];
+
+export const proyectoLinks = [
+  {
+    id: "amenidades",
+    label: "Amenidades",
+    href: "#amenidades",
+    icon: AmenidadesIcon,
+  },
+  { id: "modelos", label: "Modelos", href: "#modelos", icon: ModelosIcon },
+  { id: "plano", label: "Plano de Conjunto", href: "#plano", icon: PlanoIcon },
 ];
 
 export const CONTACTO_DATA = {
