@@ -21,7 +21,10 @@ export default function Footer() {
             {NAV_LINKS.map((link) => {
               const Icon = link.icon;
               return (
-                <button className="group flex items-center px-[20px] py-[8px] gap-[10px] rounded-[30px] button font-medium border transition-colors border-beige text-impulso active:text-beige bg-beige drop-shadow hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-impulso">
+                <button
+                  key={link.id}
+                  className="group flex items-center px-[20px] py-[8px] gap-[10px] rounded-[30px] button font-medium border transition-colors border-beige text-impulso active:text-beige bg-beige drop-shadow hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-impulso"
+                >
                   <span className="relative size-[18px]">
                     <Icon className="absolute inset-0 w-full h-full" />
                   </span>
