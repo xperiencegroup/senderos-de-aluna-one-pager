@@ -1,6 +1,15 @@
 import { useState, type ComponentType, type SVGProps } from "react";
-import backgroundImage from "@/assets/images/amenidades-background.jpg";
+import { AnimatePresence, motion } from "motion/react";
 import PillButton from "@/components/pill-button";
+
+// images
+import garitaImage from "@/assets/images/amenidades/garita.jpg";
+import salonSocialImage from "@/assets/images/amenidades/salon-social.jpg";
+import canchaImage from "@/assets/images/amenidades/cancha.jpg";
+import petParkImage from "@/assets/images/amenidades/pet-park.jpg";
+import juegosInfantilesImage from "@/assets/images/amenidades/juegos-infantiles.jpg";
+import zonaEventosImage from "@/assets/images/amenidades/zona-eventos.jpg";
+import churrasquerasImage from "@/assets/images/amenidades/churrasqueras.jpg";
 
 // icons
 import CanchaIcon from "@/assets/icons/components/amenidades/cancha-icon";
@@ -15,24 +24,51 @@ type Amenidad = {
   id: string;
   label: string;
   Icon?: ComponentType<SVGProps<SVGSVGElement>>;
+  image: string;
 };
 
 const amenidades: Amenidad[] = [
-  { id: "garita", label: "Garita", Icon: GaritaIcon },
-  { id: "salon-social", label: "Salón Social", Icon: SalonIcon },
-  { id: "cancha", label: "Cancha Polideportiva", Icon: CanchaIcon },
-  { id: "mascotas", label: "Área de Mascotas", Icon: MascotasIcon },
-  { id: "juegos", label: "Juegos Infantiles", Icon: JuegosIcon },
-  { id: "eventos", label: "Zona de Eventos", Icon: EventosIcon },
+  { id: "garita", label: "Garita", Icon: GaritaIcon, image: garitaImage },
+  {
+    id: "salon-social",
+    label: "Salón Social",
+    Icon: SalonIcon,
+    image: salonSocialImage,
+  },
+  {
+    id: "cancha",
+    label: "Cancha Polideportiva",
+    Icon: CanchaIcon,
+    image: canchaImage,
+  },
+  {
+    id: "mascotas",
+    label: "Área de Mascotas",
+    Icon: MascotasIcon,
+    image: petParkImage,
+  },
+  {
+    id: "juegos",
+    label: "Juegos Infantiles",
+    Icon: JuegosIcon,
+    image: juegosInfantilesImage,
+  },
+  {
+    id: "eventos",
+    label: "Zona de Eventos",
+    Icon: EventosIcon,
+    image: zonaEventosImage,
+  },
   {
     id: "churrasqueras",
     label: "Churrasqueras",
     Icon: ChurrasquerasIcon,
+    image: churrasquerasImage,
   },
 ];
 
 export default function Amenidades() {
-  const [selected, setSelected] = useState(amenidades[0].id);
+  const [selected, setSelected] = useState(amenidades[0]);
 
   return (
     <div className="flex bg-beige">
@@ -47,15 +83,15 @@ export default function Amenidades() {
 
           {/* Botones */}
           <ul className="flex flex-col w-full max-w-[300px] gap-[27px]">
-            {amenidades.map(({ id, label, Icon }) => (
-              <li key={id}>
+            {amenidades.map((amenidad) => (
+              <li key={amenidad.id}>
                 <PillButton
-                  Icon={Icon}
-                  current={selected === id}
-                  onClick={() => setSelected(id)}
+                  Icon={amenidad.Icon}
+                  current={selected.id === amenidad.id}
+                  onClick={() => setSelected(amenidad)}
                   className="w-full"
                 >
-                  {label}
+                  {amenidad.label}
                 </PillButton>
               </li>
             ))}
@@ -65,11 +101,21 @@ export default function Amenidades() {
 
       {/* image */}
       <div className="relative shrink-0 w-full min-h-[100svh] max-xl:max-w-[712px] max-w-[65vw] rounded-bl-[200px] overflow-hidden">
-        <img
-          src={backgroundImage}
-          alt="Familia jugando futbol"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        <AnimatePresence>
+          <motion.img
+            key={selected.id}
+            src={selected.image}
+            alt={selected.label}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1 }}
+            transition={{
+              duration: 0.7,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </AnimatePresence>
       </div>
     </div>
   );
