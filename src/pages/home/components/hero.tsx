@@ -37,7 +37,7 @@ export default function Hero() {
           <h1 className="hero">
             <span className="text-proposito font-semibold">El camino</span>
             <br />
-            <span className="text-impulso font-extrabold italic">
+            <span className="text-impulso font-bold italic">
               donde se escribe
             </span>
             <br />

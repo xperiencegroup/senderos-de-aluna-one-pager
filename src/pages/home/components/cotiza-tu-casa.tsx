@@ -20,7 +20,7 @@ export default function CotizaTuCasa() {
             {/* title */}
             <h2 className="hero-2 text-center text-impulso">
               <span className="font-semibold">Cotiza</span>{" "}
-              <span className="font-extrabold italic">tu casa</span>
+              <span className="font-bold italic">tu casa</span>
             </h2>
 
             {/* subtitle */}

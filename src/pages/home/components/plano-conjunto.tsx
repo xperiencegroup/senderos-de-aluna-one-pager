@@ -25,7 +25,7 @@ export default function PlanoConjunto() {
           <p className="hero-2 text-center text-beige uppercase">
             <span className="font-semibold">Registrate y conoce</span>
             <br />
-            <span className="font-extrabold italic">
+            <span className="font-bold italic">
               los detalles del plano de conjunto
             </span>
           </p>
