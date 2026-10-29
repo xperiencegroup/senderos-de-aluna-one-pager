@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import CloseIcon from "@/assets/icons/components/close-icon";
 import InitialStep from "./steps/initial-step";
+import { STEPS } from "@/types/xperience-form";
+import StepsLayout from "./steps/steps-layout";
+import TusDatos from "./steps/tus-datos";
 
 type Props = {
   onClose: () => void;
 };
 
-const LAST_SLIDE = 3; // 3
+const LAST_SLIDE = STEPS.length; // 3
 
 export default function XperienceForm({ onClose }: Props) {
   const [step, setStep] = useState<number>(0);
@@ -33,9 +36,9 @@ export default function XperienceForm({ onClose }: Props) {
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-[100] flex justify-center overflow-y-auto overscroll-contain bg-cyan-800"
+      className="fixed inset-0 z-[100] flex justify-center items-center overflow-y-auto overscroll-contain bg-cyan-800"
     >
-      <div className="relative w-full max-w-[1366px] min-h-full max-h-[768px] h-[268px] bg-beige">
+      <div className="relative w-full max-w-[1366px] h-full max-h-[768px] bg-beige">
         {/* close button */}
         <button
           onClick={onClose}
@@ -44,8 +47,15 @@ export default function XperienceForm({ onClose }: Props) {
           <CloseIcon className="size-[20px] text-horizonte group-active:text-proposito" />
         </button>
 
-        {step === 0 && <InitialStep nextStep={nextStep} />}
-        {step === 1 && <InitialStep nextStep={nextStep} />}
+        {step === 0 ? (
+          <InitialStep nextStep={nextStep} />
+        ) : (
+          <StepsLayout step={step}>
+            {step === 1 && <TusDatos nextStep={nextStep} />}
+            {/* {step === 2 && <Interes nextStep={nextStep} />} */}
+            {/* {step === 3 && <Confirmacion onClose={onClose} />} */}
+          </StepsLayout>
+        )}
       </div>
     </div>
   );

@@ -14,3 +14,6 @@ export const initialData: XperienceData = {
   telefono: "",
   interes: null,
 };
+
+// steps/steps.ts
+export const STEPS = ["Tus datos", "Interés", "Confirmación"] as const;
