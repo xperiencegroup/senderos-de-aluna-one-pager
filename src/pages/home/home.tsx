@@ -10,11 +10,14 @@ import PlanoConjunto from "./components/plano-conjunto";
 import Ubicacion from "./components/ubicacion";
 import { modelos } from "@/data/modelos";
 import ModelPopup from "@/components/popup/model-popup";
+import XperienceForm from "@/components/popup/xperience-form/xperience-form";
 
 export default function Home() {
   const [params, setParams] = useSearchParams();
   const modeloId = params.get("modelo");
   const modelo = modelos.find((m) => m.id === modeloId);
+
+  const formXperience = params.get("form");
 
   return (
     <>
@@ -33,6 +36,10 @@ export default function Home() {
           modelo={modelo}
           onClose={() => setParams({}, { replace: true })}
         />
+      )}
+
+      {formXperience && (
+        <XperienceForm onClose={() => setParams({}, { replace: true })} />
       )}
     </>
   );

@@ -3,8 +3,11 @@ import formaBackground from "@/assets/images/forma-plano-conjunto.svg";
 import FillButton from "@/components/fill-button";
 import ClickIcon from "@/assets/icons/components/click-icon";
 import AlunaIcon from "@/assets/icons/components/aluna-icon";
+import { useSearchParams } from "react-router";
 
 export default function PlanoConjunto() {
+  const [, setSearchParams] = useSearchParams();
+
   return (
     <div id="plano" className="flex relative w-full min-h-svh items-end">
       <img
@@ -31,7 +34,11 @@ export default function PlanoConjunto() {
           </p>
 
           <div>
-            <FillButton Icon={ClickIcon} gap={15}>
+            <FillButton
+              Icon={ClickIcon}
+              gap={15}
+              onClick={() => setSearchParams({ form: "xperience" })}
+            >
               <span className="flex items-center justify-center gap-[15px]">
                 <AlunaIcon className="size-[20px]" aria-hidden="true" />
                 <span>Iniciar Recorrido Virtual</span>
