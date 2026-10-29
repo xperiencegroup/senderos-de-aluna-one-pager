@@ -23,6 +23,13 @@ const VARIANTS = {
     text: "text-proposito group-hover:text-beige group-active:text-beige",
     icon: "text-proposito group-active:text-beige",
   },
+  impulso: {
+    container:
+      "border-beige bg-impulso active:border-impulso focus-visible:ring-impulso focus-visible:ring-offset-impulso",
+    fill: "bg-beige",
+    text: "text-beige group-hover:text-impulso group-active:text-impulso",
+    icon: "text-beige group-active:text-impulso",
+  },
 } as const;
 
 type Variant = keyof typeof VARIANTS;
@@ -31,6 +38,7 @@ type BaseProps = {
   children: ReactNode;
   /** Componente de icono (SVGR con currentColor). Opcional. */
   Icon?: ComponentType<SVGProps<SVGSVGElement>>;
+  iconSize?: number;
   /**
    * Distancia en px entre el texto y el icono de la derecha.
    * Se reparte mitad al texto y mitad al icono, y el área del relleno
@@ -56,13 +64,13 @@ type AnchorProps = BaseProps &
 
 export type FillButtonProps = ButtonProps | AnchorProps;
 
-const ICON_SIZE = 20; // tamaño del icono
 const EDGE = 20; // padding exterior (izquierda del texto, derecha del icono)
 
 export default function FillButton(props: FillButtonProps) {
   const {
     children,
     Icon,
+    iconSize = 20,
     gap = 40,
     variant = "default",
     className = "",
@@ -74,11 +82,12 @@ export default function FillButton(props: FillButtonProps) {
   const half = gap / 2;
   // Ancho del bloque del icono = padding izq + icono + padding der.
   // El relleno de hover se detiene justo donde empieza ese bloque.
-  const iconArea = Icon ? half + ICON_SIZE + EDGE - 2 : 0;
+  const iconArea = Icon ? half + iconSize + EDGE - 2 : 0;
 
   const cssVars = {
     "--gap-half": `${half}px`,
     "--icon-area": `${iconArea}px`,
+    "--icon-size": `${iconSize}px`,
     ...style,
   } as CSSProperties;
 
@@ -112,8 +121,7 @@ export default function FillButton(props: FillButtonProps) {
         <span className="relative z-10 pl-[var(--gap-half)] pr-[20px]">
           <Icon
             aria-hidden="true"
-            className={`size-[20px] ${v.icon} transition-colors duration-200
-            group-active:delay-150`}
+            className={`size-[var(--icon-size)] ${v.icon} transition-colors duration-200 group-active:delay-150`}
           />
         </span>
       )}
