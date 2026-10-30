@@ -1,0 +1,52 @@
+name: Deploy SiteGround
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+        env:
+          VITE_BASE: /senderosdealuna/
+
+      - name: .htaccess para la SPA
+        run: |
+          cat > dist/.htaccess << 'EOF'
+          <IfModule mod_rewrite.c>
+          RewriteEngine On
+          RewriteBase /senderosdealuna/
+          RewriteRule ^index\.html$ - [L]
+          RewriteCond %{REQUEST_FILENAME} !-f
+          RewriteCond %{REQUEST_FILENAME} !-d
+          RewriteRule . /senderosdealuna/index.html [L]
+          </IfModule>
+          EOF
+
+      - name: SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SG_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p ${{ secrets.SG_PORT }} ${{ secrets.SG_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Subir dist
+        run: |
+          rsync -az --delete -e "ssh -p ${{ secrets.SG_PORT }}" dist/ \
+            ${{ secrets.SG_USER }}@${{ secrets.SG_HOST }}:www/aluna.gt/public_html/senderosdealuna/
