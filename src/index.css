@@ -95,7 +95,7 @@ img {
   }
 
   .modelo-title {
-    @apply text-[35px];
+    @apply text-[35px] min-[1440px]:text-[40px] min-[1920px]:text-[46px];
   }
 
   .formulario-input {

@@ -24,14 +24,14 @@ export default function Modelos() {
       {/* content */}
       <div className="relative mx-auto flex max-w-[1366px] flex-col items-center gap-[24px] text-center">
         <header className="flex flex-col items-center gap-[16px]">
-          <h2 className="text-[clamp(1.75rem,2.6vw,2.5rem)] font-medium leading-tight">
+          <h2 className="text-[clamp(1.75rem,2.6vw,2.5rem)] min-[1440px]:text-[48px] min-[1920px]:text-[56px] font-medium leading-tight">
             Cuatro modelos,{" "}
             <span className="font-semibold italic">nuevas posibilidades</span>
           </h2>
           <hr className="w-full max-w-[340px] border-0 border-t-2 border-beige" />
         </header>
 
-        <div className="flex max-w-[760px] flex-col gap-[16px] text-[clamp(0.85rem,1vw,1rem)] leading-relaxed">
+        <div className="flex max-w-[760px] min-[1440px]:max-w-[860px] min-[1920px]:max-w-[960px] flex-col gap-[16px] text-[clamp(0.85rem,1vw,1rem)] min-[1440px]:text-[18px] min-[1920px]:text-[20px] leading-relaxed">
           <p>
             En <span className="font-semibold italic">Senderos de ALUNA</span>{" "}
             sabemos que cada familia es diferente.
@@ -46,20 +46,15 @@ export default function Modelos() {
           </p>
         </div>
 
-        <ul className="mt-[16px] grid w-full grid-cols-1 gap-[14px] sm:grid-cols-2 lg:grid-cols-4">
-          {modelos.map((m) => (
-            <li key={m.id}></li>
-          ))}
-        </ul>
       </div>
 
       {/* models */}
-      <div className="relative flex gap-[15px]">
+      <div className="relative flex mt-[40px] gap-[15px] min-[1440px]:gap-[24px] min-[1920px]:gap-[32px]">
         {modelos.map((modelo) => {
           return (
             <div
               key={modelo.id}
-              className="relative w-[290px] h-[427px] rounded-t-full overflow-hidden bg-proposito drop-shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-1.5"
+              className="relative w-[290px] h-[427px] min-[1440px]:w-[340px] min-[1440px]:h-[500px] min-[1920px]:w-[400px] min-[1920px]:h-[590px] rounded-t-full overflow-hidden bg-proposito drop-shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-1.5"
             >
               {/* bg image */}
               <img
