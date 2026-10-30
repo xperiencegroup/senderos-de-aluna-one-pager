@@ -120,7 +120,8 @@ export const modelos: Modelo[] = [
         { icon: banoIcon, label: "Baño Completo" },
         { icon: estudioIcon, label: "Estudio" },
         { icon: lavadoraIcon, label: "Lavandería" },
-        { icon: jardinIcon, label: "Pasillo Lateral - Jardín" },
+        { icon: jardinIcon, label: "Pasillo Lateral" },
+        { icon: jardinIcon, label: "Jardín" },
       ],
       nivel2: [
         { icon: camaIcon, label: "Dormitorio Principal" },

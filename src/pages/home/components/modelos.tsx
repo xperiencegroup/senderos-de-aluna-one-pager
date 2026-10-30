@@ -64,9 +64,9 @@ export default function Modelos() {
               />
 
               <div className="relative z-10 flex flex-col w-full h-full justify-end">
-                <FormaModelo
-                  className={`absolute bottom-0 w-full ${modelo.variant === "green" ? "text-proposito" : "text-beige"}`}
-                />
+              <FormaModelo
+                className={`absolute bottom-0 w-full h-auto ${modelo.variant === "green" ? "text-proposito" : "text-beige"}`}
+              />
 
                 {/* text */}
                 <div className="relative z-20 flex w-full h-[43px] items-center justify-between px-[20px] mb-[15px]">
