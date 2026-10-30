@@ -6,14 +6,15 @@ import path from "node:path";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: process.env.VITE_BASE ?? "/",
   plugins: [
     react(),
     babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
   ],
   resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
+    alias: {      
+      "@": path.resolve(import.meta.dirname, "./src"),
     },
   },
 });
