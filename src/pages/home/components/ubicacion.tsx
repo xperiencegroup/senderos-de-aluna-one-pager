@@ -33,8 +33,7 @@ export default function Ubicacion() {
 
               {/* description */}
               <p className="w-full max-w-[401px] subtitle text-beige">
-                Aldea el calvario, zona 8 del municipio de Villa Nueva,
-                departamento de Guatemala
+                Macrolote 1, zona 8, Aldea El Calvario, Villa Nueva, Guatemala.
               </p>
             </div>
           </div>

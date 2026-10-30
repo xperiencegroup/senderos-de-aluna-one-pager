@@ -46,8 +46,7 @@ export default function ExploraCX() {
             Explora Senderos de ALUNA de forma integral desde donde estés.
             <br />
             Con Click and Xperience podrás ubicar el proyecto, conocer el plano
-            de conjunto, recorrer los modelos de casa, revisar disponibilidades
-            y descubrir sus amenidades a través de una experiencia mucho más
+            de conjunto, recorrer los modelos de casa y descubrir sus amenidades a través de una experiencia mucho más
             inmersiva.
             <br />
             <br />

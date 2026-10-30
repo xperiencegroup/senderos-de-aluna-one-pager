@@ -80,7 +80,7 @@ export const SOCIAL_LINKS = [
   {
     title: "Instagram",
     icon: instagramIcon,
-    href: "https://www.instagram.com/",
+    href: "https://www.instagram.com/viveenaluna/",
   },
   {
     title: "WhatsApp",
@@ -90,6 +90,6 @@ export const SOCIAL_LINKS = [
   {
     title: "Facebook",
     icon: facebookIcon,
-    href: "https://www.facebook.com/",
+    href: "https://www.facebook.com/viveenaluna",
   },
 ];

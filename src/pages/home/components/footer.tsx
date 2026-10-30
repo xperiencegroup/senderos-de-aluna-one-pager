@@ -14,7 +14,10 @@ export default function Footer() {
               <div className="w-full h-[2.5px] mt-[20px] bg-impulso" />
             </div>
             {/* xperience */}
-            <img src={xperience} className="w-[93px]" />
+            <div className="flex flex-col gap-[6px]">
+              <p className="caption font-light text-proposito">Página Web</p>
+              <img src={xperience} alt="Xperience" className="w-[93px]" />
+            </div>
           </div>
 
           <div className="flex flex-col w-[161px] gap-[24px]">

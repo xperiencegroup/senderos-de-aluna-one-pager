@@ -3,14 +3,18 @@ import imageDecoration from "@/assets/images/fha-image-decoration.png";
 
 export default function FHA() {
   return (
-    <div className="flex w-full min-h-[50svh] justify-center bg-impulso overflow-hidden">
-      <div className="flex w-full max-w-[1366px] h-[400px] justify-center min-[1440px]:max-w-[1700px] min-[1440px]:h-auto min-[1440px]:px-[60px] min-[1440px]:gap-[40px]">
+    <div className="flex w-full justify-center bg-impulso overflow-hidden">
+      {/* El alto de la sección lo define la figura */}
+      <div className="flex w-full max-w-[1366px] min-[1440px]:max-w-[1700px] h-[360px] min-[1440px]:h-[440px] min-[1920px]:h-[520px] items-center gap-[60px] px-[84px]">
         {/* image */}
-        <div className="relative w-full max-w-[276px] min-[1440px]:max-w-[360px] min-h-[50svh] shrink-0">
-          <img src={imageDecoration} className="w-full" />
-        </div>
+        <img
+          src={imageDecoration}
+          alt=""
+          aria-hidden="true"
+          className="block shrink-0 w-[240px] min-[1440px]:w-[290px] min-[1920px]:w-[340px] h-auto"
+        />
 
-        <div className="w-full max-w-[923px] min-[1440px]:max-w-[1200px] flex flex-col justify-center items-center gap-[24px]">
+        <div className="flex flex-1 flex-col justify-center items-center gap-[24px] py-[40px]">
           {/* fha */}
           <img src={FHALogo} alt="FHA - Cumple el sueño de tu casa propia" />
 
@@ -21,7 +25,7 @@ export default function FHA() {
             <span className="font-bold italic">respaldada</span> por el sello de
             confianza de FHA
             <br />
-            (lnstituto de Fomento de Hipotecas Aseguradas).
+            (Instituto de Fomento de Hipotecas Aseguradas).
             <br />
             <br />
             Con este respaldo,{" "}
