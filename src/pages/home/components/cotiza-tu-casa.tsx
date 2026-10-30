@@ -15,8 +15,8 @@ export default function CotizaTuCasa() {
 
       {/* conoce el proyecto */}
       <div className="flex gap-[80px] bg-beige">
-        <div className="flex flex-col justify-center items-end w-full min-h-svh py-[34px] pl-[30px]">
-          <div className="flex flex-col justify-between w-full max-w-[620px] h-full max-h-[660px] pt-[24px] bg-beige">
+        <div className="flex flex-col justify-center items-center w-full min-h-svh py-[34px] px-[30px]">
+          <div className="flex flex-col justify-between w-full max-w-[620px] min-[1440px]:max-w-[700px] h-full max-h-[660px] pt-[24px] bg-beige">
             {/* title */}
             <h2 className="hero-2 text-center text-impulso">
               <span className="font-semibold">Cotiza</span>{" "}

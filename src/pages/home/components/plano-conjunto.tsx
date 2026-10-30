@@ -26,7 +26,7 @@ export default function PlanoConjunto() {
 
         <div className="flex flex-col relative h-[270px] justify-center items-center gap-[24px]">
           <p className="hero-2 text-center text-beige uppercase">
-            <span className="font-semibold">Registrate y conoce</span>
+            <span className="font-semibold">Regístrate y conoce</span>
             <br />
             <span className="font-bold italic">
               los detalles del plano de conjunto

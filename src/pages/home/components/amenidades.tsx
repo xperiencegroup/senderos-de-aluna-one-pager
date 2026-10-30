@@ -72,17 +72,17 @@ export default function Amenidades() {
 
   return (
     <div id="amenidades" className="flex bg-beige">
-      <div className="flex flex-col justify-center items-end w-full min-h-[100svh] py-[34px] pl-[30px]">
-        <div className="flex flex-col gap-[30px] text-left bg-beige pr-[42px]">
+      <div className="flex flex-col justify-center items-center w-full min-h-[100svh] py-[34px] px-[30px]">
+        <div className="flex flex-col gap-[30px] text-left bg-beige">
           <h2 className="hero font-bold text-proposito">Amenidades</h2>
 
-          <p className="regular w-full max-w-[347px] text-origen">
+          <p className="regular w-full max-w-[347px] min-[1440px]:max-w-[420px] text-origen">
             Espacios pensados para que tu familia crezca, conviva y disfrute
             cada día.
           </p>
 
           {/* Botones */}
-          <ul className="flex flex-col w-full max-w-[300px] gap-[27px]">
+          <ul className="flex flex-col w-full max-w-[300px] min-[1440px]:max-w-[340px] gap-[27px]">
             {amenidades.map((amenidad) => (
               <li key={amenidad.id}>
                 <PillButton

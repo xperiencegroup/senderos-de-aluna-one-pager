@@ -16,7 +16,7 @@ export default function Hero() {
       />
 
       {/* Forma: ancho fijo, alto siempre 100% */}
-      <div className="absolute inset-y-0 left-0 top-0 z-10 w-[927px] max-w-full">
+      <div className="absolute inset-y-0 left-0 top-0 z-10 w-[927px] min-[1440px]:w-[max(927px,60vw)] max-w-full">
         <img
           src={formaAluna}
           alt=""
@@ -34,7 +34,7 @@ export default function Hero() {
         />
 
         <div className="flex flex-col gap-[30px]">
-          <h1 className="hero">
+          <h1 className="hero min-[1440px]:text-[52px] min-[1920px]:text-[58px]">
             <span className="text-proposito font-semibold">El camino</span>
             <br />
             <span className="text-impulso font-bold italic">

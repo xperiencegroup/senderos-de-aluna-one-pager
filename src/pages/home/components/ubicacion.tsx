@@ -43,20 +43,23 @@ export default function Ubicacion() {
 
       {/* desarrollado por MR2 */}
       <div className="relative flex w-full min-h-[384px] h-[50svh] justify-center">
-        <div className="w-full max-w-[1366px] h-full flex justify-between items-center px-[83px]">
+        <div className="w-full max-w-[1366px] min-[1440px]:max-w-[1700px] h-full flex justify-between items-center gap-[40px] px-[83px] min-[1440px]:px-[60px] 2xl:px-[84px]">
           {/* title */}
-          <h2 className="w-full max-w-[320px] hero-2">
+          <h2 className="shrink-0 hero-2 whitespace-nowrap">
             <span className="font-semibold text-impulso">
-              Respaldo <br /> con décadas
-            </span>{" "}
+              Respaldo
+              <br />
+              con décadas
+            </span>
             <br />
             <span className="font-extrabold italic text-origen">
-              de experiencia y visión urbana
+              de experiencia
+              <br />y visión urbana
             </span>
           </h2>
 
           {/* description */}
-          <p className="w-full max-w-[422px] regular text-origen">
+          <p className="w-full max-w-[422px] min-[1440px]:max-w-[560px] regular text-origen">
             <span className="font-semibold italic">Senderos de ALUNA</span> es
             un proyecto de{" "}
             <span className="font-semibold italic">Grupo MR2,</span> una empresa
@@ -70,13 +73,17 @@ export default function Ubicacion() {
           </p>
 
           {/* logo and button */}
-          <div className="h-[276px] flex flex-col justify-between items-center">
+          <div className="shrink-0 h-[276px] min-[1440px]:h-[340px] flex flex-col justify-between items-center">
             <p className="regular font-semibold italic text-impulso">
               Desarrollado por:
             </p>
 
             {/* logo */}
-            <img src={MR2Logo} alt="Logo de MR2" />
+            <img
+              src={MR2Logo}
+              alt="Logo de MR2"
+              className="w-auto min-[1440px]:w-[380px]"
+            />
 
             {/* button */}
             <FillButton Icon={ArrowIcon}>Visitar Sitio Web</FillButton>

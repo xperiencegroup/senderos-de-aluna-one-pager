@@ -1,9 +1,17 @@
+import type { CSSProperties } from "react";
 import FillButton from "@/components/fill-button";
 
 // icons
 import AlunaIcon from "@/assets/icons/components/aluna-icon";
 import ClickIcon from "@/assets/icons/components/click-icon";
 import whatsappIcon from "@/assets/icons/footer/whatsapp-button.svg";
+
+/*
+ * Botón compacto con relleno circular en hover:
+ * - Bloque de la "A" = 40×40 (pl 20 − 10 de margen negativo + 20 de ícono + pr 10).
+ * - Botón interno = 90 px → --icon-area 50 deja el relleno en 40 px (círculo).
+ */
+const circleFill = { "--icon-area": "50px" } as CSSProperties;
 
 export default function FloatingActions() {
   return (
@@ -16,15 +24,14 @@ export default function FloatingActions() {
       <FillButton
         href="#xperiencia"
         Icon={ClickIcon}
-        gap={15}
+        gap={20}
+        style={circleFill}
         aria-label="Iniciar Recorrido Virtual"
       >
-        <span className="flex items-center justify-center gap-[15px]">
-          <AlunaIcon className="size-[20px] shrink-0" aria-hidden="true" />
-          <span className="hidden md:inline whitespace-nowrap">
-            Iniciar Recorrido Virtual
-          </span>
-        </span>
+        <AlunaIcon
+          className="block size-[20px] -ml-[10px] shrink-0"
+          aria-hidden="true"
+        />
       </FillButton>
 
       {/* WhatsApp */}
