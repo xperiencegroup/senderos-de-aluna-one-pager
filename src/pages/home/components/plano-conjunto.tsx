@@ -9,11 +9,11 @@ export default function PlanoConjunto() {
   const [, setSearchParams] = useSearchParams();
 
   return (
-    <div id="plano" className="flex relative w-full min-h-svh items-end">
+    <div id="plano" className="flex relative w-full h-[min(100svh,56vw)] min-h-[620px] items-end">
       <img
         src={masterplanImage}
         alt="Masterplan de Senderos de Aluna"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover object-top"
       />
 
       <div className="relative flex flex-col w-full h-[513px] justify-end items-center overflow-visible">
@@ -24,14 +24,15 @@ export default function PlanoConjunto() {
           className="pointer-events-none absolute bottom-0 left-0 h-full w-full select-none"
         />
 
-        <div className="flex flex-col relative h-[270px] justify-center items-center gap-[24px]">
-          <p className="hero-2 text-center text-beige uppercase">
+        <div className="flex flex-col relative min-h-[270px] justify-center items-center gap-[24px] px-[20px] py-[30px]">
+          <h2 className="hero-2 text-center text-beige uppercase">
+            
             <span className="font-semibold">Regístrate y conoce</span>
             <br />
             <span className="font-bold italic">
               los detalles del plano de conjunto
             </span>
-          </p>
+          </h2>
 
           <div>
             <FillButton
