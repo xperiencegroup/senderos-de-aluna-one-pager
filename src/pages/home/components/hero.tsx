@@ -56,7 +56,7 @@ export default function Hero() {
           </p>
 
           <FillButton Icon={DownloadIcon} className="self-start">
-            Descargar Brochure
+            Descargar Folleto Comercial
           </FillButton>
         </div>
       </div>

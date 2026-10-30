@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import Navbar from "../pages/home/components/navbar";
 import Footer from "@/pages/home/components/footer";
+import FloatingActions from "@/components/floating-actions";
 
 export default function Layout() {
   return (
@@ -12,6 +13,8 @@ export default function Layout() {
       </main>
 
       <Footer />
+
+      <FloatingActions />
     </div>
   );
 }

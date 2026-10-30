@@ -79,7 +79,7 @@ export default function Navbar() {
     <header className="absolute top-0 z-50 w-full bg-beige shadow-[0_2px_6px_rgba(0,0,0,0.12)]">
       <nav
         aria-label="Navegación principal"
-        className="mx-auto flex h-[74px] max-w-[1366px] items-center justify-between px-4 xl:px-[30px]"
+        className="mx-auto flex h-[74px] max-w-[1366px] items-center justify-between px-4 xl:px-[30px] min-[1440px]:max-w-none min-[1440px]:px-[60px] 2xl:px-[84px]"
       >
         {/* Logo */}
         <a
@@ -91,7 +91,7 @@ export default function Navbar() {
         </a>
 
         {/* Links escritorio */}
-        <ul className="hidden flex-1 items-center justify-evenly lg:flex">
+        <ul className="hidden flex-1 items-center justify-evenly lg:flex min-[1440px]:gap-4">
           {/* nosotros y experiencia */}
           {links.slice(0, 2).map(({ id, label, href, icon }) => (
             <li key={id}>
@@ -99,7 +99,7 @@ export default function Navbar() {
                 href={href}
                 Icon={icon}
                 current={active === id}
-                className={"w-[160px] xl:w-[194px]"}
+                className={"w-[160px] xl:w-[194px] min-[1440px]:w-[210px] 2xl:w-[230px]"}
               >
                 {label}
               </PillButton>
@@ -108,14 +108,14 @@ export default function Navbar() {
 
           {/* Proyecto dropdown */}
           <li
-            className={`relative w-[160px] xl:w-[210px] h-[44px]`}
+            className={`relative w-[160px] xl:w-[210px] min-[1440px]:w-[226px] 2xl:w-[246px] h-[44px]`}
             ref={proyectoRef}
           >
             <motion.div
               initial={false}
               animate={{ height: isProyectoSelected ? "auto" : 44 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className={`absolute top-0 left-0 w-[160px] xl:w-[210px] rounded-[30px] drop-shadow border-2 transition-colors duration-200 ${isProyectoSelected ? "text-horizonte bg-proposito border-horizonte" : "text-proposito bg-beige border-proposito"} overflow-hidden`}
+              className={`absolute top-0 left-0 w-[160px] xl:w-[210px] min-[1440px]:w-[226px] 2xl:w-[246px] rounded-[30px] drop-shadow border-2 transition-colors duration-200 ${isProyectoSelected ? "text-horizonte bg-proposito border-horizonte" : "text-proposito bg-beige border-proposito"} overflow-hidden`}
             >
               <button
                 onClick={() => setIsProyectoSelected((prev) => !prev)}
@@ -166,7 +166,7 @@ export default function Navbar() {
                 href={href}
                 Icon={icon}
                 current={active === id}
-                className={"w-[160px] xl:w-[194px]"}
+                className={"w-[160px] xl:w-[194px] min-[1440px]:w-[210px] 2xl:w-[230px]"}
               >
                 {label}
               </PillButton>
@@ -177,7 +177,7 @@ export default function Navbar() {
         {/* CTA escritorio */}
         <a
           href={contacto.href}
-          className="hidden lg:inline-flex group w-[160px] justify-center items-center gap-[10px] rounded-[30px] bg-impulso border-2 border-beige px-[20px] py-[10px] button font-medium text-beige transition-colors duration-200 hover:bg-impulso hover:opacity-65
+          className="hidden lg:inline-flex group w-[160px] min-[1440px]:w-[180px] justify-center items-center gap-[10px] rounded-[30px] bg-impulso border-2 border-beige px-[20px] py-[10px] button font-medium text-beige transition-colors duration-200 hover:bg-impulso hover:opacity-65
           active:text-impulso active:bg-beige active:border-impulso active:opacity-100
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-impulso focus-visible:ring-offset-2 focus-visible:ring-offset-horizonte-4"
         >

@@ -43,14 +43,9 @@ export const NAV_LINKS = [
 ];
 
 export const proyectoLinks = [
-  {
-    id: "amenidades",
-    label: "Amenidades",
-    href: "#amenidades",
-    icon: AmenidadesIcon,
-  },
-  { id: "modelos", label: "Modelos", href: "#modelos", icon: ModelosIcon },
-  { id: "plano", label: "Plano de Conjunto", href: "#plano", icon: PlanoIcon },
+  { id: "plano", label: "Plano de Conjunto", href: "#plano", icon: PlanoIcon },  
+  { id: "amenidades", label: "Amenidades", href: "#amenidades", icon: AmenidadesIcon },
+  { id: "modelos", label: "Modelos", href: "#modelos", icon: ModelosIcon },  
 ];
 
 export const CONTACTO_DATA = {
