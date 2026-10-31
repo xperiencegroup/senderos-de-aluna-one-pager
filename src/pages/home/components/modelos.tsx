@@ -12,13 +12,13 @@ export default function Modelos() {
   return (
     <section
       id="modelos"
-      className="relative flex flex-col justify-center items-center min-h-svh bg-impulso px-[83px] py-[48px] text-beige overflow-hidden"
+      className="relative flex flex-col justify-center items-center min-h-svh bg-impulso px-[83px] py-[48px] text-beige overflow-hidden max-lg:min-h-0 max-lg:px-[20px] max-lg:py-[56px] md:max-lg:px-[48px]"
     >
       {/* logo background */}
       <img
         src={logoIcon}
         alt="Ícono de Senderos de Aluna"
-        className="absolute -top-120 -right-30 scale-100"
+        className="absolute -top-120 -right-30 scale-100 max-lg:hidden"
       />
 
       {/* content */}
@@ -49,12 +49,12 @@ export default function Modelos() {
       </div>
 
       {/* models */}
-      <div className="relative flex mt-[40px] gap-[15px] min-[1440px]:gap-[24px] min-[1920px]:gap-[32px]">
+      <div className="relative flex mt-[40px] gap-[15px] min-[1440px]:gap-[24px] min-[1920px]:gap-[32px] max-lg:mt-[24px] max-lg:self-stretch max-lg:overflow-x-auto max-lg:snap-x max-lg:snap-mandatory max-lg:-mx-[20px] max-lg:px-[20px] max-lg:py-[12px] md:max-lg:-mx-[48px] md:max-lg:px-[48px] [scrollbar-width:none]">
         {modelos.map((modelo) => {
           return (
             <div
               key={modelo.id}
-              className="relative w-[290px] h-[427px] min-[1440px]:w-[340px] min-[1440px]:h-[500px] min-[1920px]:w-[400px] min-[1920px]:h-[590px] rounded-t-full overflow-hidden bg-proposito drop-shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-1.5"
+              className="relative w-[290px] h-[427px] min-[1440px]:w-[340px] min-[1440px]:h-[500px] min-[1920px]:w-[400px] min-[1920px]:h-[590px] max-lg:shrink-0 max-lg:snap-center max-md:w-[260px] max-md:h-[383px] rounded-t-full overflow-hidden bg-proposito drop-shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-1.5"
             >
               {/* bg image */}
               <img
@@ -64,9 +64,9 @@ export default function Modelos() {
               />
 
               <div className="relative z-10 flex flex-col w-full h-full justify-end">
-              <FormaModelo
-                className={`absolute bottom-0 w-full h-auto ${modelo.variant === "green" ? "text-proposito" : "text-beige"}`}
-              />
+                <FormaModelo
+                  className={`absolute bottom-0 w-full h-auto ${modelo.variant === "green" ? "text-proposito" : "text-beige"}`}
+                />
 
                 {/* text */}
                 <div className="relative z-20 flex w-full h-[43px] items-center justify-between px-[20px] mb-[15px]">

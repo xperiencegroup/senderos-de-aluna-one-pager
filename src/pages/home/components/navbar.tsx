@@ -26,8 +26,8 @@ export default function Navbar() {
 
   // Resalta el link según la sección visible
   useEffect(() => {
-    const sections = links
-      .map((l) => document.getElementById(l.id))
+    const sections = ["inicio", ...links.map((l) => l.id)]
+      .map((id) => document.getElementById(id))
       .filter((s): s is HTMLElement => s !== null);
 
     if (!sections.length) return;
@@ -72,7 +72,8 @@ export default function Navbar() {
   active:opacity-100 active:bg-proposito active:text-horizonte active:border-horizonte
   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-proposito focus-visible:ring-offset-2 focus-visible:ring-offset-proposito-4`;
 
-  const pillActive = "text-horizonte-4";
+  const pillActive = "bg-proposito! text-horizonte! border-horizonte!";
+
 
   const ProyectoIcon = links[2].icon;
   return (
@@ -220,28 +221,61 @@ export default function Navbar() {
         }`}
       >
         <div className="overflow-hidden">
-          <ul className="flex flex-col gap-3 px-4 pb-6 pt-2 sm:px-6">
-            {links.map(({ id, label, href }) => (
-              <li key={id}>
-                <a
-                  href={href}
-                  onClick={() => setOpen(false)}
-                  aria-current={active === id ? "page" : undefined}
-                  className={`${pill} w-full justify-start ${active === id ? pillActive : ""}`}
-                  tabIndex={open ? 0 : -1}
-                >
-                  {label}
-                </a>
-              </li>
-            ))}
+          <ul className="flex flex-col gap-3 max-h-[calc(100svh-74px)] overflow-y-auto px-4 pb-6 pt-2 sm:px-6">
+            {links.map(({ id, label, href, icon: Icon }) => {
+              // Proyecto: en móvil se muestran sus sub-secciones directo
+              if (id === "proyecto") {
+                return (
+                  <li key={id} className="flex flex-col gap-2">
+                    <span className="flex items-center gap-[10px] px-[20px] pt-1 button font-semibold text-proposito">
+                      <Icon className="size-[20px]" />
+                      {label}
+                    </span>
+                    <ul className="flex flex-col gap-2 pl-4">
+                      {proyectoLinks.map((sub) => {
+                        const SubIcon = sub.icon;
+                        return (
+                          <li key={sub.id}>
+                            <a
+                              href={sub.href}
+                              onClick={() => setOpen(false)}
+                              tabIndex={open ? 0 : -1}
+                              className={`${pill} w-full justify-start`}
+                            >
+                              <SubIcon className="size-[20px]" />
+                              {sub.label}
+                            </a>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </li>
+                );
+              }
+
+              return (
+                <li key={id}>
+                  <a
+                    href={href}
+                    onClick={() => setOpen(false)}
+                    aria-current={active === id ? "page" : undefined}
+                    className={`${pill} w-full justify-start ${active === id ? pillActive : ""}`}
+                    tabIndex={open ? 0 : -1}
+                  >
+                    <Icon className="size-[20px]" />
+                    {label}
+                  </a>
+                </li>
+              );
+            })}
             <li>
               <a
                 href={contacto.href}
                 onClick={() => setOpen(false)}
                 tabIndex={open ? 0 : -1}
-                className="inline-flex w-full items-center justify-start gap-2.5 rounded-full bg-impulso px-6 py-2.5 text-sm font-medium text-horizonte-4 transition-colors duration-200 hover:bg-impulso-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-impulso"
+                className="inline-flex w-full items-center justify-start gap-[10px] rounded-[30px] border-2 border-impulso bg-impulso px-[20px] py-[10px] button font-medium text-beige transition-opacity duration-200 hover:opacity-65 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-impulso"
               >
-                {/* <Icon>{contacto.icon}</Icon> */}
+                <CallIcon className="size-[20px] text-beige" />
                 {contacto.label}
               </a>
             </li>

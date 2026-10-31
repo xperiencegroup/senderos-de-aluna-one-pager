@@ -55,7 +55,7 @@ export default function ModelThumbnails({
                 onClick={() => onSelect(index)}
                 aria-label={`Ver imagen ${index + 1}`}
                 aria-current={isSelected ? "true" : undefined}
-                className={`size-[130px] min-[1440px]:size-[150px] min-[1920px]:size-[170px] shrink-0 cursor-pointer overflow-hidden rounded-tr-[32px] border-2 transition-[border-color,opacity] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-impulso ${
+                className={`size-[130px] min-[1440px]:size-[150px] min-[1920px]:size-[170px] max-md:size-[88px] max-md:rounded-tr-[22px] shrink-0 cursor-pointer overflow-hidden rounded-tr-[32px] border-2 transition-[border-color,opacity] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-impulso ${
                   isSelected
                     ? "border-impulso opacity-100"
                     : "border-transparent opacity-80 hover:opacity-100"

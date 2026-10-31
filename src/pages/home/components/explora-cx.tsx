@@ -24,14 +24,14 @@ export default function ExploraCX() {
       <img
         src={logoDecoration}
         alt="Decoración"
-        className="absolute -right-40 -top-40"
+        className="absolute -right-40 -top-40 max-lg:hidden"
       />
 
       {/* content */}
-      <div className="relative z-10 w-full h-full px-[84px]">
-        <div className="flex flex-col w-full max-w-[800px] h-[408px] py-[52px] gap-[12px]">
+      <div className="relative z-10 w-full h-full px-[84px] max-lg:px-[20px] md:max-lg:px-[48px]">
+        <div className="flex flex-col w-full max-w-[800px] h-[408px] py-[52px] gap-[12px] max-lg:h-auto max-lg:py-[56px] max-lg:gap-[16px]">
           {/* title */}
-          <h2 className="hero">
+          <h2 className="hero max-md:text-[34px]">
             <span className="font-semibold text-impulso">Explora</span>{" "}
             <span className="font-extrabold italic text-beige">
               Click and Xperience
@@ -42,11 +42,12 @@ export default function ExploraCX() {
           <div className="w-full max-w-[397px] bg-impulso h-[2.5px]" />
 
           {/* description */}
-          <p className="regular text-beige">
+          <p className="regular text-beige max-lg:[text-shadow:0_1px_6px_rgba(0,0,0,0.45)]">
             Explora Senderos de ALUNA de forma integral desde donde estés.
             <br />
             Con Click and Xperience podrás ubicar el proyecto, conocer el plano
-            de conjunto, recorrer los modelos de casa y descubrir sus amenidades a través de una experiencia mucho más
+            de conjunto, recorrer los modelos de casa, revisar disponibilidades
+            y descubrir sus amenidades a través de una experiencia mucho más
             inmersiva.
             <br />
             <br />

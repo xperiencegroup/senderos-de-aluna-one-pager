@@ -10,29 +10,36 @@ import isotipo from "@/assets/logos/main/isotipo.svg";
 
 export default function InitialStep({ nextStep }: { nextStep: () => void }) {
   return (
-    <div className="flex w-full h-full justify-center items-center">
+    <div className="flex w-full h-full justify-center items-center max-lg:min-h-svh">
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         {/* background logo */}
-        <img src={logoBackground} className="absolute -top-450" />
+        <img
+          src={logoBackground}
+          alt=""
+          aria-hidden="true"
+          className="absolute -top-450 max-lg:hidden"
+        />
 
         {/* logo esquinado */}
         <img
           src={isotipo}
-          className="absolute w-[184px] h-[365px] bottom-0 left-0"
+          alt=""
+          aria-hidden="true"
+          className="absolute w-[184px] h-[365px] bottom-0 left-0 max-lg:w-[70px] max-lg:h-auto max-lg:opacity-40"
         />
       </div>
 
       {/* content */}
-      <div className="relative flex flex-col w-[828px] items-center gap-[30px]">
+      <div className="relative flex flex-col w-[828px] items-center gap-[30px] max-lg:w-full max-lg:gap-[22px] max-lg:px-[20px] max-lg:pt-[80px] max-lg:pb-[56px] md:max-lg:px-[48px]">
         {/* logo */}
         <img
           src={senderosAlunaLogo}
           alt="Logo Senderos de Aluna"
-          className="w-full max-w-[274px]"
+          className="w-full max-w-[274px] max-md:max-w-[190px]"
         />
 
         {/* title */}
-        <h3 className="hero text-center font-semibold">
+        <h3 className="hero text-center font-semibold max-md:text-[30px]">
           <span className="text-proposito">El lugar donde</span>
           <br />
           <span className="font-bold italic text-impulso">
@@ -46,7 +53,7 @@ export default function InitialStep({ nextStep }: { nextStep: () => void }) {
         <div className="w-full max-w-[470px] h-[2px] bg-impulso" />
 
         {/* description */}
-        <p className="text-center subtitle-caps text-impulso">
+        <p className="text-center subtitle-caps text-impulso max-md:text-[16px] max-md:[&_br]:hidden">
           <span className="font-semibold">Senderos de ALUNA</span> es un
           condominio cerrado en Villa Nueva,
           <br />

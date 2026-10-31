@@ -4,13 +4,17 @@ import { CONTACTO_INFO, NAV_LINKS, SOCIAL_LINKS } from "@/const/nav-links";
 
 export default function Footer() {
   return (
-    <div className="flex w-full min-h-[384px] justify-center">
-      <div className="flex flex-col w-full max-w-[1366px] justify-center px-[83px]">
-        <div className="w-full flex items-center justify-between">
+    <div className="flex w-full min-h-[384px] justify-center max-lg:min-h-0">
+      <div className="flex flex-col w-full max-w-[1366px] justify-center px-[83px] max-lg:px-[20px] max-lg:pt-[48px] max-lg:pb-[100px] max-lg:gap-[32px] md:max-lg:px-[48px]">
+        <div className="w-full flex items-center justify-between max-lg:flex-col max-lg:items-stretch max-lg:gap-[32px]">
           {/* senderos de aluna + xperience */}
-          <div className="flex flex-col justify-between w-[274px] h-[226px]">
+          <div className="flex flex-col justify-between w-[274px] h-[226px] max-lg:w-full max-lg:h-auto max-lg:gap-[24px]">
             <div className="flex flex-col">
-              <img src={senderosAluna} className="w-full" />
+              <img
+                src={senderosAluna}
+                alt="Senderos de Aluna"
+                className="w-full max-lg:w-[220px]"
+              />
               <div className="w-full h-[2.5px] mt-[20px] bg-impulso" />
             </div>
             {/* xperience */}
@@ -20,7 +24,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="flex flex-col w-[161px] gap-[24px]">
+          <div className="flex flex-col w-[161px] gap-[24px] max-lg:grid max-lg:grid-cols-2 max-lg:w-full max-lg:gap-[12px] md:max-lg:grid-cols-3">
             {NAV_LINKS.map((link) => {
               const Icon = link.icon;
               return (
@@ -39,7 +43,7 @@ export default function Footer() {
           </div>
 
           {/* contáctanos */}
-          <div className="flex flex-col w-[387px] h-[300px] px-[20px] py-[30px] gap-[20px] items-start justify-center rounded-[30px] bg-impulso/15">
+          <div className="flex flex-col w-[387px] h-[300px] max-lg:w-full max-lg:h-auto px-[20px] py-[30px] gap-[20px] items-start justify-center rounded-[30px] bg-impulso/15">
             <h3 className="subtitle font-bold italic text-origen">
               Contáctanos
             </h3>
@@ -54,7 +58,12 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="flex items-center gap-[24px]"
                   >
-                    <img src={data.icon} className="size-[44px]" />
+                    <img
+                      src={data.icon}
+                      alt=""
+                      aria-hidden="true"
+                      className="size-[44px] shrink-0"
+                    />
                     <div className="flex flex-col">
                       <p className="subtitle-caps font-semibold text-origen">
                         {data.title}
@@ -67,7 +76,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="flex flex-col w-[212px] h-[154px] justify-center px-[20px] py-[30px] gap-[20px]">
+          <div className="flex flex-col w-[212px] h-[154px] justify-center px-[20px] py-[30px] gap-[20px] max-lg:w-full max-lg:h-auto max-lg:p-0">
             <h3 className="subtitle font-bold italic">Síguenos</h3>
             <div className="flex items-center gap-[20px]">
               {SOCIAL_LINKS.map((social, index) => {
@@ -79,7 +88,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="relative flex justify-center items-center size-[44px] hover:cursor-pointer"
                   >
-                    <img src={social.icon} className="relative" />
+                    <img src={social.icon} alt={social.title} className="relative" />
                   </a>
                 );
               })}

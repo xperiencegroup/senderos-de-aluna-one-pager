@@ -6,7 +6,7 @@ type StepperProps = {
 
 export default function Stepper({ step }: StepperProps) {
   return (
-    <ol className="flex w-[330px]">
+    <ol className="flex w-[330px] max-lg:w-full max-lg:max-w-[420px] max-lg:self-center">
       {STEPS.map((label, i) => {
         const n = i + 1;
         const isActive = n <= step;
@@ -36,7 +36,7 @@ export default function Stepper({ step }: StepperProps) {
             </span>
 
             {/* Etiqueta */}
-            <span className="regular text-impulso whitespace-nowrap">
+            <span className="regular text-impulso whitespace-nowrap max-md:text-[13px]">
               {label}
             </span>
           </li>

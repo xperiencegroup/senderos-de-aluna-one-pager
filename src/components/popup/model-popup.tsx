@@ -26,9 +26,9 @@ type Caracteristica = Modelo["caracteristicas"]["nivel1"][number];
 
 /* Tamaños escalables (1280 → 1440 → 1920) */
 const levelCol =
-  "flex flex-col w-[280px] min-[1440px]:w-[320px] min-[1920px]:w-[360px] h-fit items-center gap-[15px] min-[1440px]:gap-[20px]";
+  "flex flex-col w-[280px] min-[1440px]:w-[320px] min-[1920px]:w-[360px] h-fit items-center gap-[15px] min-[1440px]:gap-[20px] max-lg:w-full max-lg:max-w-[420px] max-lg:self-center";
 const planoBox =
-  "relative flex justify-center items-center w-[210px] h-[349px] min-[1440px]:w-[250px] min-[1440px]:h-[415px] min-[1920px]:w-[290px] min-[1920px]:h-[480px]";
+  "relative flex justify-center items-center w-[210px] h-[349px] min-[1440px]:w-[250px] min-[1440px]:h-[415px] min-[1920px]:w-[290px] min-[1920px]:h-[480px] max-md:w-[180px] max-md:h-[300px]";
 
 function Caracteristicas({ items }: { items: Caracteristica[] }) {
   return (
@@ -96,20 +96,20 @@ export default function ModelPopup({ modelo, onClose }: Props) {
         ref={closeRef}
         onClick={onClose}
         aria-label="Cerrar"
-        className="group fixed right-[30px] top-[30px] z-10 flex size-[44px] min-[1440px]:size-[52px] justify-center items-center bg-proposito border-2 border-horizonte drop-shadow rounded-full transition-colors duration-100 hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-horizonte active:border-proposito"
+        className="group fixed right-[30px] top-[30px] max-md:right-[16px] max-md:top-[16px] z-10 flex size-[44px] min-[1440px]:size-[52px] justify-center items-center bg-proposito border-2 border-horizonte drop-shadow rounded-full transition-colors duration-100 hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-horizonte active:border-proposito"
       >
         <CloseIcon className="size-[20px] min-[1440px]:size-[24px] text-horizonte group-active:text-proposito" />
       </button>
 
-      <div className="relative flex items-center min-h-full w-full max-w-[1366px] min-[1440px]:max-w-[1600px] min-[1920px]:max-w-[1800px] px-[83px] min-[1440px]:px-[100px] py-[54px]">
+      <div className="relative flex items-center min-h-full w-full max-w-[1366px] min-[1440px]:max-w-[1600px] min-[1920px]:max-w-[1800px] px-[83px] min-[1440px]:px-[100px] py-[54px] max-lg:items-start max-lg:px-[20px] max-lg:pt-[72px] max-lg:pb-[48px] md:max-lg:px-[48px]">
         {/* content */}
-        <div className="flex w-full justify-between items-start gap-[40px]">
+        <div className="flex w-full justify-between items-start gap-[40px] max-lg:flex-col max-lg:items-stretch">
           {/* title, description and carrusel */}
-          <div className="flex flex-col w-[584px] min-[1440px]:w-[680px] min-[1920px]:w-[800px] shrink-0 gap-[16px] min-[1440px]:gap-[20px]">
+          <div className="flex flex-col w-[584px] min-[1440px]:w-[680px] min-[1920px]:w-[800px] max-lg:w-full shrink-0 gap-[16px] min-[1440px]:gap-[20px]">
             {/* title */}
             <h2
               id="model-popup-title"
-              className="hero font-semibold text-impulso"
+              className="hero font-semibold text-impulso max-md:text-[34px]"
             >
               {modelo.nombre} {modelo.numero}
             </h2>
@@ -119,7 +119,7 @@ export default function ModelPopup({ modelo, onClose }: Props) {
 
             {/* carrusel */}
             <div className="flex flex-col w-full gap-[16px] min-[1440px]:gap-[20px]">
-              <div className="h-[351px] min-[1440px]:h-[420px] min-[1920px]:h-[500px] w-full shrink-0">
+              <div className="h-[351px] min-[1440px]:h-[420px] min-[1920px]:h-[500px] max-md:h-[240px] md:max-lg:h-[380px] w-full shrink-0">
                 <ModelCarousel
                   key={modelo.id}
                   ref={carouselRef}
@@ -128,7 +128,7 @@ export default function ModelPopup({ modelo, onClose }: Props) {
                 />
               </div>
 
-              <div className="w-full h-[138px] min-[1440px]:h-[158px] min-[1920px]:h-[178px]">
+              <div className="w-full h-[138px] min-[1440px]:h-[158px] min-[1920px]:h-[178px] max-md:h-[96px]">
                 <ModelThumbnails
                   key={modelo.id}
                   images={modelo.images}

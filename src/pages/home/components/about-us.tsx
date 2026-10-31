@@ -9,17 +9,17 @@ export default function AboutUs() {
   return (
     <section id="nosotros">
       {/* historia */}
-      <div className="flex gap-[40px] bg-impulso">
-        <div className="relative shrink-0 w-full min-h-[50svh] max-xl:max-w-[712px] max-w-[55vw] rounded-br-[200px] overflow-hidden">
+      <div className="flex gap-[40px] bg-impulso max-lg:flex-col max-lg:gap-0">
+        <div className="relative shrink-0 w-full min-h-[50svh] max-xl:max-w-[712px] max-w-[55vw] rounded-br-[200px] overflow-hidden max-lg:max-w-none max-lg:min-h-0 max-lg:h-[300px] md:max-lg:h-[420px] max-lg:rounded-br-[120px]">
           <img
             src={nuestraHistoriaImage}
             alt="Familia jugando futbol"
             className="absolute inset-0 w-full h-full object-cover"
           />
         </div>
-        <div className="flex flex-col justify-center items-center w-full min-h-[50svh] py-[34px] px-[30px]">
+        <div className="flex flex-col justify-center items-center w-full min-h-[50svh] py-[34px] px-[30px] max-lg:min-h-0 max-lg:px-[20px] max-lg:py-[48px] md:max-lg:px-[48px]">
           <div className={textBlock}>
-            <h2 className="hero-2 text-beige">
+            <h2 className="hero-2 max-md:text-[30px] text-beige">
               <span className="font-semibold">Nuestra</span>{" "}
               <span className="font-bold italic">Historia</span>
             </h2>
@@ -43,10 +43,10 @@ export default function AboutUs() {
       </div>
 
       {/* conoce el proyecto */}
-      <div className="flex gap-[40px] bg-beige">
-        <div className="flex flex-col justify-center items-center w-full min-h-[50svh] py-[34px] px-[30px]">
+      <div className="flex gap-[40px] bg-beige max-lg:flex-col-reverse max-lg:gap-0">
+        <div className="flex flex-col justify-center items-center w-full min-h-[50svh] py-[34px] px-[30px] max-lg:min-h-0 max-lg:px-[20px] max-lg:py-[48px] md:max-lg:px-[48px]">
           <div className={textBlock}>
-            <h2 className="hero-2 text-impulso">
+            <h2 className="hero-2 max-md:text-[30px] text-impulso">
               <span className="font-semibold">Conoce</span>{" "}
               <span className="font-bold italic">el Proyecto</span>
             </h2>
@@ -72,7 +72,7 @@ export default function AboutUs() {
         </div>
 
         {/* image */}
-        <div className="relative shrink-0 w-full min-h-[50svh] max-xl:max-w-[712px] max-w-[55vw] rounded-tl-[200px] overflow-hidden">
+        <div className="relative shrink-0 w-full min-h-[50svh] max-xl:max-w-[712px] max-w-[55vw] rounded-tl-[200px] overflow-hidden max-lg:max-w-none max-lg:min-h-0 max-lg:h-[300px] md:max-lg:h-[420px] max-lg:rounded-tl-[120px]">
           <img
             src={conoceProyectoImage}
             alt="Sala de una casa en Senderos de Aluna"

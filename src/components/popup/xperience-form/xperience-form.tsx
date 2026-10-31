@@ -36,13 +36,13 @@ export default function XperienceForm({ onClose }: Props) {
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-[100] flex justify-center items-center overflow-y-auto overscroll-contain bg-cyan-800"
+      className="fixed inset-0 z-[100] flex justify-center items-center overflow-y-auto overscroll-contain bg-cyan-800 max-lg:items-start"
     >
-      <div className="relative w-full max-w-[1366px] h-full max-h-[768px] bg-beige">
+      <div className="relative w-full max-w-[1366px] h-full max-h-[768px] bg-beige max-lg:h-auto max-lg:min-h-full max-lg:max-h-none">
         {/* close button */}
         <button
           onClick={onClose}
-          className="group absolute z-50 right-[44px] top-[31px] flex size-[44px] justify-center items-center bg-proposito border-2 border-horizonte drop-shadow rounded-full transition-colors duration-100 hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-horizonte active:border-proposito"
+          className="group absolute z-50 right-[44px] top-[31px] max-md:right-[16px] max-md:top-[16px] flex size-[44px] justify-center items-center bg-proposito border-2 border-horizonte drop-shadow rounded-full transition-colors duration-100 hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-horizonte active:border-proposito"
         >
           <CloseIcon className="size-[20px] text-horizonte group-active:text-proposito" />
         </button>

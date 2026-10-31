@@ -71,25 +71,25 @@ export default function Amenidades() {
   const [selected, setSelected] = useState(amenidades[0]);
 
   return (
-    <div id="amenidades" className="flex bg-beige">
-      <div className="flex flex-col justify-center items-center w-full min-h-[100svh] py-[34px] px-[30px]">
-        <div className="flex flex-col gap-[30px] text-left bg-beige">
-          <h2 className="hero font-bold text-proposito">Amenidades</h2>
+    <div id="amenidades" className="flex bg-beige max-lg:flex-col-reverse">
+      <div className="flex flex-col justify-center items-center w-full min-h-[100svh] py-[34px] px-[30px] max-lg:min-h-0 max-lg:px-[20px] max-lg:pt-[40px] max-lg:pb-[56px] md:max-lg:px-[48px]">
+        <div className="flex flex-col gap-[30px] text-left bg-beige max-lg:w-full max-lg:gap-[20px]">
+          <h2 className="hero font-bold text-proposito max-md:text-[34px]">Amenidades</h2>
 
-          <p className="regular w-full max-w-[347px] min-[1440px]:max-w-[420px] text-origen">
+          <p className="regular w-full max-w-[347px] min-[1440px]:max-w-[420px] max-lg:max-w-none text-origen">
             Espacios pensados para que tu familia crezca, conviva y disfrute
             cada día.
           </p>
 
           {/* Botones */}
-          <ul className="flex flex-col w-full max-w-[300px] min-[1440px]:max-w-[340px] gap-[27px]">
+          <ul className="flex flex-col w-full max-w-[300px] min-[1440px]:max-w-[340px] gap-[27px] max-lg:flex-row max-lg:max-w-none max-lg:gap-[12px] max-lg:overflow-x-auto max-lg:snap-x max-lg:-mx-[20px] max-lg:w-[calc(100%+40px)] max-lg:px-[20px] max-lg:py-[6px] md:max-lg:-mx-[48px] md:max-lg:w-[calc(100%+96px)] md:max-lg:px-[48px] [scrollbar-width:none]">
             {amenidades.map((amenidad) => (
-              <li key={amenidad.id}>
+              <li key={amenidad.id} className="max-lg:shrink-0 max-lg:snap-start">
                 <PillButton
                   Icon={amenidad.Icon}
                   current={selected.id === amenidad.id}
                   onClick={() => setSelected(amenidad)}
-                  className="w-full"
+                  className="w-full max-lg:w-auto max-lg:whitespace-nowrap"
                 >
                   {amenidad.label}
                 </PillButton>
@@ -100,7 +100,7 @@ export default function Amenidades() {
       </div>
 
       {/* image */}
-      <div className="relative shrink-0 w-full min-h-[100svh] max-xl:max-w-[712px] max-w-[65vw] rounded-bl-[200px] overflow-hidden">
+      <div className="relative shrink-0 w-full min-h-[100svh] max-xl:max-w-[712px] max-w-[65vw] rounded-bl-[200px] overflow-hidden max-lg:max-w-none max-lg:min-h-0 max-lg:h-[320px] md:max-lg:h-[440px] max-lg:rounded-bl-[120px]">
         <AnimatePresence>
           <motion.img
             key={selected.id}

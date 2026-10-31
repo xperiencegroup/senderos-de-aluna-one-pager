@@ -21,7 +21,7 @@ const modelos = ["ALUNA 75", "ALUNA 88", "ALUNA 96", "ALUNA 105"];
 /* Clases compartidas.
    - pl-[56px] deja espacio al icono
    - aria-[invalid=true]: pinta el borde de rojo cuando hay error */
-const input = `w-full py-[20px] pl-[55px] pr-[20px] rounded-[10px] drop-shadow
+const input = `w-full py-[20px] max-md:py-[16px] pl-[55px] pr-[20px] rounded-[10px] drop-shadow
   border border-origen bg-white text-origen placeholder:text-origen
   formulario-input italic outline-none transition-colors duration-200
   aria-[invalid=true]:border-error`;
@@ -193,7 +193,7 @@ export default function FormularioCotiza() {
         iconPosition="end"
         base="border-beige bg-proposito text-beige focus-visible:ring-proposito"
         pressed="active:bg-beige active:text-proposito active:border-proposito"
-        className="w-full h-[52px] mt-[28px]"
+        className="w-full h-[52px] mt-[28px] max-md:mt-[16px]"
       >
         {isSubmitting ? "Enviando..." : "Solicitar información"}
         <ArrowIcon className="size-[12px]" />
