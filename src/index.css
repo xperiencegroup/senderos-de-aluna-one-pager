@@ -74,6 +74,8 @@ img {
   --color-horizonte-4: #f0fade;
 }
 
+@custom-variant short (@media (min-width: 1024px) and (max-height: 820px));
+
 @layer components {
   .button {
     @apply text-[13px] min-[1440px]:text-[14px] min-[1920px]:text-[15px];
@@ -134,4 +136,9 @@ img {
   flex: 0 0 100%;
   min-width: 0;
   padding-right: 10px;
+}
+
+/* intl-tel-input: ancho completo dentro de los formularios */
+.iti {
+  width: 100%;
 }

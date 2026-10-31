@@ -13,6 +13,8 @@ import Ubicacion from "./components/ubicacion";
 import { modelos } from "@/data/modelos";
 import ModelPopup from "@/components/popup/model-popup";
 import XperienceForm from "@/components/popup/xperience-form/xperience-form";
+import FolletoForm from "@/components/popup/folleto-form";
+import { FORMULARIOS_ACTIVOS } from "@/lib/leads";
 
 export default function Home() {
   const [params, setParams] = useSearchParams();
@@ -45,8 +47,12 @@ export default function Home() {
         />
       )}
 
-      {formXperience && (
+      {FORMULARIOS_ACTIVOS && formXperience === "xperience" && (
         <XperienceForm onClose={() => setParams({}, { replace: true })} />
+      )}
+
+      {FORMULARIOS_ACTIVOS && formXperience === "folleto" && (
+        <FolletoForm onClose={() => setParams({}, { replace: true })} />
       )}
     </>
   );

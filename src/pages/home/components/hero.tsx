@@ -1,10 +1,12 @@
+import type { MouseEvent } from "react";
 import heroBg from "@/assets/images/hero-background.jpg";
 import formaAluna from "@/assets/images/fondo-forma-hero.svg";
 import senderosLogo from "@/assets/logos/main/logo_and_name.svg";
 
 import FillButton from "@/components/fill-button";
 import DownloadIcon from "@/assets/icons/components/download-icon";
-import folleto from "@/assets/fichas/Senderos de Aluna _ Brochure comercial.pdf";
+import { useSearchParams } from "react-router";
+import { FOLLETO_URL, NOMBRE_FOLLETO, getLeadGuardado } from "@/lib/leads";
 import { track } from "@/lib/track";
 
 /*
@@ -13,6 +15,18 @@ import { track } from "@/lib/track";
  * Todas las clases móviles usan max-lg: / max-md:, desktop no cambia.
  */
 export default function Hero() {
+  const [, setParams] = useSearchParams();
+
+  // Con registro previo descarga directo; si no, abre el formulario del folleto
+  const onFolleto = (e: MouseEvent) => {
+    if (getLeadGuardado()) {
+      track("descargar_folleto");
+      return;
+    }
+    e.preventDefault();
+    setParams({ form: "folleto" });
+  };
+
   return (
     <section
       id="inicio"
@@ -66,9 +80,9 @@ export default function Hero() {
           </p>
 
           <FillButton
-            href={folleto}
-            download="Folleto comercial Senderos de Aluna.pdf"
-            onClick={() => track("descargar_folleto")}
+            href={FOLLETO_URL}
+            download={NOMBRE_FOLLETO}
+            onClick={onFolleto}
             Icon={DownloadIcon}
             className="self-start"
           >

@@ -30,16 +30,16 @@ export default function InitialStep({ nextStep }: { nextStep: () => void }) {
       </div>
 
       {/* content */}
-      <div className="relative flex flex-col w-[828px] items-center gap-[30px] max-lg:w-full max-lg:gap-[22px] max-lg:px-[20px] max-lg:pt-[80px] max-lg:pb-[56px] md:max-lg:px-[48px]">
+      <div className="relative flex flex-col w-[828px] items-center gap-[30px] py-[72px] short:py-[32px] short:gap-[18px] max-lg:w-full max-lg:gap-[22px] max-lg:px-[20px] max-lg:pt-[80px] max-lg:pb-[56px] md:max-lg:px-[48px]">
         {/* logo */}
         <img
           src={senderosAlunaLogo}
           alt="Logo Senderos de Aluna"
-          className="w-full max-w-[274px] max-md:max-w-[190px]"
+          className="w-full max-w-[274px] short:max-w-[200px] max-md:max-w-[190px]"
         />
 
         {/* title */}
-        <h3 className="hero text-center font-semibold max-md:text-[30px]">
+        <h3 className="hero text-center font-semibold short:text-[40px] max-md:text-[30px]">
           <span className="text-proposito">El lugar donde</span>
           <br />
           <span className="font-bold italic text-impulso">
@@ -68,7 +68,6 @@ export default function InitialStep({ nextStep }: { nextStep: () => void }) {
         {/* botón comenzar */}
         <FillButton
           onClick={nextStep}
-          variant="impulso"
           Icon={ArrowIcon}
           iconSize={16}
           className="h-[44px]"
