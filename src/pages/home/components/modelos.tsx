@@ -71,8 +71,9 @@ export default function Modelos() {
                 {/* text */}
                 <div className="relative z-20 flex w-full h-[43px] items-center justify-between px-[20px] mb-[15px]">
                   <p
-                    className={`modelo-title font-bold uppercase ${modelo.variant === "green" ? "text-horizonte" : "text-proposito"}`}
+                    className={`modelo-title font-bold uppercase whitespace-nowrap max-md:text-[28px] ${modelo.variant === "green" ? "text-horizonte" : "text-proposito"}`}
                   >
+                    
                     Aluna {modelo.numero}
                   </p>
 

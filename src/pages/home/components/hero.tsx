@@ -4,6 +4,8 @@ import senderosLogo from "@/assets/logos/main/logo_and_name.svg";
 
 import FillButton from "@/components/fill-button";
 import DownloadIcon from "@/assets/icons/components/download-icon";
+import folleto from "@/assets/fichas/Senderos de Aluna _ Brochure comercial.pdf";
+import { track } from "@/lib/track";
 
 /*
  * Móvil (< lg): la foto pasa a ser un banner arriba (con esquina
@@ -63,7 +65,13 @@ export default function Hero() {
             etapa de la vida.
           </p>
 
-          <FillButton Icon={DownloadIcon} className="self-start">
+          <FillButton
+            href={folleto}
+            download="Folleto comercial Senderos de Aluna.pdf"
+            onClick={() => track("descargar_folleto")}
+            Icon={DownloadIcon}
+            className="self-start"
+          >
             Descargar Folleto Comercial
           </FillButton>
         </div>

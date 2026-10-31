@@ -8,6 +8,7 @@ import logoDecoration from "@/assets/icons/logo-decoration-explora.svg";
 import AlunaIcon from "@/assets/icons/components/aluna-icon";
 import ClickIcon from "@/assets/icons/components/click-icon";
 import { useSearchParams } from "react-router";
+import { track } from "@/lib/track";
 
 export default function ExploraCX() {
   const [, setSearchParams] = useSearchParams();
@@ -61,7 +62,10 @@ export default function ExploraCX() {
             <FillButton
               Icon={ClickIcon}
               gap={15}
-              onClick={() => setSearchParams({ form: "xperience" })}
+              onClick={() => {
+                track("iniciar_recorrido", { origen: "explora" });
+                setSearchParams({ form: "xperience" });
+              }}
             >
               <span className="flex items-center justify-center gap-[15px]">
                 <AlunaIcon className="size-[20px]" aria-hidden="true" />

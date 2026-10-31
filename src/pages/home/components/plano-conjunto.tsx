@@ -4,6 +4,7 @@ import FillButton from "@/components/fill-button";
 import ClickIcon from "@/assets/icons/components/click-icon";
 import AlunaIcon from "@/assets/icons/components/aluna-icon";
 import { useSearchParams } from "react-router";
+import { track } from "@/lib/track";
 
 /*
  * Móvil (< lg): el masterplan va completo arriba (sin recorte) y abajo
@@ -46,7 +47,10 @@ export default function PlanoConjunto() {
             <FillButton
               Icon={ClickIcon}
               gap={15}
-              onClick={() => setSearchParams({ form: "xperience" })}
+              onClick={() => {
+                track("iniciar_recorrido", { origen: "plano" });
+                setSearchParams({ form: "xperience" });
+              }}
             >
               <span className="flex items-center justify-center gap-[15px]">
                 <AlunaIcon className="size-[20px]" aria-hidden="true" />

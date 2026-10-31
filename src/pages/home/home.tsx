@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { useSearchParams } from "react-router";
+import { track } from "@/lib/track";
 import AboutUs from "./components/about-us";
 import Amenidades from "./components/amenidades";
 import CotizaTuCasa from "./components/cotiza-tu-casa";
@@ -18,6 +20,11 @@ export default function Home() {
   const modelo = modelos.find((m) => m.id === modeloId);
 
   const formXperience = params.get("form");
+
+  // Evento al abrir el popup de un modelo
+  useEffect(() => {
+    if (modelo) track("ver_modelo", { modelo: modelo.numero });
+  }, [modelo]);
 
   return (
     <>

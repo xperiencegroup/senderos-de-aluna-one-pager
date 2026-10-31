@@ -1,6 +1,7 @@
 import senderosAluna from "@/assets/logos/main/logo_and_name.svg";
 import xperience from "@/assets/logos/xperience.svg";
 import { CONTACTO_INFO, NAV_LINKS, SOCIAL_LINKS } from "@/const/nav-links";
+import { track } from "@/lib/track";
 
 export default function Footer() {
   return (
@@ -54,6 +55,7 @@ export default function Footer() {
                   <a
                     key={key}
                     href={data.href}
+                    onClick={() => track("click_contacto", { tipo: data.title })}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-[24px]"
@@ -84,6 +86,11 @@ export default function Footer() {
                   <a
                     key={index}
                     href={social.href}
+                    onClick={() =>
+                      social.title === "WhatsApp"
+                        ? track("click_whatsapp", { origen: "footer" })
+                        : track("click_social", { red: social.title })
+                    }
                     target="_blank"
                     rel="noopener noreferrer"
                     className="relative flex justify-center items-center size-[44px] hover:cursor-pointer"

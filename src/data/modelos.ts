@@ -40,6 +40,12 @@ import aluna105_04 from "@/assets/images/modelos/105/renders/04.jpg";
 import aluna105_05 from "@/assets/images/modelos/105/renders/05.jpg";
 import aluna105_06 from "@/assets/images/modelos/105/renders/06.jpg";
 
+// fichas técnicas
+import ficha75 from "@/assets/fichas/FT 75 - Senderos de Aluna.pdf";
+import ficha88 from "@/assets/fichas/FT 88 - Senderos de Aluna.pdf";
+import ficha96 from "@/assets/fichas/FT 96 - Senderos de Aluna.pdf";
+import ficha105 from "@/assets/fichas/FT 105 - Senderos de Aluna.pdf";
+
 // icons
 import banoIcon from "@/assets/icons/modelo/bano.svg";
 import camaIcon from "@/assets/icons/modelo/cama.svg";
@@ -64,6 +70,7 @@ export type Modelo = {
   image: string; // foto frontal (tarjeta)
   variant: Variant;
   description: string;
+  ficha: string; // PDF de la ficha técnica
   images: ModeloImage[]; // renders del carrusel
   planos: {
     nivel1: ModeloImage;
@@ -102,6 +109,7 @@ export const modelos: Modelo[] = [
     numero: "75",
     href: "#modelo-75",
     image: frontal75,
+    ficha: ficha75,
     variant: "green",
     description:
       "El modelo ideal para familias jóvenes o como primera inversión. Maximiza la eficiencia del espacio.",
@@ -136,6 +144,7 @@ export const modelos: Modelo[] = [
     numero: "88",
     href: "#modelo-88",
     image: frontal88,
+    ficha: ficha88,
     variant: "beige",
     description:
       "Un modelo funcional y versátil, diseñado para aprovechar cada espacio y brindar comodidad en el día a día. Su dormitorio principal cuenta con walk-in clóset y baño privado, ideal para comenzar tu patrimonio o invertir con visión a futuro.",
@@ -170,6 +179,7 @@ export const modelos: Modelo[] = [
     numero: "96",
     href: "#modelo-96",
     image: frontal96,
+    ficha: ficha96,
     variant: "green",
     description:
       "Diseñado para ofrecer comodidad y funcionalidad en cada rincón, con una distribución inteligente que se adapta a tu estilo de vida y a tus planes de inversión.",
@@ -203,6 +213,7 @@ export const modelos: Modelo[] = [
     numero: "105",
     href: "#modelo-105",
     image: frontal105,
+    ficha: ficha105,
     variant: "beige",
     description:
       "El modelo premium, diseñado para ofrecer el máximo confort y espacio, con un dormitorio o estudio en el primer nivel y tres baños en total.",

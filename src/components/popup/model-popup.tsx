@@ -9,6 +9,7 @@ import type { EmblaCarouselType } from "embla-carousel";
 
 import DownloadIcon from "@/assets/icons/components/download-icon";
 import CloseIcon from "@/assets/icons/components/close-icon";
+import { track } from "@/lib/track";
 
 type Props = {
   modelo: Modelo;
@@ -176,6 +177,11 @@ export default function ModelPopup({ modelo, onClose }: Props) {
 
             <div className="flex h-[78px] justify-center items-center">
               <FillButton
+                href={modelo.ficha}
+                download={`Ficha técnica Aluna ${modelo.numero}.pdf`}
+                onClick={() =>
+                  track("descargar_ficha", { modelo: modelo.numero })
+                }
                 Icon={DownloadIcon}
                 variant="proposito"
                 className="whitespace-nowrap text-proposito border-proposito"

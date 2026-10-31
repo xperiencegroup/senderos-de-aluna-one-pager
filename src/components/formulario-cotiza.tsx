@@ -8,6 +8,7 @@ import mailIcon from "@/assets/icons/form/mail-icon.svg";
 import modelIcon from "@/assets/icons/form/model-icon.svg";
 import PillButton from "./pill-button";
 import ArrowIcon from "@/assets/icons/components/arrow-icon";
+import { track } from "@/lib/track";
 
 type CotizaValues = {
   nombre: string;
@@ -64,6 +65,7 @@ export default function FormularioCotiza() {
     try {
       setStatus("idle");
       console.log(data);
+      track("enviar_cotizacion", { modelo: data.modelo });
       reset();
       setStatus("success");
     } catch {
