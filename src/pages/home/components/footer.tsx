@@ -6,10 +6,10 @@ import { track } from "@/lib/track";
 export default function Footer() {
   return (
     <div className="flex w-full min-h-[384px] justify-center max-lg:min-h-0">
-      <div className="flex flex-col w-full max-w-[1366px] justify-center px-[83px] max-lg:px-[20px] max-lg:pt-[48px] max-lg:pb-[100px] max-lg:gap-[32px] md:max-lg:px-[48px]">
+      <div className="flex flex-col w-full max-w-[1366px] min-[1920px]:max-w-[88vw] justify-center px-[70px] max-lg:px-[20px] max-lg:pt-[48px] max-lg:pb-[100px] max-lg:gap-[32px] md:max-lg:px-[48px]">
         <div className="w-full flex items-center justify-between max-lg:flex-col max-lg:items-stretch max-lg:gap-[32px]">
           {/* senderos de aluna + xperience */}
-          <div className="flex flex-col justify-between w-[274px] h-[226px] max-lg:w-full max-lg:h-auto max-lg:gap-[24px]">
+          <div className="flex flex-col justify-between w-[274px] h-[226px] lg:mr-[48px] min-[1920px]:mr-[80px] max-lg:w-full max-lg:h-auto max-lg:gap-[24px]">
             <div className="flex flex-col">
               <img
                 src={senderosAluna}
