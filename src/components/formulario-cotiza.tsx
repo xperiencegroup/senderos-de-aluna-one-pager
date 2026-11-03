@@ -22,13 +22,13 @@ const modelos = ["ALUNA 75", "ALUNA 88", "ALUNA 96", "ALUNA 105"];
 /* Clases compartidas.
    - pl-[56px] deja espacio al icono
    - aria-[invalid=true]: pinta el borde de rojo cuando hay error */
-const input = `w-full py-[20px] max-md:py-[16px] pl-[55px] pr-[20px] rounded-[10px] drop-shadow
+const input = `w-full py-[20px] max-md:py-[16px] min-[1920px]:py-[26px] pl-[55px] min-[1920px]:pl-[68px] pr-[20px] rounded-[10px] min-[1920px]:rounded-[12px] drop-shadow
   border border-origen bg-white text-origen placeholder:text-origen
   formulario-input italic outline-none transition-colors duration-200
   aria-[invalid=true]:border-error`;
 
 const icon =
-  "pointer-events-none absolute z-10 left-[20px] top-1/2 size-[20px] -translate-y-1/2";
+  "pointer-events-none absolute z-10 left-[20px] min-[1920px]:left-[26px] top-1/2 size-[20px] min-[1920px]:size-[24px] -translate-y-1/2";
 
 /* Error tipo Google: texto pequeño bajo el campo, en absolute para que
    no mueva el layout (cabe dentro del gap de 24px del form) */
@@ -76,8 +76,8 @@ export default function FormularioCotiza() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      noValidate
-      className="flex flex-col gap-[24px]"
+      noValidate      
+      className="flex flex-col gap-[24px] min-[1920px]:gap-[32px]"      
     >
       {/* nombre */}
       <div className="relative">
@@ -195,7 +195,7 @@ export default function FormularioCotiza() {
         iconPosition="end"
         base="border-beige bg-proposito text-beige focus-visible:ring-proposito"
         pressed="active:bg-beige active:text-proposito active:border-proposito"
-        className="w-full h-[52px] mt-[28px] max-md:mt-[16px]"
+        className="w-full h-[52px] min-[1920px]:h-[64px] mt-[28px] min-[1920px]:mt-[36px] max-md:mt-[16px]"
       >
         {isSubmitting ? "Enviando..." : "Solicitar información"}
         <ArrowIcon className="size-[12px]" />

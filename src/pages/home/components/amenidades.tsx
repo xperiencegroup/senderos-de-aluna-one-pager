@@ -76,13 +76,13 @@ export default function Amenidades() {
         <div className="flex flex-col gap-[30px] text-left bg-beige max-lg:w-full max-lg:gap-[20px]">
           <h2 className="hero font-bold text-proposito max-md:text-[34px]">Amenidades</h2>
 
-          <p className="regular w-full max-w-[347px] min-[1440px]:max-w-[420px] max-lg:max-w-none text-origen">
+          <p className="regular w-full max-w-[347px] min-[1440px]:max-w-[420px] min-[1920px]:max-w-[520px] max-lg:max-w-none text-origen">
             Espacios pensados para que tu familia crezca, conviva y disfrute
             cada día.
           </p>
 
           {/* Botones */}
-          <ul className="flex flex-col w-full max-w-[300px] min-[1440px]:max-w-[340px] gap-[27px] max-lg:flex-row max-lg:max-w-none max-lg:gap-[12px] max-lg:overflow-x-auto max-lg:snap-x max-lg:-mx-[20px] max-lg:w-[calc(100%+40px)] max-lg:px-[20px] max-lg:py-[6px] md:max-lg:-mx-[48px] md:max-lg:w-[calc(100%+96px)] md:max-lg:px-[48px] [scrollbar-width:none]">
+            <ul className="flex flex-col w-full max-w-[300px] min-[1440px]:max-w-[340px] min-[1920px]:max-w-[480px] gap-[27px] min-[1920px]:gap-[34px] max-lg:flex-row max-lg:max-w-none max-lg:gap-[12px] max-lg:overflow-x-auto max-lg:snap-x max-lg:-mx-[20px] max-lg:w-[calc(100%+40px)] max-lg:px-[20px] max-lg:py-[6px] md:max-lg:-mx-[48px] md:max-lg:w-[calc(100%+96px)] md:max-lg:px-[48px] [scrollbar-width:none]">
             {amenidades.map((amenidad) => (
               <li key={amenidad.id} className="max-lg:shrink-0 max-lg:snap-start">
                 <PillButton
@@ -107,8 +107,8 @@ export default function Amenidades() {
             src={selected.image}
             alt={selected.label}
             initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1 }}
+            animate={{ opacity: 1, scale: 1.01 }}
+            exit={{ opacity: 0, scale: 1.01 }}
             transition={{
               duration: 0.7,
               ease: [0.22, 1, 0.36, 1],
