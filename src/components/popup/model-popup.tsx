@@ -29,7 +29,7 @@ type Caracteristica = Modelo["caracteristicas"]["nivel1"][number];
 const levelCol =
   "flex flex-col w-[280px] min-[1440px]:w-[320px] min-[1920px]:w-[360px] h-fit items-center gap-[15px] min-[1440px]:gap-[20px] max-lg:w-full max-lg:max-w-[420px] max-lg:self-center";
 const planoBox =
-  "relative flex justify-center items-center w-[210px] h-[349px] min-[1440px]:w-[250px] min-[1440px]:h-[415px] min-[1920px]:w-[290px] min-[1920px]:h-[480px] max-md:w-[180px] max-md:h-[300px]";
+  "relative flex justify-center items-center aspect-[210/349] h-[min(349px,40svh)] min-[1440px]:h-[min(415px,42svh)] min-[1920px]:h-[min(480px,44svh)] max-lg:h-[349px] max-md:h-[300px]";
 
 function Caracteristicas({ items }: { items: Caracteristica[] }) {
   return (
@@ -86,27 +86,33 @@ export default function ModelPopup({ modelo, onClose }: Props) {
   }, [onClose]);
 
   return (
+    /* overlay: clic fuera del panel cierra. En < lg el panel ocupa toda la pantalla */
     <div
       role="dialog"
       aria-modal="true"
       aria-labelledby="model-popup-title"
-      className="fixed inset-0 z-[100] flex justify-center overflow-y-auto overscroll-contain bg-beige"
+      onClick={onClose}
+      className="fixed inset-0 z-[100] flex justify-center items-center p-[32px] min-[1920px]:p-[48px] bg-black/50 backdrop-blur-[2px] max-lg:p-0"
     >
-      {/* close button: esquina superior derecha de la pantalla */}
-      <button
-        ref={closeRef}
-        onClick={onClose}
-        aria-label="Cerrar"
-        className="group fixed right-[30px] top-[30px] max-md:right-[16px] max-md:top-[16px] z-10 flex size-[44px] min-[1440px]:size-[52px] justify-center items-center bg-proposito border-2 border-horizonte drop-shadow rounded-full transition-colors duration-100 hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-horizonte active:border-proposito"
+      {/* panel */}
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative flex items-center w-full max-w-[1366px] min-[1440px]:max-w-[1500px] min-[1920px]:max-w-[1700px] max-h-full max-lg:overflow-y-auto max-lg:overscroll-contain bg-beige px-[56px] min-[1440px]:px-[72px] py-[min(48px,5svh)] drop-shadow-xl max-lg:h-full max-lg:max-h-none max-lg:items-start max-lg:px-[20px] max-lg:pt-[72px] max-lg:pb-[48px] md:max-lg:px-[48px]"
       >
-        <CloseIcon className="size-[20px] min-[1440px]:size-[24px] text-horizonte group-active:text-proposito" />
-      </button>
+        {/* close button: esquina superior derecha del panel */}
+        <button
+          ref={closeRef}
+          onClick={onClose}
+          aria-label="Cerrar"
+          className="group absolute right-[24px] top-[24px] max-md:fixed max-md:right-[16px] max-md:top-[16px] z-10 flex size-[44px] min-[1440px]:size-[52px] justify-center items-center bg-proposito border-2 border-horizonte drop-shadow rounded-full transition-colors duration-100 hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-horizonte active:border-proposito"
+        >
+          <CloseIcon className="size-[20px] min-[1440px]:size-[24px] text-horizonte group-active:text-proposito" />
+        </button>
 
-      <div className="relative flex items-center min-h-full w-full max-w-[1366px] min-[1440px]:max-w-[1600px] min-[1920px]:max-w-[1800px] px-[83px] min-[1440px]:px-[100px] py-[54px] max-lg:items-start max-lg:px-[20px] max-lg:pt-[72px] max-lg:pb-[48px] md:max-lg:px-[48px]">
         {/* content */}
         <div className="flex w-full justify-between items-start gap-[40px] max-lg:flex-col max-lg:items-stretch">
-          {/* title, description and carrusel */}
-          <div className="flex flex-col w-[584px] min-[1440px]:w-[680px] min-[1920px]:w-[800px] max-lg:w-full shrink-0 gap-[16px] min-[1440px]:gap-[20px]">
+          {/* title, description and carrusel (cede ancho si el panel es angosto) */}
+          <div className="flex flex-col w-[584px] min-[1440px]:w-[680px] min-[1920px]:w-[800px] max-lg:w-full min-w-0 shrink gap-[16px] min-[1440px]:gap-[20px]">
             {/* title */}
             <h2
               id="model-popup-title"
@@ -120,7 +126,7 @@ export default function ModelPopup({ modelo, onClose }: Props) {
 
             {/* carrusel */}
             <div className="flex flex-col w-full gap-[16px] min-[1440px]:gap-[20px]">
-              <div className="h-[351px] min-[1440px]:h-[420px] min-[1920px]:h-[500px] max-md:h-[240px] md:max-lg:h-[380px] w-full shrink-0">
+              <div className="h-[min(351px,36svh)] min-[1440px]:h-[min(420px,38svh)] min-[1920px]:h-[min(500px,40svh)] max-lg:h-[351px] max-md:h-[240px] md:max-lg:h-[380px] w-full shrink-0">
                 <ModelCarousel
                   key={modelo.id}
                   ref={carouselRef}
@@ -129,7 +135,7 @@ export default function ModelPopup({ modelo, onClose }: Props) {
                 />
               </div>
 
-              <div className="w-full h-[138px] min-[1440px]:h-[158px] min-[1920px]:h-[178px] max-md:h-[96px]">
+              <div className="w-full h-[min(138px,14svh)] min-[1440px]:h-[min(158px,14svh)] min-[1920px]:h-[min(178px,15svh)] max-lg:h-[138px] max-md:h-[96px]">
                 <ModelThumbnails
                   key={modelo.id}
                   images={modelo.images}
