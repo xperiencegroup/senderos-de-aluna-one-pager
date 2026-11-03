@@ -17,13 +17,15 @@ export default function PlanoConjunto() {
   return (
     <div
       id="plano"
-      className="flex relative w-full h-[min(100svh,56vw)] min-h-[620px] items-end max-lg:flex-col max-lg:items-stretch max-lg:h-auto max-lg:min-h-0 max-lg:bg-impulso"
+      className="flex relative w-full h-[min(100svh,56vw)] min-h-[620px] items-end lg:overflow-hidden lg:bg-[#1e2b1a] max-lg:flex-col max-lg:items-stretch max-lg:h-auto max-lg:min-h-0 max-lg:bg-impulso"
     >
-      <img
-        src={masterplanImage}
-        alt="Masterplan de Senderos de Aluna"
-        className="absolute inset-0 w-full h-full object-cover object-top max-lg:relative max-lg:inset-auto max-lg:h-[calc(31vw+32px)]"
-      />
+      <div className="absolute inset-x-0 top-0 bottom-[240px] max-lg:relative max-lg:inset-auto">
+        <img
+          src={masterplanImage}
+          alt="Masterplan de Senderos de Aluna"
+          className="size-full object-cover object-center max-lg:h-auto"
+        />
+      </div>
 
       <div className="relative flex flex-col w-full h-[513px] justify-end items-center overflow-visible max-lg:h-auto max-lg:-mt-[32px] max-lg:rounded-t-[32px] max-lg:bg-impulso">
         {/* fondo con forma (solo desktop) */}
