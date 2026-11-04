@@ -31,6 +31,7 @@ export default function Footer() {
               return (
                 <a
                   href={`${link.href}`}
+                  onClick={() => track("click_nav", { seccion: link.id, origen: "footer" })}
                   key={link.id}
                   className="group flex items-center px-[20px] py-[8px] gap-[10px] rounded-[30px] button font-medium border transition-colors border-beige text-impulso active:text-beige bg-beige drop-shadow hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-impulso"
                 >
@@ -55,7 +56,7 @@ export default function Footer() {
                   <a
                     key={key}
                     href={data.href}
-                    onClick={() => track("click_contacto", { tipo: data.title })}
+                    onClick={() => track("click_contacto", { tipo: data.title, origen: "footer" })}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-[24px]"

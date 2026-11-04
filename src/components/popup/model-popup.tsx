@@ -11,6 +11,8 @@ import DownloadIcon from "@/assets/icons/components/download-icon";
 import CloseIcon from "@/assets/icons/components/close-icon";
 import { track } from "@/lib/track";
 
+import { FICHAS_ACTIVAS } from "@/lib/leads";
+
 type Props = {
   modelo: Modelo;
   onClose: () => void;
@@ -181,20 +183,22 @@ export default function ModelPopup({ modelo, onClose }: Props) {
 
             <Caracteristicas items={modelo.caracteristicas.nivel2} />
 
-            <div className="flex h-[78px] justify-center items-center">
-              <FillButton
-                href={modelo.ficha}
-                download={`Ficha técnica Aluna ${modelo.numero}.pdf`}
-                onClick={() =>
-                  track("descargar_ficha", { modelo: modelo.numero })
-                }
-                Icon={DownloadIcon}
-                variant="proposito"
-                className="whitespace-nowrap text-proposito border-proposito"
-              >
-                Descargar Ficha Técnica
-              </FillButton>
-            </div>
+            {FICHAS_ACTIVAS && (
+              <div className="flex h-[78px] justify-center items-center">
+                <FillButton
+                  href={modelo.ficha}
+                  download={`Ficha técnica Aluna ${modelo.numero}.pdf`}
+                  onClick={() =>
+                    track("descargar_ficha", { modelo: modelo.numero })
+                  }
+                  Icon={DownloadIcon}
+                  variant="proposito"
+                  className="whitespace-nowrap text-proposito border-proposito"
+                >
+                  Descargar Ficha Técnica
+                </FillButton>
+              </div>
+            )}
           </div>
         </div>
       </div>

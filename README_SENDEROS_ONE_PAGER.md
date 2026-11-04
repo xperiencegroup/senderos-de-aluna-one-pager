@@ -118,13 +118,16 @@ WordPress no interfiere porque la carpeta `senderosdealuna/` existe físicamente
 - GA4 (`G-JZQJGXCNFS`) y Clarity (`yxeodt9m0i`) en `index.html`, compartidos con la app CX.
 - Solo se cargan si el hostname termina en `aluna.gt` (las previews de Vercel no envían datos).
 - Todas las apps envían el parámetro `app` (`onepager` / `cx`): en GA4 es la dimensión personalizada `app`; en Clarity, la etiqueta `app`.
-- Eventos con `track()` (`src/lib/track.ts`): `ver_modelo`, `descargar_ficha`, `descargar_folleto`, `solicitar_folleto`, `iniciar_recorrido`, `click_whatsapp`, `click_contacto`, `click_social`, `enviar_cotizacion`, `onboarding_paso`, `onboarding_completo`, `explorar_cx`.
+- Eventos con `track()` (`src/lib/track.ts`): `ver_modelo`, `descargar_ficha`, `descargar_folleto`, `solicitar_folleto`, `iniciar_recorrido`, `click_whatsapp`, `click_contacto`, `click_social`, `click_nav`, `ver_amenidad`, `enviar_cotizacion`, `onboarding_paso`, `onboarding_completo`, `explorar_cx`.
+- Dimensiones personalizadas en GA4 (alcance Evento): `app`, `origen`, `seccion`, `amenidad`, `modelo`, `tipo`, `red`, `paso`. Al agregar un parámetro nuevo en `track()`, registrarlo en *Admin → Data display → Custom definitions* (no es retroactivo).
+- Eventos clave (key events) en GA4: `enviar_cotizacion`, `click_whatsapp`, `click_contacto`, `descargar_folleto`. Se marcan con la estrella en *Admin → Data display → Events → Recent events*.
 
 ## Formularios (onboarding y folleto)
 
 - **Onboarding Xperience** (`?form=xperience`): entrada + 3 pasos (Tus datos, Interés, Confirmación). "Explorar proyectos" lleva a `senderos.aluna.gt`.
 - **Folleto comercial** (`?form=folleto`): formulario previo a la descarga. Si el lead ya está en `localStorage` (`senderos_de_aluna_onepager_lead`), descarga directo.
 - **Desactivados por ahora**: `FORMULARIOS_ACTIVOS = false` en `src/lib/leads.ts`. Los botones no abren nada hasta integrar HubSpot.
+- **Desactivados por ahora**: `FICHAS_ACTIVAS = false` en `src/lib/leads.ts`. Los botones no abren nada hasta integrar HubSpot.
 - `src/lib/leads.ts` es el único punto de integración: hoy simula el envío y guarda el lead en `localStorage`.
 
 ## Estructura del código
@@ -146,9 +149,9 @@ src/
 
 ## Pendiente
 - Actualizar Node local a ≥ 22.22 (React Router 8.5 lo exige).
-- Integrar formularios con HubSpot (formularios, propiedades y portal) o con `/api/onboarding` de la app CX; decidir tras revisar el diagrama de leads. Luego activar `FORMULARIOS_ACTIVOS`.
+- Integrar formularios con HubSpot (formularios, propiedades y portal) o con `/api/onboarding` de la app CX; decidir tras revisar el diagrama de leads. Luego activar `FORMULARIOS_ACTIVOS` y `FICHAS_ACTIVAS`.
 - Folio del lead (generación y formato), envío por WhatsApp (servicio de HubSpot) y correo; mostrar los checks del paso 3 solo cuando sean reales.
 - Definir si existe un paso extra en el onboarding tras "Por ahora no, gracias".
 - URL del aviso de privacidad (`AVISO_PRIVACIDAD_URL` en `src/lib/leads.ts`).
 - Marca de agua "MR2" en la sección "Desarrollado por" (falta el SVG).
-- `og:url` en `index.html`: `https://aluna.gt/senderosdealuna/`.
+- Marcar `onboarding_completo` como key event en GA4 al activar los formularios (aparece en *Recent events* hasta que se dispara por primera vez).

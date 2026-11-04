@@ -2,6 +2,8 @@ import { useState, type ComponentType, type SVGProps } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import PillButton from "@/components/pill-button";
 
+import { track } from "@/lib/track";
+
 // images
 import garitaImage from "@/assets/images/amenidades/garita.jpg";
 import salonSocialImage from "@/assets/images/amenidades/salon-social.jpg";
@@ -88,7 +90,10 @@ export default function Amenidades() {
                 <PillButton
                   Icon={amenidad.Icon}
                   current={selected.id === amenidad.id}
-                  onClick={() => setSelected(amenidad)}
+                  onClick={() => {
+                    setSelected(amenidad);
+                    track("ver_amenidad", { amenidad: amenidad.id });
+                  }}
                   className="w-full max-lg:w-auto max-lg:whitespace-nowrap"
                 >
                   {amenidad.label}

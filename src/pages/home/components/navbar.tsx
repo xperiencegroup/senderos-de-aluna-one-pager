@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { NAV_LINKS as links, proyectoLinks } from "@/const/nav-links";
 import { CONTACTO_DATA as contacto } from "@/const/nav-links";
 import { motion } from "motion/react";
+import { track } from "@/lib/track";
 
 import PillButton from "@/components/pill-button";
 import CallIcon from "@/assets/icons/components/call-icon";
@@ -98,6 +99,7 @@ export default function Navbar() {
             <li key={id}>
               <PillButton
                 href={href}
+                onClick={() => track("click_nav", { seccion: id, origen: "navbar" })}                
                 Icon={icon}
                 current={active === id}
                 className={"w-[160px] xl:w-[194px] min-[1440px]:w-[210px] 2xl:w-[230px]"}
@@ -146,6 +148,7 @@ export default function Navbar() {
                   return (
                     <a
                       href={link.href}
+                      onClick={() => track("click_nav", { seccion: link.id, origen: "navbar" })}                      
                       key={index}
                       className="group flex justify-center items-center font-medium button px-[20px] py-[10px] gap-[10px] rounded-[30px] border-2 transition-colors duration-200 border-proposito text-proposito bg-beige drop-shadow hover:opacity-65 active:opacity-100 active:text-horizonte active:bg-proposito active:border-horizonte hover:cursor-pointer"
                     >
@@ -165,6 +168,7 @@ export default function Navbar() {
             <li key={id}>
               <PillButton
                 href={href}
+                onClick={() => track("click_nav", { seccion: id, origen: "navbar" })}                
                 Icon={icon}
                 current={active === id}
                 className={"w-[160px] xl:w-[194px] min-[1440px]:w-[210px] 2xl:w-[230px]"}
@@ -178,6 +182,7 @@ export default function Navbar() {
         {/* CTA escritorio */}
         <a
           href={contacto.href}
+          onClick={() => track("click_contacto", { tipo: contacto.label, origen: "navbar" })}          
           className="hidden lg:inline-flex group w-[160px] min-[1440px]:w-[180px] justify-center items-center gap-[10px] rounded-[30px] bg-impulso border-2 border-beige px-[20px] py-[10px] button font-medium text-beige transition-colors duration-200 hover:bg-impulso hover:opacity-65
           active:text-impulso active:bg-beige active:border-impulso active:opacity-100
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-impulso focus-visible:ring-offset-2 focus-visible:ring-offset-horizonte-4"
@@ -238,7 +243,10 @@ export default function Navbar() {
                           <li key={sub.id}>
                             <a
                               href={sub.href}
-                              onClick={() => setOpen(false)}
+                              onClick={() => {
+                                track("click_nav", { seccion: sub.id, origen: "navbar_movil" });
+                                setOpen(false);
+                              }}
                               tabIndex={open ? 0 : -1}
                               className={`${pill} w-full justify-start`}
                             >
@@ -257,7 +265,10 @@ export default function Navbar() {
                 <li key={id}>
                   <a
                     href={href}
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      track("click_nav", { seccion: id, origen: "navbar_movil" });
+                      setOpen(false);
+                    }}
                     aria-current={active === id ? "page" : undefined}
                     className={`${pill} w-full justify-start ${active === id ? pillActive : ""}`}
                     tabIndex={open ? 0 : -1}
@@ -271,7 +282,10 @@ export default function Navbar() {
             <li>
               <a
                 href={contacto.href}
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  track("click_contacto", { tipo: contacto.label, origen: "navbar" });
+                  setOpen(false);
+                }}
                 tabIndex={open ? 0 : -1}
                 className="inline-flex w-full items-center justify-start gap-[10px] rounded-[30px] border-2 border-impulso bg-impulso px-[20px] py-[10px] button font-medium text-beige transition-opacity duration-200 hover:opacity-65 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-impulso"
               >
