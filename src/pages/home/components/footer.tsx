@@ -5,7 +5,10 @@ import { track } from "@/lib/track";
 
 export default function Footer() {
   return (
-    <div className="flex w-full min-h-[384px] justify-center max-lg:min-h-0">
+    <div
+      id="contacto"
+      className="flex w-full min-h-[384px] justify-center max-lg:min-h-0"
+    >
       <div className="flex flex-col w-full max-w-[1366px] min-[1920px]:max-w-[88vw] justify-center px-[5px] md:px-[20px] xl:px-[70px] max-lg:px-[20px] max-lg:pt-[48px] max-lg:pb-[100px] max-lg:gap-[32px] md:max-lg:px-[48px]">
         <div className="w-full flex items-center justify-between max-lg:flex-col max-lg:items-stretch portrait:gap-[20px] gap-[20px] lg:gap-[10px] xl:gap-[32px]">
           {/* senderos de aluna + xperience */}
