@@ -6,7 +6,10 @@ import FormularioCotiza from "@/components/formulario-cotiza";
 
 export default function CotizaTuCasa() {
   return (
-    <div id="cotizador" className="relative w-full min-h-svh overflow-hidden max-lg:min-h-0">
+    <div
+      id="cotizador"
+      className="relative w-full min-h-svh overflow-hidden max-lg:min-h-0"
+    >
       {/* decoration */}
       <img
         src={logoDecoration}
@@ -16,9 +19,9 @@ export default function CotizaTuCasa() {
       />
 
       {/* conoce el proyecto */}
-      <div className="flex bg-beige max-lg:flex-col-reverse max-lg:gap-0">
-        <div className="flex flex-col justify-center items-center w-full min-h-svh py-[34px] px-[30px] max-lg:min-h-0 max-lg:px-[20px] max-lg:pt-[40px] max-lg:pb-[56px] md:max-lg:px-[48px]">
-          <div className="flex flex-col justify-between w-full max-w-[620px] min-[1440px]:max-w-[700px] min-[1920px]:max-w-[900px] h-full max-h-[660px] min-[1920px]:max-h-[820px] pt-[24px] bg-beige max-lg:max-h-none max-lg:justify-start max-lg:gap-[24px] max-lg:pt-0">
+      <div className="flex bg-beige max-lg:flex-col max-lg:gap-0">
+        <div className="flex flex-col justify-center items-center w-full min-h-svh px-[24px] py-[50px] lg:py-[34px] lg:px-[30px] max-lg:min-h-0">
+          <div className="flex flex-col justify-between w-full max-w-[620px] min-[1440px]:max-w-[700px] min-[1920px]:max-w-[900px] h-full max-h-[660px] min-[1920px]:max-h-[820px] pt-[24px] bg-beige max-lg:max-h-none max-lg:justify-start max-lg:gap-[15px] max-lg:pt-0">
             {/* title */}
             <h2 className="hero-2 text-center text-impulso max-md:text-[30px]">
               <span className="font-semibold">Cotiza</span>{" "}
