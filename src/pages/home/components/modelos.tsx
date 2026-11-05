@@ -1,13 +1,20 @@
 import { useSearchParams } from "react-router";
-import { modelos } from "@/data/modelos";
+import { modelos, type Modelo } from "@/data/modelos";
 
-import FormaModelo from "@/assets/images/forma-modelo";
-
-import ArrowIcon from "@/assets/icons/components/arrow-icon";
 import logoIcon from "@/assets/icons/logo-opacity-bg.svg";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import ModeloCard from "./modelo-card/modelo-card";
+import InfiniteCarousel from "@/components/carousel/infinite-carousel";
 
 export default function Modelos() {
-  const [, setParams] = useSearchParams();
+  const [params, setParams] = useSearchParams();
+
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+
+  const abrirModelo = (modelo: Modelo) => {
+    // track("ver_modelo", { modelo: modelo.id });
+    setParams({ modelo: modelo.id });
+  };
 
   return (
     <section
@@ -22,17 +29,17 @@ export default function Modelos() {
       />
 
       {/* content */}
-      <div className="relative mx-auto flex max-w-[1366px] flex-col items-center gap-[24px] text-center">
-        <header className="flex flex-col items-center gap-[16px]">
-          <h2 className="text-[clamp(1.75rem,2.6vw,2.5rem)] min-[1440px]:text-[48px] min-[1920px]:text-[56px] font-medium leading-tight">
-            Cuatro modelos,{" "}
+      <div className="relative mx-auto flex max-w-[1366px] flex-col items-center gap-[10px] sm:gap-[24px]">
+        <header className="max-sm:w-full flex flex-col items-center gap-[16px]">
+          <h2 className="text-[clamp(1.75rem,2.6vw,2.5rem)] min-[1440px]:text-[48px] min-[1920px]:text-[56px] font-medium leading-tight text-center">
+            Cuatro modelos, <br className="sm:hidden" />
             <span className="font-semibold italic">nuevas posibilidades</span>
           </h2>
-          <hr className="w-full max-w-[340px] border-0 border-t-2 border-beige" />
+          <hr className="w-full sm:max-w-[340px] border-0 border-t-2 border-beige" />
         </header>
 
         <div className="flex max-w-[760px] min-[1440px]:max-w-[860px] min-[1920px]:max-w-[960px] flex-col gap-[16px] text-[clamp(0.85rem,1vw,1rem)] min-[1440px]:text-[18px] min-[1920px]:text-[20px] leading-relaxed">
-          <p>
+          <p className="sm:text-center">
             En <span className="font-semibold italic">Senderos de ALUNA</span>{" "}
             sabemos que cada familia es diferente.
             <br />
@@ -40,55 +47,31 @@ export default function Modelos() {
             distribuciones y posibilidades para acompañarte en cada etapa de tu
             vida.
           </p>
-          <p className="font-semibold italic">
+          <p className="sm:text-center font-semibold italic">
             Explora nuestros modelos y descubre cuál se adapta mejor a ti y a tu
             familia.
           </p>
         </div>
-
       </div>
 
       {/* models */}
-      <div className="relative flex mt-[40px] gap-[15px] min-[1440px]:gap-[24px] min-[1920px]:gap-[32px] max-lg:mt-[24px] max-lg:self-stretch max-lg:overflow-x-auto max-lg:snap-x max-lg:snap-mandatory max-lg:-mx-[20px] max-lg:px-[20px] max-lg:py-[12px] md:max-lg:-mx-[48px] md:max-lg:px-[48px] [scrollbar-width:none]">
-        {modelos.map((modelo) => {
-          return (
-            <div
-              key={modelo.id}
-              className="relative w-[290px] h-[427px] min-[1440px]:w-[340px] min-[1440px]:h-[500px] min-[1920px]:w-[400px] min-[1920px]:h-[590px] max-lg:shrink-0 max-lg:snap-center max-md:w-[260px] max-md:h-[383px] rounded-t-full overflow-hidden bg-proposito drop-shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-1.5"
-            >
-              {/* bg image */}
-              <img
-                src={modelo.image}
-                alt={`Imágen frontal modelo ${modelo.id}`}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-
-              <div className="relative z-10 flex flex-col w-full h-full justify-end">
-                <FormaModelo
-                  className={`absolute bottom-0 w-full h-auto ${modelo.variant === "green" ? "text-proposito" : "text-beige"}`}
-                />
-
-                {/* text */}
-                <div className="relative z-20 flex w-full h-[43px] items-center justify-between px-[20px] mb-[15px]">
-                  <p
-                    className={`modelo-title font-bold uppercase whitespace-nowrap max-md:text-[28px] ${modelo.variant === "green" ? "text-horizonte" : "text-proposito"}`}
-                  >
-                    
-                    Aluna {modelo.numero}
-                  </p>
-
-                  <button
-                    onClick={() => setParams({ modelo: modelo.id })}
-                    className="group flex size-[38px] justify-center items-center rounded-full drop-shadow border-1 border-beige bg-impulso transition-opacity hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-beige active:border-impulso"
-                  >
-                    <ArrowIcon className="size-[15px] text-beige group-active:text-impulso" />
-                  </button>
-                </div>
-              </div>
+      {isDesktop ? (
+        <div className="relative flex mt-[40px] gap-[8px] xl:gap-[15px] min-[1440px]:gap-[24px] min-[1920px]:gap-[32px]">
+          {modelos.map((modelo) => (
+            <ModeloCard key={modelo.id} modelo={modelo} onOpen={abrirModelo} />
+          ))}
+        </div>
+      ) : (
+        <InfiniteCarousel
+          paused={params.has("modelo")}
+          className="mt-[24px] self-stretch -mx-[20px] md:-mx-[48px] py-[12px]"
+          items={modelos.map((modelo) => (
+            <div key={modelo.id} className="px-[8px]">
+              <ModeloCard modelo={modelo} onOpen={abrirModelo} />
             </div>
-          );
-        })}
-      </div>
+          ))}
+        />
+      )}
     </section>
   );
 }
