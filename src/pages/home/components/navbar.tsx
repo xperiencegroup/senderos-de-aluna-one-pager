@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { NAV_LINKS as links, proyectoLinks } from "@/const/nav-links";
 import { CONTACTO_DATA as contacto } from "@/const/nav-links";
+import { SOCIAL_LINKS } from "@/const/nav-links";
 import { motion } from "motion/react";
 import { track } from "@/lib/track";
 
@@ -10,12 +11,18 @@ import DropdownArrow from "@/assets/icons/components/dropdown-arrow";
 
 // íconos
 import isotipo from "@/assets/logos/main/isotipo.svg";
+import { useLockBodyScroll } from "@/hooks/use-lock-body-scroll";
+
+const mobileLinks = links.flatMap((link) =>
+  link.id === "proyecto" ? proyectoLinks : [link],
+);
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [isProyectoSelected, setIsProyectoSelected] = useState<boolean>(false);
   const proyectoRef = useRef<HTMLLIElement>(null);
+  useLockBodyScroll(open);
 
   // Cierra el menú móvil al pasar a escritorio
   useEffect(() => {
@@ -75,7 +82,6 @@ export default function Navbar() {
 
   const pillActive = "bg-proposito! text-horizonte! border-horizonte!";
 
-
   const ProyectoIcon = links[2].icon;
   return (
     <header className="absolute top-0 z-50 w-full bg-beige shadow-[0_2px_6px_rgba(0,0,0,0.12)]">
@@ -99,10 +105,14 @@ export default function Navbar() {
             <li key={id}>
               <PillButton
                 href={href}
-                onClick={() => track("click_nav", { seccion: id, origen: "navbar" })}                
+                onClick={() =>
+                  track("click_nav", { seccion: id, origen: "navbar" })
+                }
                 Icon={icon}
                 current={active === id}
-                className={"w-[160px] xl:w-[194px] min-[1440px]:w-[210px] 2xl:w-[230px]"}
+                className={
+                  "w-[160px] xl:w-[194px] min-[1440px]:w-[210px] 2xl:w-[230px]"
+                }
               >
                 {label}
               </PillButton>
@@ -148,7 +158,12 @@ export default function Navbar() {
                   return (
                     <a
                       href={link.href}
-                      onClick={() => track("click_nav", { seccion: link.id, origen: "navbar" })}                      
+                      onClick={() =>
+                        track("click_nav", {
+                          seccion: link.id,
+                          origen: "navbar",
+                        })
+                      }
                       key={index}
                       className="group flex justify-center items-center font-medium button px-[20px] py-[10px] gap-[10px] rounded-[30px] border-2 transition-colors duration-200 border-proposito text-proposito bg-beige drop-shadow hover:opacity-65 active:opacity-100 active:text-horizonte active:bg-proposito active:border-horizonte hover:cursor-pointer"
                     >
@@ -168,10 +183,14 @@ export default function Navbar() {
             <li key={id}>
               <PillButton
                 href={href}
-                onClick={() => track("click_nav", { seccion: id, origen: "navbar" })}                
+                onClick={() =>
+                  track("click_nav", { seccion: id, origen: "navbar" })
+                }
                 Icon={icon}
                 current={active === id}
-                className={"w-[160px] xl:w-[194px] min-[1440px]:w-[210px] 2xl:w-[230px]"}
+                className={
+                  "w-[160px] xl:w-[194px] min-[1440px]:w-[210px] 2xl:w-[230px]"
+                }
               >
                 {label}
               </PillButton>
@@ -182,7 +201,9 @@ export default function Navbar() {
         {/* CTA escritorio */}
         <a
           href={contacto.href}
-          onClick={() => track("click_contacto", { tipo: contacto.label, origen: "navbar" })}          
+          onClick={() =>
+            track("click_contacto", { tipo: contacto.label, origen: "navbar" })
+          }
           className="hidden lg:inline-flex group w-[160px] min-[1440px]:w-[180px] justify-center items-center gap-[10px] rounded-[30px] bg-impulso border-2 border-beige px-[20px] py-[10px] button font-medium text-beige transition-colors duration-200 hover:bg-impulso hover:opacity-65
           active:text-impulso active:bg-beige active:border-impulso active:opacity-100
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-impulso focus-visible:ring-offset-2 focus-visible:ring-offset-horizonte-4"
@@ -221,79 +242,80 @@ export default function Navbar() {
       {/* Menú móvil */}
       <div
         id="menu-movil"
+        inert={!open}
         className={`grid transition-[grid-template-rows] duration-300 lg:hidden ${
           open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         }`}
       >
         <div className="overflow-hidden">
-          <ul className="flex flex-col gap-3 max-h-[calc(100svh-74px)] overflow-y-auto px-4 pb-6 pt-2 sm:px-6">
-            {links.map(({ id, label, href, icon: Icon }) => {
-              // Proyecto: en móvil se muestran sus sub-secciones directo
-              if (id === "proyecto") {
-                return (
-                  <li key={id} className="flex flex-col gap-2">
-                    <span className="flex items-center gap-[10px] px-[20px] pt-1 button font-semibold text-proposito">
-                      <Icon className="size-[20px]" />
-                      {label}
-                    </span>
-                    <ul className="flex flex-col gap-2 pl-4">
-                      {proyectoLinks.map((sub) => {
-                        const SubIcon = sub.icon;
-                        return (
-                          <li key={sub.id}>
-                            <a
-                              href={sub.href}
-                              onClick={() => {
-                                track("click_nav", { seccion: sub.id, origen: "navbar_movil" });
-                                setOpen(false);
-                              }}
-                              tabIndex={open ? 0 : -1}
-                              className={`${pill} w-full justify-start`}
-                            >
-                              <SubIcon className="size-[20px]" />
-                              {sub.label}
-                            </a>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </li>
-                );
-              }
-
-              return (
+          <div className="flex flex-col h-[calc(100svh-74px)] overflow-y-auto px-4 pb-6 pt-2 sm:px-6">
+            <ul className="flex flex-col gap-[15px]">
+              {mobileLinks.map(({ id, label, href, icon: Icon }) => (
                 <li key={id}>
                   <a
                     href={href}
                     onClick={() => {
-                      track("click_nav", { seccion: id, origen: "navbar_movil" });
+                      track("click_nav", {
+                        seccion: id,
+                        origen: "navbar_movil",
+                      });
                       setOpen(false);
                     }}
                     aria-current={active === id ? "page" : undefined}
                     className={`${pill} w-full justify-start ${active === id ? pillActive : ""}`}
-                    tabIndex={open ? 0 : -1}
                   >
                     <Icon className="size-[20px]" />
                     {label}
                   </a>
                 </li>
-              );
-            })}
-            <li>
-              <a
-                href={contacto.href}
-                onClick={() => {
-                  track("click_contacto", { tipo: contacto.label, origen: "navbar" });
-                  setOpen(false);
-                }}
-                tabIndex={open ? 0 : -1}
-                className="inline-flex w-full items-center justify-start gap-[10px] rounded-[30px] border-2 border-impulso bg-impulso px-[20px] py-[10px] button font-medium text-beige transition-opacity duration-200 hover:opacity-65 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-impulso"
-              >
-                <CallIcon className="size-[20px] text-beige" />
-                {contacto.label}
-              </a>
-            </li>
-          </ul>
+              ))}
+
+              <li>
+                <a
+                  href={contacto.href}
+                  onClick={() => {
+                    track("click_contacto", {
+                      tipo: contacto.label,
+                      origen: "navbar_movil",
+                    });
+                    setOpen(false);
+                  }}
+                  className="inline-flex w-full items-center justify-start gap-[10px] rounded-[30px] border-2 border-impulso bg-impulso px-[20px] py-[10px] button font-medium text-beige transition-opacity duration-200 hover:opacity-65 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-impulso"
+                >
+                  <CallIcon className="size-[20px] text-beige" />
+                  {contacto.label}
+                </a>
+              </li>
+            </ul>
+
+            {/* Síguenos */}
+            <div className="flex flex-col items-center gap-[16px] pt-[32px]">
+              <p className="subtitle text-center text-origen">
+                <span className="italic">Síguenos</span>
+                <br />
+                <span className="font-bold italic">@viveenaluna</span>
+              </p>
+
+              <div className="flex items-center gap-[20px]">
+                {SOCIAL_LINKS.map((social) => (
+                  <a
+                    key={social.title}
+                    href={social.href}
+                    onClick={() =>
+                      social.title === "WhatsApp"
+                        ? track("click_whatsapp", { origen: "navbar_movil" })
+                        : track("click_social", { red: social.title })
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative flex justify-center items-center size-[44px] hover:cursor-pointer"
+                  >
+                    <img src={social.icon} alt={social.title} />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </header>
