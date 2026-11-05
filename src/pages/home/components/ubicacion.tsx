@@ -45,7 +45,7 @@ export default function Ubicacion() {
 
       {/* desarrollado por MR2 */}
       <div className="relative flex w-full min-h-[384px] h-[50svh] justify-center max-lg:h-auto max-lg:min-h-0">
-        <div className="w-full max-w-[1366px] min-[1440px]:max-w-[1700px] h-full flex justify-between items-center gap-[40px] px-[83px] max-lg:flex-col max-lg:items-start max-lg:gap-[28px] max-lg:px-[20px] max-lg:py-[56px] md:max-lg:px-[48px] min-[1440px]:px-[60px] 2xl:px-[84px]">
+        <div className="w-full max-w-[1366px] min-[1440px]:max-w-[1700px] h-full flex justify-between items-center gap-[40px] lg:px-[40px] xl:px-[83px] max-lg:flex-col max-lg:items-start max-lg:gap-[28px] max-lg:px-[20px] max-lg:py-[56px] md:max-lg:px-[48px] min-[1440px]:px-[60px] 2xl:px-[84px]">
           {/* title */}
           <h2 className="shrink-0 hero-2 whitespace-nowrap max-md:text-[30px]">
             <span className="font-semibold text-impulso">
