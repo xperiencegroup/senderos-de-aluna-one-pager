@@ -142,3 +142,11 @@ img {
 .iti {
   width: 100%;
 }
+
+.curva {
+  background: radial-gradient(
+    100% 100% at 100% 0,
+    transparent 99.5%,
+    var(--color-impulso) 100%
+  );
+}
