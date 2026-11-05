@@ -13,12 +13,15 @@ import { track } from "@/lib/track";
 export default function ExploraCX() {
   const [, setSearchParams] = useSearchParams();
   return (
-    <div id="xperiencia" className="relative w-full min-h-svh overflow-hidden">
+    <div
+      id="xperiencia"
+      className="relative w-full portrait:min-h-[max(100svh,800px)] overflow-hidden"
+    >
       {/* bg image */}
       <img
         src={imageBackground}
         alt="Parque Senderos de Aluna"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover object-top-left origin-top-left"
       />
 
       {/* logo decoration */}
@@ -34,6 +37,7 @@ export default function ExploraCX() {
           {/* title */}
           <h2 className="hero max-md:text-[34px]">
             <span className="font-semibold text-impulso">Explora</span>{" "}
+            <br className="sm:hidden" />
             <span className="font-extrabold italic text-beige">
               Click and Xperience
             </span>
@@ -44,16 +48,21 @@ export default function ExploraCX() {
 
           {/* description */}
           <p className="regular text-beige max-lg:[text-shadow:0_1px_6px_rgba(0,0,0,0.45)]">
-            Explora Senderos de ALUNA de forma integral desde donde estés.
-            <br />
-            Con Click and Xperience podrás ubicar el proyecto, conocer el plano
-            de conjunto, recorrer los modelos de casa y descubrir sus amenidades a través de una experiencia mucho más
-            inmersiva.
+            Explora <span className="font-semibold">Senderos de ALUNA</span> de
+            forma integral desde donde estés.
             <br />
             <br />
-            Más que ver imágenes, podrás vivir el proyecto mediante recorridos
-            virtuales y una navegación interactiva que te permitirá entender
-            cada espacio y tomar una mejor decisión.
+            Con <span className="font-semibold">Click and Xperience</span>{" "}
+            podrás ubicar el proyecto, conocer el plano de conjunto, recorrer
+            los modelos de casa y descubrir sus amenidades a través de una
+            experiencia mucho más inmersiva.
+            <br />
+            <br />
+            Más que ver imágenes, podrás vivir el proyecto mediante{" "}
+            <span className="font-semibold">
+              recorridos virtuales y una navegación interactiva
+            </span>{" "}
+            que te permitirá entender cada espacio y tomar una mejor decisión.
           </p>
 
           {/* button */}
