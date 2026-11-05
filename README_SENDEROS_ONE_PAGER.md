@@ -4,33 +4,33 @@ Sitio de una sola página de Senderos de Aluna, publicado en `aluna.gt/senderosd
 
 ## Estructura de aluna.gt
 
-| URL | Contenido | Dónde vive |
-|---|---|---|
-| `aluna.gt` | Splash de selección de proyecto | WordPress (SiteGround), página "Inicio" |
-| `aluna.gt/alunaresidencial/` | Aluna Residencial | WordPress (SiteGround), página "Aluna Residencial" |
-| `aluna.gt/senderosdealuna/` | Este proyecto | Archivos estáticos en `public_html/senderosdealuna/` (SiteGround) |
-| `senderos.aluna.gt` | App Click & Xperience de Senderos (repo aparte) | Vercel, vía CNAME en SiteGround |
+| URL                          | Contenido                                       | Dónde vive                                                        |
+| ---------------------------- | ----------------------------------------------- | ----------------------------------------------------------------- |
+| `aluna.gt`                   | Splash de selección de proyecto                 | WordPress (SiteGround), página "Inicio"                           |
+| `aluna.gt/alunaresidencial/` | Aluna Residencial                               | WordPress (SiteGround), página "Aluna Residencial"                |
+| `aluna.gt/senderosdealuna/`  | Este proyecto                                   | Archivos estáticos en `public_html/senderosdealuna/` (SiteGround) |
+| `senderos.aluna.gt`          | App Click & Xperience de Senderos (repo aparte) | Vercel, vía CNAME en SiteGround                                   |
 
 El cliente pidió rutas en lugar de subdominios. La excepción es la app CX: usa funciones serverless (`api/`) que SiteGround no puede ejecutar, por eso vive en Vercel con un subdominio.
 
 - `senderos-de-aluna-one-pager.vercel.app` (producción de Vercel de este repo) redirige con 308 a `www.aluna.gt` (splash), a propósito, para que quien tenga el link viejo vea que el sitio ya está publicado. Las previews por rama siguen funcionando.
 - `senderos-de-aluna.vercel.app` (app CX) redirige con 308 a `senderos.aluna.gt`.
 
-- DNS: dominio registrado en la asociación de dominios .gt, con nameservers delegados a SiteGround. La zona se administra en *Site Tools → Domain → DNS Zone Editor*.
+- DNS: dominio registrado en la asociación de dominios .gt, con nameservers delegados a SiteGround. La zona se administra en _Site Tools → Domain → DNS Zone Editor_.
 - El chatbot de Senderos vive en otra aplicación (Railway) y no forma parte de este repo.
 
 ## Splash
 
 Página "Inicio" de WordPress (plantilla Elementor Canvas) con un widget HTML que enlaza a `/alunaresidencial/` y `/senderosdealuna/`. Usa una paleta de punto medio entre ambos proyectos:
 
-| Token | Color | Origen |
-|---|---|---|
+| Token       | Color     | Origen                                 |
+| ----------- | --------- | -------------------------------------- |
 | `--primary` | `#166d5c` | Propósito (compartido con Residencial) |
-| `--bg` | `#f3ede1` | Armonía |
-| `--text` | `#3c4142` | Origen |
-| `--muted` | `#5c686b` | Origen 2 |
-| `--accent` | `#df7a5f` | Impulso |
-| `--line` | `#dfdbd4` | Armonía 3 |
+| `--bg`      | `#f3ede1` | Armonía                                |
+| `--text`    | `#3c4142` | Origen                                 |
+| `--muted`   | `#5c686b` | Origen 2                               |
+| `--accent`  | `#df7a5f` | Impulso                                |
+| `--line`    | `#dfdbd4` | Armonía 3                              |
 
 ## Stack
 
@@ -76,10 +76,10 @@ Reglas al agregar código:
 
 Hay dos destinos, ambos disparados por GitHub:
 
-| Destino | Cómo | Base | Uso |
-|---|---|---|---|
-| Vercel | Integración GitHub → Vercel | `/` | Previews por rama y pruebas |
-| SiteGround | GitHub Actions (`deploy-siteground.yml`) | `/senderosdealuna/` | Sitio público |
+| Destino    | Cómo                                     | Base                | Uso                         |
+| ---------- | ---------------------------------------- | ------------------- | --------------------------- |
+| Vercel     | Integración GitHub → Vercel              | `/`                 | Previews por rama y pruebas |
+| SiteGround | GitHub Actions (`deploy-siteground.yml`) | `/senderosdealuna/` | Sitio público               |
 
 ### Workflow `deploy-siteground.yml`
 
@@ -89,16 +89,16 @@ Corre en cada push a `main`:
 2. Compila con `VITE_BASE=/senderosdealuna/`.
 3. Genera `dist/.htaccess`: las rutas de la SPA cargan `index.html`; `index.html` sin caché y assets con hash con caché de un año.
 4. Sube `dist/` por SSH con `rsync --delete` a `www/aluna.gt/public_html/senderosdealuna/`.
-5. Purga la caché de SiteGround con `wp sg purge` (si falla, solo deja un aviso en *Actions*).
+5. Purga la caché de SiteGround con `wp sg purge` (si falla, solo deja un aviso en _Actions_).
 
 No crear carpetas dentro de `public_html/senderosdealuna/`: el `rsync --delete` las borra en cada deploy.
 
-Secrets requeridos en *Settings → Secrets and variables → Actions*:
+Secrets requeridos en _Settings → Secrets and variables → Actions_:
 
-- `SG_SSH_KEY`: llave privada ed25519 (sin contraseña). Su llave pública está importada en SiteGround (*Devs → SSH Keys Manager*).
-- `SG_HOST`, `SG_USER`, `SG_PORT`: datos de *SSH Credentials* en SiteGround.
+- `SG_SSH_KEY`: llave privada ed25519 (sin contraseña). Su llave pública está importada en SiteGround (_Devs → SSH Keys Manager_).
+- `SG_HOST`, `SG_USER`, `SG_PORT`: datos de _SSH Credentials_ en SiteGround.
 
-Flujo de trabajo recomendado: trabajar en una rama, revisar el preview de Vercel, y hacer merge a `main` para publicar. Revisar la pestaña *Actions* después de cada merge.
+Flujo de trabajo recomendado: trabajar en una rama, revisar el preview de Vercel, y hacer merge a `main` para publicar. Revisar la pestaña _Actions_ después de cada merge.
 
 ### Por qué doble despliegue
 
@@ -112,6 +112,9 @@ WordPress no interfiere porque la carpeta `senderosdealuna/` existe físicamente
 - Pantallas grandes escalan con `min-[1440px]:` y `min-[1920px]:` (tipografía global en `index.css`).
 - Variante propia `short:` (`@custom-variant` en `index.css`): desktop con alto ≤ 820 px (ej. 1280×720). Compacta los formularios para que no generen scroll.
 - `html, body { overflow-x: clip; }` en `index.css` como red de seguridad contra scroll horizontal.
+- Modelos: debajo de 1024 px la fila de tarjetas se reemplaza por `InfiniteCarousel` (se elige con `useMediaQuery`, no con CSS, para no dejar corriendo la animación oculta). Se pausa mientras hay un modelo abierto (`?modelo=`).
+- Plano de conjunto: debajo de 768 px usa `materplan-background-v.jpg` (versión vertical). El contenedor tiene un alto mínimo de `115vw` para que `object-cover` nunca recorte el masterplan arriba o abajo; si se cambia la imagen, recalcular ese valor.
+- Bloqueo de scroll (`useLockBodyScroll`): se aplica sobre `<html>`, no sobre `<body>`. Por el `overflow-x: clip` de `index.css`, el scroll de la página lo controla `<html>` y un `overflow: hidden` en `<body>` no tiene efecto.
 
 ## Analítica
 
@@ -119,8 +122,8 @@ WordPress no interfiere porque la carpeta `senderosdealuna/` existe físicamente
 - Solo se cargan si el hostname termina en `aluna.gt` (las previews de Vercel no envían datos).
 - Todas las apps envían el parámetro `app` (`onepager` / `cx`): en GA4 es la dimensión personalizada `app`; en Clarity, la etiqueta `app`.
 - Eventos con `track()` (`src/lib/track.ts`): `ver_modelo`, `descargar_ficha`, `descargar_folleto`, `solicitar_folleto`, `iniciar_recorrido`, `click_whatsapp`, `click_contacto`, `click_social`, `click_nav`, `ver_amenidad`, `enviar_cotizacion`, `onboarding_paso`, `onboarding_completo`, `explorar_cx`.
-- Dimensiones personalizadas en GA4 (alcance Evento): `app`, `origen`, `seccion`, `amenidad`, `modelo`, `tipo`, `red`, `paso`. Al agregar un parámetro nuevo en `track()`, registrarlo en *Admin → Data display → Custom definitions* (no es retroactivo).
-- Eventos clave (key events) en GA4: `enviar_cotizacion`, `click_whatsapp`, `click_contacto`, `descargar_folleto`. Se marcan con la estrella en *Admin → Data display → Events → Recent events*.
+- Dimensiones personalizadas en GA4 (alcance Evento): `app`, `origen`, `seccion`, `amenidad`, `modelo`, `tipo`, `red`, `paso`. Al agregar un parámetro nuevo en `track()`, registrarlo en _Admin → Data display → Custom definitions_ (no es retroactivo).
+- Eventos clave (key events) en GA4: `enviar_cotizacion`, `click_whatsapp`, `click_contacto`, `descargar_folleto`. Se marcan con la estrella en _Admin → Data display → Events → Recent events_.
 
 ## Formularios (onboarding y folleto)
 
@@ -135,10 +138,13 @@ WordPress no interfiere porque la carpeta `senderosdealuna/` existe físicamente
 ```
 src/
   assets/       iconos (componentes y SVG), imágenes, logos, fichas técnicas y folleto (PDF)
-  components/   botones, botones flotantes, formulario de cotización, campos compartidos (forms/),
-                popups de modelo, onboarding Xperience y folleto
-  const/        enlaces de navegación
-  data/         datos de los modelos (75, 88, 96, 105)
+  components/   botones, botones flotantes, formulario de cotización
+    carousel/   carrusel infinito (modelos en móvil y tablet)
+    forms/      campos compartidos de formularios
+    popup/      popups de modelo, folleto y onboarding Xperience (pasos y stepper)
+  const/        enlaces de navegación y redes sociales
+  data/         datos de los modelos (75, 88, 96, 105): renders, planos y características
+  hooks/        useMediaQuery y useLockBodyScroll
   layout/       layout general
   lib/          track() de GA4 y leads (envío de formularios)
   pages/home/   secciones del one-pager (hero, modelos, amenidades, ubicación, footer, etc.)
@@ -148,10 +154,11 @@ src/
 ```
 
 ## Pendiente
+
 - Actualizar Node local a ≥ 22.22 (React Router 8.5 lo exige).
 - Integrar formularios con HubSpot (formularios, propiedades y portal) o con `/api/onboarding` de la app CX; decidir tras revisar el diagrama de leads. Luego activar `FORMULARIOS_ACTIVOS` y `FICHAS_ACTIVAS`.
 - Folio del lead (generación y formato), envío por WhatsApp (servicio de HubSpot) y correo; mostrar los checks del paso 3 solo cuando sean reales.
 - Definir si existe un paso extra en el onboarding tras "Por ahora no, gracias".
 - URL del aviso de privacidad (`AVISO_PRIVACIDAD_URL` en `src/lib/leads.ts`).
 - Marca de agua "MR2" en la sección "Desarrollado por" (falta el SVG).
-- Marcar `onboarding_completo` como key event en GA4 al activar los formularios (aparece en *Recent events* hasta que se dispara por primera vez).
+- Marcar `onboarding_completo` como key event en GA4 al activar los formularios (aparece en _Recent events_ hasta que se dispara por primera vez).
