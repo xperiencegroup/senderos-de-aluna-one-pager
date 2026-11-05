@@ -1,10 +1,15 @@
-import masterplanImage from "@/assets/images/materplan-background.jpg";
-import formaBackground from "@/assets/images/forma-plano-conjunto.svg";
 import FillButton from "@/components/fill-button";
-import ClickIcon from "@/assets/icons/components/click-icon";
-import AlunaIcon from "@/assets/icons/components/aluna-icon";
 import { useSearchParams } from "react-router";
 import { track } from "@/lib/track";
+
+// horizontal
+import masterplanImageH from "@/assets/images/materplan-background.jpg";
+// vertical
+import masterplanImageV from "@/assets/images/materplan-background-v.jpg";
+
+import formaBackground from "@/assets/images/forma-plano-conjunto.svg";
+import ClickIcon from "@/assets/icons/components/click-icon";
+import AlunaIcon from "@/assets/icons/components/aluna-icon";
 
 /*
  * Móvil (< lg): el masterplan va completo arriba (sin recorte) y abajo
@@ -17,13 +22,25 @@ export default function PlanoConjunto() {
   return (
     <div
       id="plano"
-      className="flex relative w-full portrait:min-h-[max(100svh,800px)] landscape:h-[min(100svh,56vw)] landscape:min-h-[620px] portrait:justify-end items-end lg:overflow-hidden lg:bg-[#1e2b1a] max-lg:flex-col max-lg:items-stretch max-lg:h-auto max-lg:min-h-0 max-lg:bg-impulso overflow-hidden"
+      className="relative flex w-full items-end overflow-hidden lg:bg-[#1e2b1a]
+    h-[max(100svh,800px)] max-md:h-auto max-md:min-h-[max(100svh,800px)]
+    max-lg:flex-col max-lg:items-stretch max-lg:justify-end"
     >
-      <div className="absolute inset-x-0 top-0 bottom-[240px] portrait:h-full landscape:max-lg:relative landscape:max-lg:inset-auto">
+      <div className="max-md:hidden absolute inset-x-0 top-0 bottom-[240px]">
+        {/* imagen horizontal */}
         <img
-          src={masterplanImage}
+          src={masterplanImageH}
           alt="Masterplan de Senderos de Aluna"
-          className="size-full object-cover object-center landscape:max-lg:h-auto"
+          className="hidden md:block size-full object-cover object-center max-md:h-auto"
+        />
+      </div>
+
+      {/* imagen vertical, aparece < 1024px */}
+      <div className="md:hidden relative grow w-full min-h-[115vw] overflow-hidden">
+        <img
+          src={masterplanImageV}
+          alt="Masterplan de Senderos de Aluna"
+          className="absolute inset-0 size-full object-cover object-center"
         />
       </div>
 
@@ -39,7 +56,7 @@ export default function PlanoConjunto() {
         {/* forma curva */}
         <div className="lg:hidden absolute size-[70px] bg-impulso top-0 left-0 -translate-y-[100%] curva" />
 
-        <div className="flex flex-col relative min-h-[270px] justify-center items-center gap-[24px] px-[20px] py-[30px] max-lg:min-h-0 max-lg:pt-[40px] max-lg:pb-[56px]">
+        <div className="flex flex-col relative min-h-[270px] justify-center items-center gap-[24px] px-[20px] py-[30px] max-lg:min-h-0 max-lg:pt-[30px] max-lg:pb-[56px]">
           <h2 className="hero-2 text-center text-beige uppercase max-md:text-[24px]">
             <span className="font-semibold">Regístrate y conoce</span>
             <br />
