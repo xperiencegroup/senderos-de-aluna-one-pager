@@ -72,21 +72,32 @@ const amenidades: Amenidad[] = [
 export default function Amenidades() {
   const [selected, setSelected] = useState(amenidades[0]);
 
-  return (
-    <div id="amenidades" className="flex bg-beige max-lg:flex-col-reverse">
-      <div className="flex flex-col justify-center items-center w-full min-h-[100svh] py-[34px] px-[30px] max-lg:min-h-0 max-lg:px-[20px] max-lg:pt-[40px] max-lg:pb-[56px] md:max-lg:px-[48px]">
-        <div className="flex flex-col gap-[30px] text-left bg-beige max-lg:w-full max-lg:gap-[20px]">
-          <h2 className="hero font-bold text-proposito max-md:text-[34px]">Amenidades</h2>
+  console.log(selected);
 
-          <p className="regular w-full max-w-[347px] min-[1440px]:max-w-[420px] min-[1920px]:max-w-[520px] max-lg:max-w-none text-origen">
-            Espacios pensados para que tu familia crezca, conviva y disfrute
-            cada día.
+  return (
+    <div
+      id="amenidades"
+      className="flex bg-beige max-lg:min-h-[max(100svh,700px)] max-lg:flex-col-reverse"
+    >
+      <div className="flex flex-col justify-center items-center w-full min-h-[100svh] py-[30px] px-[30px] lg:py-[34px] lg:px-[30px] max-lg:min-h-0">
+        <div className="flex flex-col gap-[30px] text-left bg-beige max-lg:w-full max-lg:gap-[20px]">
+          <h2 className="max-sm:hidden hero font-bold text-proposito max-md:text-[34px]">
+            Amenidades
+          </h2>
+
+          <p className="regular w-full max-w-[347px] min-[1440px]:max-w-[420px] min-[1920px]:max-w-[520px] max-lg:max-w-none text-origen max-sm:text-center">
+            Espacios pensados para que tu familia{" "}
+            <br className="max-[550px]:hidden block sm:hidden" /> crezca,
+            conviva y disfrute cada día.
           </p>
 
-          {/* Botones */}
-            <ul className="flex flex-col w-full max-w-[300px] min-[1440px]:max-w-[340px] min-[1920px]:max-w-[480px] gap-[27px] min-[1920px]:gap-[34px] max-lg:flex-row max-lg:max-w-none max-lg:gap-[12px] max-lg:overflow-x-auto max-lg:snap-x max-lg:-mx-[20px] max-lg:w-[calc(100%+40px)] max-lg:px-[20px] max-lg:py-[6px] md:max-lg:-mx-[48px] md:max-lg:w-[calc(100%+96px)] md:max-lg:px-[48px] [scrollbar-width:none]">
+          {/* Botones desktop*/}
+          <ul className="max-sm:hidden max flex flex-wrap flex-col w-full max-w-[300px] min-[1440px]:max-w-[340px] min-[1920px]:max-w-[480px] gap-[27px] min-[1920px]:gap-[34px] max-lg:flex-row max-lg:max-w-none max-lg:gap-[12px] max-lg:overflow-x-auto max-lg:snap-x max-lg:-mx-[20px] max-lg:w-[calc(100%+40px)] max-lg:px-[20px] max-lg:py-[6px] md:max-lg:-mx-[48px] md:max-lg:w-[calc(100%+96px)] md:max-lg:px-[48px] [scrollbar-width:none]">
             {amenidades.map((amenidad) => (
-              <li key={amenidad.id} className="max-lg:shrink-0 max-lg:snap-start">
+              <li
+                key={amenidad.id}
+                className="max-lg:shrink-0 max-lg:snap-start"
+              >
                 <PillButton
                   Icon={amenidad.Icon}
                   current={selected.id === amenidad.id}
@@ -101,11 +112,45 @@ export default function Amenidades() {
               </li>
             ))}
           </ul>
+
+          {/* botones mobile */}
+          <ul className="sm:hidden self-center flex flex-wrap justify-center gap-[6px] max-w-[198px] min-[400px]:max-w-none">
+            {amenidades.map((amenidad) => {
+              const isSelected = selected.id === amenidad.id;
+
+              return (
+                <li key={amenidad.id} className="shrink-0 snap-start">
+                  <button
+                    type="button"
+                    aria-label={amenidad.label}
+                    aria-pressed={isSelected}
+                    onClick={() => {
+                      setSelected(amenidad);
+                      track("ver_amenidad", { amenidad: amenidad.id });
+                    }}
+                    className="group flex size-[45px] items-center justify-center rounded-full
+            border-[1.5px] border-proposito bg-beige drop-shadow
+            transition-colors duration-200 hover:cursor-pointer hover:opacity-80
+            active:bg-proposito active:border-horizonte active:opacity-100
+            aria-pressed:bg-proposito aria-pressed:border-horizonte aria-pressed:opacity-100"
+                  >
+                    {amenidad.Icon && (
+                      <amenidad.Icon
+                        aria-hidden="true"
+                        className="w-[23px] h-fit text-proposito
+                group-active:text-horizonte group-aria-pressed:text-horizonte"
+                      />
+                    )}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
 
       {/* image */}
-      <div className="relative shrink-0 w-full min-h-[100svh] max-xl:max-w-[712px] max-w-[65vw] rounded-bl-[200px] overflow-hidden max-lg:max-w-none max-lg:min-h-0 max-lg:h-[320px] md:max-lg:h-[440px] max-lg:rounded-bl-[120px]">
+      <div className="relative shrink-0 w-full min-h-[100svh] max-xl:max-w-[712px] max-w-[65vw] rounded-bl-[200px] overflow-hidden max-lg:max-w-none max-lg:min-h-0 max-lg:flex-1 max-lg:h-[320px] md:max-lg:h-[440px] max-lg:rounded-bl-[120px]">
         <AnimatePresence>
           <motion.img
             key={selected.id}
