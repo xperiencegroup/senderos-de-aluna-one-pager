@@ -17,17 +17,17 @@ export default function PlanoConjunto() {
   return (
     <div
       id="plano"
-      className="flex relative w-full h-[min(100svh,56vw)] min-h-[620px] items-end lg:overflow-hidden lg:bg-[#1e2b1a] max-lg:flex-col max-lg:items-stretch max-lg:h-auto max-lg:min-h-0 max-lg:bg-impulso"
+      className="flex relative w-full portrait:min-h-[max(100svh,800px)] landscape:h-[min(100svh,56vw)] landscape:min-h-[620px] portrait:justify-end items-end lg:overflow-hidden lg:bg-[#1e2b1a] max-lg:flex-col max-lg:items-stretch max-lg:h-auto max-lg:min-h-0 max-lg:bg-impulso overflow-hidden"
     >
-      <div className="absolute inset-x-0 top-0 bottom-[240px] max-lg:relative max-lg:inset-auto">
+      <div className="absolute inset-x-0 top-0 bottom-[240px] portrait:h-full landscape:max-lg:relative landscape:max-lg:inset-auto">
         <img
           src={masterplanImage}
           alt="Masterplan de Senderos de Aluna"
-          className="size-full object-cover object-center max-lg:h-auto"
+          className="size-full object-cover object-center landscape:max-lg:h-auto"
         />
       </div>
 
-      <div className="relative flex flex-col w-full h-[513px] justify-end items-center overflow-visible max-lg:h-auto max-lg:-mt-[32px] max-lg:rounded-t-[32px] max-lg:bg-impulso">
+      <div className="relative flex flex-col w-full h-[513px] justify-end items-center overflow-visible max-lg:h-auto max-lg:-mt-[32px] max-lg:bg-impulso">
         {/* fondo con forma (solo desktop) */}
         <img
           src={formaBackground}
@@ -35,6 +35,9 @@ export default function PlanoConjunto() {
           aria-hidden="true"
           className="pointer-events-none absolute bottom-0 left-0 h-full w-full select-none max-lg:hidden"
         />
+
+        {/* forma curva */}
+        <div className="lg:hidden absolute size-[70px] bg-impulso top-0 left-0 -translate-y-[100%] curva" />
 
         <div className="flex flex-col relative min-h-[270px] justify-center items-center gap-[24px] px-[20px] py-[30px] max-lg:min-h-0 max-lg:pt-[40px] max-lg:pb-[56px]">
           <h2 className="hero-2 text-center text-beige uppercase max-md:text-[24px]">
