@@ -114,7 +114,7 @@ export default function Amenidades() {
           </ul>
 
           {/* botones mobile */}
-          <ul className="sm:hidden self-center flex flex-wrap justify-center gap-[6px] max-w-[198px] min-[400px]:max-w-none">
+          <ul className="sm:hidden self-center flex flex-wrap justify-center gap-[6px] max-w-[198px] min-[412px]:max-w-none">
             {amenidades.map((amenidad) => {
               const isSelected = selected.id === amenidad.id;
 
