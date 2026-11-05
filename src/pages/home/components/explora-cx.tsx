@@ -15,7 +15,7 @@ export default function ExploraCX() {
   return (
     <div
       id="xperiencia"
-      className="relative w-full portrait:min-h-[max(100svh,800px)] overflow-hidden"
+      className="relative w-full portrait:min-h-[max(100svh,800px)] min-h-svh overflow-hidden"
     >
       {/* bg image */}
       <img
