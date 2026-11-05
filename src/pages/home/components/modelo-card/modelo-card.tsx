@@ -24,7 +24,7 @@ export default function ModeloCard({ modelo, onOpen }: ModeloCardProps) {
           className={`absolute bottom-0 w-full h-auto ${isGreen ? "text-proposito" : "text-beige"}`}
         />
 
-        <div className="relative z-20 flex w-full h-[43px] items-center justify-between px-[20px] mb-[15px]">
+        <div className="relative z-20 flex w-full h-[43px] items-center justify-between px-[20px] lg:px-[8px] xl:px-[20px] mb-[15px]">
           <p
             className={`modelo-title font-bold uppercase whitespace-nowrap max-md:text-[28px] ${isGreen ? "text-horizonte" : "text-proposito"}`}
           >
@@ -35,7 +35,7 @@ export default function ModeloCard({ modelo, onOpen }: ModeloCardProps) {
             type="button"
             aria-label={`Ver modelo Aluna ${modelo.numero}`}
             onClick={() => onOpen(modelo)}
-            className="group flex size-[38px] justify-center items-center rounded-full drop-shadow border-1 border-beige bg-impulso transition-opacity hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-beige active:border-impulso"
+            className="shrink-0 group flex size-[38px] justify-center items-center rounded-full drop-shadow border-1 border-beige bg-impulso transition-opacity hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-beige active:border-impulso"
           >
             <ArrowIcon className="size-[15px] text-beige group-active:text-impulso" />
           </button>
