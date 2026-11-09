@@ -114,25 +114,50 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
 
         {/* imagen */}
         <div className="relative w-[44%] shrink-0 rounded-tr-[200px] overflow-hidden max-lg:w-full max-lg:h-[240px] max-lg:rounded-tr-[100px]">
-          <img src={imagen} alt="Familia cocinando en una casa de Senderos de Aluna" className="absolute inset-0 w-full h-full object-cover" />
-          <img src={logo} alt="Senderos de Aluna" className="absolute left-[60px] top-[48px] w-[280px] max-lg:left-[20px] max-lg:top-[20px] max-lg:w-[150px]" />
+          <img
+            src={imagen}
+            alt="Familia cocinando en una casa de Senderos de Aluna"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <img
+            src={logo}
+            alt="Senderos de Aluna"
+            className="absolute left-[60px] top-[48px] w-[280px] max-lg:left-[20px] max-lg:top-[20px] max-lg:w-[150px]"
+          />
         </div>
 
         {/* formulario */}
         <div className="flex flex-1 items-center px-[80px] py-[48px] short:py-[24px] max-lg:px-[20px] max-lg:pt-[32px] max-lg:pb-[48px] md:max-lg:px-[48px]">
-          <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col w-full max-w-[640px] gap-[24px] short:gap-[14px]">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+            className="flex flex-col w-full max-w-[640px] gap-[24px] short:gap-[18px]"
+          >
             <div className="flex flex-col gap-[16px]">
-              <h2 id="folleto-title" className="hero max-md:text-[32px] short:text-[36px]">
-                <span className="font-semibold text-proposito">Regístrate para recibir</span>
+              <h2
+                id="folleto-title"
+                className="hero max-md:text-[32px] short:text-[36px]"
+              >
+                <span className="font-semibold text-proposito">
+                  Regístrate para recibir
+                </span>
                 <br />
-                <span className="font-bold italic text-impulso">más información</span>
+                <span className="font-bold italic text-impulso">
+                  más información
+                </span>
               </h2>
               <p className="subtitle text-proposito max-md:text-[17px]">
-                Conoce todo lo que <span className="font-semibold">Senderos de Aluna</span> tiene para ti.
+                Conoce todo lo que{" "}
+                <span className="font-semibold">Senderos de Aluna</span> tiene
+                para ti.
               </p>
             </div>
 
-            <Field id="fo-nombre" icon={userIcon} error={errors.nombre?.message}>
+            <Field
+              id="fo-nombre"
+              icon={userIcon}
+              error={errors.nombre?.message}
+            >
               <input
                 id="fo-nombre"
                 type="text"
@@ -146,7 +171,11 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
               />
             </Field>
 
-            <Field id="fo-correo" icon={mailIcon} error={errors.correo?.message}>
+            <Field
+              id="fo-correo"
+              icon={mailIcon}
+              error={errors.correo?.message}
+            >
               <input
                 id="fo-correo"
                 type="email"
@@ -162,7 +191,11 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
 
             <PhoneField control={control} name="telefono" id="fo-telefono" />
 
-            <Field id="fo-modelo" icon={modelIcon} error={errors.modelo?.message}>
+            <Field
+              id="fo-modelo"
+              icon={modelIcon}
+              error={errors.modelo?.message}
+            >
               <select
                 id="fo-modelo"
                 aria-label="Modelo de interés"
@@ -189,17 +222,26 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
                   type="checkbox"
                   aria-invalid={!!errors.privacidad}
                   className="mt-[2px] size-[28px] shrink-0 accent-proposito cursor-pointer"
-                  {...register("privacidad", { required: "Debes aceptar el aviso de privacidad" })}
+                  {...register("privacidad", {
+                    required: "Debes aceptar el aviso de privacidad",
+                  })}
                 />
                 <span>
                   Acepto información sobre Senderos de Aluna de acuerdo con el{" "}
-                  <a href={AVISO_PRIVACIDAD_URL} target="_blank" rel="noopener noreferrer" className="underline">
+                  <a
+                    href={AVISO_PRIVACIDAD_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
                     aviso de privacidad
                   </a>
                 </span>
               </label>
               {errors.privacidad && (
-                <ErrorText id="fo-privacidad-error">{errors.privacidad.message}</ErrorText>
+                <ErrorText id="fo-privacidad-error">
+                  {errors.privacidad.message}
+                </ErrorText>
               )}
             </div>
 
@@ -217,7 +259,9 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
 
             <div aria-live="polite">
               {error && (
-                <p className="regular text-red-600">No pudimos enviar tus datos. Intenta de nuevo.</p>
+                <p className="regular text-red-600">
+                  No pudimos enviar tus datos. Intenta de nuevo.
+                </p>
               )}
             </div>
           </form>

@@ -8,7 +8,7 @@ import type { DatosLead, ResultadoRegistro } from "@/types/xperience-form";
 import folletoPdf from "@/assets/fichas/Senderos de Aluna _ Brochure comercial.pdf";
 
 /** Apagar mientras se configura HubSpot: los formularios no se abren. */
-export const FORMULARIOS_ACTIVOS = false;
+export const FORMULARIOS_ACTIVOS = true;
 /** Descarga de fichas técnicas en los popups de modelo. */
 export const FICHAS_ACTIVAS = false;
 
