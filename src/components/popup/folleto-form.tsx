@@ -5,7 +5,6 @@ import CloseIcon from "@/assets/icons/components/close-icon";
 import ArrowIcon from "@/assets/icons/components/arrow-icon";
 import userIcon from "@/assets/icons/form/user-icon.svg";
 import mailIcon from "@/assets/icons/form/mail-icon.svg";
-import modelIcon from "@/assets/icons/form/model-icon.svg";
 import imagen from "@/assets/images/forms/form_brochure/form_brochure_image.webp";
 import logo from "@/assets/logos/main/logo_and_name.svg";
 import {
@@ -15,6 +14,7 @@ import {
   inputClass,
   nombreRules,
   ErrorText,
+  apellidosRules,
 } from "@/components/forms/fields";
 import {
   AVISO_PRIVACIDAD_URL,
@@ -26,13 +26,11 @@ import {
 } from "@/lib/leads";
 import { track } from "@/lib/track";
 
-const modelos = ["ALUNA 75", "ALUNA 88", "ALUNA 96", "ALUNA 105"];
-
 type Values = {
   nombre: string;
+  apellidos: string;
   correo: string;
   telefono: string;
-  modelo: string;
   privacidad: boolean;
 };
 
@@ -50,9 +48,9 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
     mode: "onTouched",
     defaultValues: {
       nombre: guardado?.nombre ?? "",
+      apellidos: guardado?.apellidos ?? "",
       correo: guardado?.correo ?? "",
       telefono: "",
-      modelo: guardado?.modelo ?? "",
       privacidad: false,
     },
   });
@@ -82,11 +80,11 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
       setError(false);
       await solicitarFolleto({
         nombre: v.nombre.trim(),
+        apellidos: v.apellidos.trim(),
         correo: v.correo.trim(),
         telefono: v.telefono,
-        modelo: v.modelo,
       });
-      track("solicitar_folleto", { modelo: v.modelo });
+      track("solicitar_folleto");
       track("descargar_folleto");
       descargar(FOLLETO_URL, NOMBRE_FOLLETO);
       onClose();
@@ -113,7 +111,7 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
         </button>
 
         {/* imagen */}
-        <div className="relative w-[44%] shrink-0 rounded-tr-[200px] overflow-hidden max-lg:w-full max-lg:h-[240px] max-lg:rounded-tr-[100px]">
+        <div className="relative w-[44%] shrink-0 rounded-tr-[200px] overflow-hidden max-lg:w-full max-lg:h-[240px] max-lg:rounded-tr-[0px]">
           <img
             src={imagen}
             alt="Familia cocinando en una casa de Senderos de Aluna"
@@ -153,24 +151,51 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
               </p>
             </div>
 
-            <Field
-              id="fo-nombre"
-              icon={userIcon}
-              error={errors.nombre?.message}
-            >
-              <input
+            <div className="grid grid-cols-2 gap-[16px] max-md:grid-cols-1 max-md:gap-[24px] short:max-md:gap-[18px]">
+              {/* nombre */}
+              <Field
                 id="fo-nombre"
-                type="text"
-                autoComplete="name"
-                placeholder="Nombre completo"
-                aria-label="Nombre completo"
-                aria-invalid={!!errors.nombre}
-                aria-describedby={errors.nombre ? "fo-nombre-error" : undefined}
-                className={inputClass}
-                {...register("nombre", nombreRules)}
-              />
-            </Field>
+                icon={userIcon}
+                error={errors.nombre?.message}
+              >
+                <input
+                  id="fo-nombre"
+                  type="text"
+                  autoComplete="given-name"
+                  placeholder="Nombre"
+                  aria-label="Nombre"
+                  aria-invalid={!!errors.nombre}
+                  aria-describedby={
+                    errors.nombre ? "fo-nombre-error" : undefined
+                  }
+                  className={inputClass}
+                  {...register("nombre", nombreRules)}
+                />
+              </Field>
 
+              {/* apellidos */}
+              <Field
+                id="fo-apellidos"
+                icon={userIcon}
+                error={errors.apellidos?.message}
+              >
+                <input
+                  id="fo-apellidos"
+                  type="text"
+                  autoComplete="family-name"
+                  placeholder="Apellidos"
+                  aria-label="Apellidos"
+                  aria-invalid={!!errors.apellidos}
+                  aria-describedby={
+                    errors.apellidos ? "fo-apellidos-error" : undefined
+                  }
+                  className={inputClass}
+                  {...register("apellidos", apellidosRules)}
+                />
+              </Field>
+            </div>
+
+            {/* correo */}
             <Field
               id="fo-correo"
               icon={mailIcon}
@@ -189,31 +214,8 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
               />
             </Field>
 
+            {/* phone */}
             <PhoneField control={control} name="telefono" id="fo-telefono" />
-
-            <Field
-              id="fo-modelo"
-              icon={modelIcon}
-              error={errors.modelo?.message}
-            >
-              <select
-                id="fo-modelo"
-                aria-label="Modelo de interés"
-                aria-invalid={!!errors.modelo}
-                aria-describedby={errors.modelo ? "fo-modelo-error" : undefined}
-                className={`${inputClass} appearance-none cursor-pointer`}
-                {...register("modelo", { required: "Selecciona un modelo" })}
-              >
-                <option value="" disabled>
-                  Modelo de interés
-                </option>
-                {modelos.map((m) => (
-                  <option key={m} value={m}>
-                    {m}
-                  </option>
-                ))}
-              </select>
-            </Field>
 
             {/* aviso de privacidad */}
             <div className="relative">
