@@ -23,8 +23,8 @@ export default function Hero() {
       track("descargar_folleto");
       return;
     }
-    e.preventDefault();
     setParams({ form: "folleto" });
+    e.preventDefault();
   };
 
   return (

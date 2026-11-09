@@ -12,16 +12,15 @@ import PlanoConjunto from "./components/plano-conjunto";
 import Ubicacion from "./components/ubicacion";
 import { modelos } from "@/data/modelos";
 import ModelPopup from "@/components/popup/model-popup";
-import XperienceForm from "@/components/popup/xperience-form/xperience-form";
-import FolletoForm from "@/components/popup/folleto-form";
 import { FORMULARIOS_ACTIVOS } from "@/lib/leads";
+import FolletoForm from "@/components/popup/folleto-form";
 
 export default function Home() {
   const [params, setParams] = useSearchParams();
   const modeloId = params.get("modelo");
   const modelo = modelos.find((m) => m.id === modeloId);
 
-  const formXperience = params.get("form");
+  const activeForm = params.get("form");
 
   // Evento al abrir el popup de un modelo
   useEffect(() => {
@@ -46,14 +45,10 @@ export default function Home() {
           onClose={() => setParams({}, { replace: true })}
         />
       )}
-
-      {FORMULARIOS_ACTIVOS && formXperience === "xperience" && (
-        <XperienceForm onClose={() => setParams({}, { replace: true })} />
-      )}
-
-      {FORMULARIOS_ACTIVOS && formXperience === "folleto" && (
-        <FolletoForm onClose={() => setParams({}, { replace: true })} />
-      )}
+      {FORMULARIOS_ACTIVOS &&
+        (activeForm === "xperience" || activeForm === "folleto") && (
+          <FolletoForm onClose={() => setParams({}, { replace: true })} />
+        )}
     </>
   );
 }
