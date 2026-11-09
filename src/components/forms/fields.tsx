@@ -10,7 +10,7 @@ import "intl-tel-input/styles";
 
 /* Clases compartidas por los formularios nuevos (mismo estilo que el de cotización) */
 export const inputClass = `w-full py-[20px] max-md:py-[16px] short:py-[12px] pl-[55px] pr-[20px] rounded-[10px]
-  border border-origen bg-white text-origen placeholder:text-origen
+  border border-origen/50 bg-white text-origen placeholder:text-origen
   formulario-input italic outline-none transition-colors duration-200
   focus:border-proposito aria-[invalid=true]:border-red-500/50`;
 
@@ -80,7 +80,7 @@ export function Field({
 
 /* Teléfono con intl-tel-input (igual que la app CX). Guarda el número en E.164. */
 const phoneInputClass = `w-full py-[20px] max-md:py-[16px] short:py-[12px] pr-[20px] rounded-[10px]
-  border border-origen bg-white text-origen placeholder:text-origen
+  border border-origen/50 bg-white text-origen placeholder:text-origen
   formulario-input italic outline-none transition-colors duration-200
   focus:border-proposito aria-[invalid=true]:border-red-500/50`;
 
@@ -151,6 +151,11 @@ export const correoRules = {
 export const nombreRules = {
   required: "Escribe tu nombre completo",
   minLength: { value: 3, message: "El nombre es demasiado corto" },
+};
+
+export const apellidosRules = {
+  required: "Escribe tus apellidos",
+  minLength: { value: 2, message: "El apellido es demasiado corto" },
 };
 
 /** Check informativo (verde) */
