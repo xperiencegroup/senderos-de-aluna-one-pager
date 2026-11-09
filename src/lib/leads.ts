@@ -11,6 +11,8 @@ import folletoPdf from "@/assets/fichas/Senderos de Aluna _ Brochure comercial.p
 export const FORMULARIOS_ACTIVOS = true;
 /** Descarga de fichas técnicas en los popups de modelo. */
 export const FICHAS_ACTIVAS = false;
+const DIAS_VIGENCIA = 7;
+const VIGENCIA_MS = DIAS_VIGENCIA * 24 * 60 * 60 * 1000;
 
 /** Folleto comercial */
 export const FOLLETO_URL = folletoPdf;
@@ -24,12 +26,31 @@ export const CX_URL = "https://senderos.aluna.gt";
 /** TODO: URL del aviso de privacidad (pendiente) */
 export const AVISO_PRIVACIDAD_URL = "#";
 
-type LeadGuardado = DatosLead & { modelo?: string };
+type LeadGuardado = DatosLead;
+
+type Registro = {
+  datos: LeadGuardado;
+  guardadoEn: number;
+};
 
 export function getLeadGuardado(): LeadGuardado | null {
   try {
     const raw = localStorage.getItem(KEY);
-    return raw ? (JSON.parse(raw) as LeadGuardado) : null;
+    if (!raw) return null;
+
+    const registro = JSON.parse(raw) as Partial<Registro>;
+
+    // restar tiempo para verificar si no ha caducido
+    const vigente =
+      typeof registro.guardadoEn === "number" &&
+      Date.now() - registro.guardadoEn < VIGENCIA_MS;
+
+    if (!vigente || !registro.datos) {
+      localStorage.removeItem(KEY);
+      return null;
+    }
+
+    return registro.datos;
   } catch {
     return null;
   }
@@ -37,7 +58,8 @@ export function getLeadGuardado(): LeadGuardado | null {
 
 function guardarLead(lead: LeadGuardado) {
   try {
-    localStorage.setItem(KEY, JSON.stringify(lead));
+    const registro: Registro = { datos: lead, guardadoEn: Date.now() };
+    localStorage.setItem(KEY, JSON.stringify(registro));
   } catch {
     // modo privado / almacenamiento lleno: no bloquea el flujo
   }
@@ -55,9 +77,7 @@ export async function registrarOnboarding(
 }
 
 /** Formulario del folleto comercial */
-export async function solicitarFolleto(
-  datos: DatosLead & { modelo: string },
-): Promise<void> {
+export async function solicitarFolleto(datos: DatosLead): Promise<void> {
   guardarLead({ ...getLeadGuardado(), ...datos });
   await esperar(500); // simulación
 }
