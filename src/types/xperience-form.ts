@@ -4,7 +4,7 @@ export const STEPS = ["Tus datos", "Interés", "Confirmación"] as const;
 /** Estado completo del formulario (versión previa, se conserva) */
 export type XperienceData = {
   nombre: string;
-  apellidos: "";
+  apellidos: string;
   correo: string;
   lada: string;
   telefono: string;

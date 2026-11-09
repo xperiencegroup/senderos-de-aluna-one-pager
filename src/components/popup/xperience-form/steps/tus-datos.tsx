@@ -12,7 +12,12 @@ import {
 } from "@/components/forms/fields";
 import type { DatosLead } from "@/types/xperience-form";
 
-type Values = { nombre: string; correo: string; telefono: string };
+type Values = {
+  nombre: string;
+  apellidos: string;
+  correo: string;
+  telefono: string;
+};
 
 type Props = {
   defaults?: Partial<DatosLead>;
@@ -29,6 +34,7 @@ export default function TusDatos({ defaults, onNext }: Props) {
     mode: "onTouched",
     defaultValues: {
       nombre: defaults?.nombre ?? "",
+      apellidos: defaults?.apellidos ?? "",
       correo: defaults?.correo ?? "",
       telefono: "",
     },
@@ -37,12 +43,18 @@ export default function TusDatos({ defaults, onNext }: Props) {
   const onSubmit = (v: Values) =>
     onNext({
       nombre: v.nombre.trim(),
+      apellidos: v.apellidos.trim(),
+
       correo: v.correo.trim(),
       telefono: v.telefono,
     });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-[28px] short:gap-[16px]">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
+      className="flex flex-col gap-[28px] short:gap-[16px]"
+    >
       <div className="flex flex-col gap-[16px] short:gap-[8px]">
         <h3 className="hero font-semibold text-impulso max-md:text-[32px] short:text-[36px]">
           Empecemos por conocerte
@@ -55,7 +67,12 @@ export default function TusDatos({ defaults, onNext }: Props) {
         </p>
       </div>
 
-      <Field id="ob-nombre" label="Nombre completo*" icon={userIcon} error={errors.nombre?.message}>
+      <Field
+        id="ob-nombre"
+        label="Nombre completo*"
+        icon={userIcon}
+        error={errors.nombre?.message}
+      >
         <input
           id="ob-nombre"
           type="text"
@@ -69,7 +86,12 @@ export default function TusDatos({ defaults, onNext }: Props) {
       </Field>
 
       <div className="grid grid-cols-2 gap-[24px] short:gap-y-[16px] max-md:grid-cols-1 max-md:gap-[28px]">
-        <Field id="ob-correo" label="Correo*" icon={mailIcon} error={errors.correo?.message}>
+        <Field
+          id="ob-correo"
+          label="Correo*"
+          icon={mailIcon}
+          error={errors.correo?.message}
+        >
           <input
             id="ob-correo"
             type="email"
@@ -82,11 +104,21 @@ export default function TusDatos({ defaults, onNext }: Props) {
           />
         </Field>
 
-        <PhoneField control={control} name="telefono" id="ob-telefono" label="Teléfono*" />
+        <PhoneField
+          control={control}
+          name="telefono"
+          id="ob-telefono"
+          label="Teléfono*"
+        />
       </div>
 
       <div className="flex justify-end pt-[8px] short:pt-0">
-        <FillButton type="submit" variant="impulso" Icon={ArrowIcon} iconSize={16}>
+        <FillButton
+          type="submit"
+          variant="impulso"
+          Icon={ArrowIcon}
+          iconSize={16}
+        >
           Confirmar
         </FillButton>
       </div>
