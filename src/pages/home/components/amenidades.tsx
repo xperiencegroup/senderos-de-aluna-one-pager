@@ -72,8 +72,6 @@ const amenidades: Amenidad[] = [
 export default function Amenidades() {
   const [selected, setSelected] = useState(amenidades[0]);
 
-  console.log(selected);
-
   return (
     <div
       id="amenidades"
