@@ -30,7 +30,7 @@ export function ErrorText({
       role="alert"
       className="absolute right-[12px] top-full -translate-y-1/2 flex items-center gap-[6px]
         bg-impulso rounded-full border border-impulso px-[10px] py-[3px]
-        text-[12px] font-medium leading-none text-beige
+        text-[12px] font-medium leading-none text-beige whitespace-nowrap
         motion-safe:animate-[error-in_200ms_ease-out]"
     >
       <svg
@@ -149,13 +149,13 @@ export const correoRules = {
 };
 
 export const nombreRules = {
-  required: "Escribe tu nombre completo",
-  minLength: { value: 3, message: "El nombre es demasiado corto" },
+  required: "Escribe tu nombre",
+  minLength: { value: 3, message: "Demasiado corto" },
 };
 
 export const apellidosRules = {
   required: "Escribe tus apellidos",
-  minLength: { value: 2, message: "El apellido es demasiado corto" },
+  minLength: { value: 2, message: "Demasiado corto" },
 };
 
 /** Check informativo (verde) */
