@@ -10,7 +10,7 @@ import isotipo from "@/assets/logos/main/isotipo.svg";
 
 export default function InitialStep({ nextStep }: { nextStep: () => void }) {
   return (
-    <div className="flex w-full h-full justify-center items-center max-lg:min-h-svh">
+    <div className="flex w-full min-h-svh justify-center items-center max-lg:min-h-svh">
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         {/* background logo */}
         <img
@@ -70,7 +70,8 @@ export default function InitialStep({ nextStep }: { nextStep: () => void }) {
           onClick={nextStep}
           Icon={ArrowIcon}
           iconSize={16}
-          className="h-[44px]"
+          className="h-[44px] mt-3"
+          variant="impulso"
         >
           Comenzar Experiencia
         </FillButton>
