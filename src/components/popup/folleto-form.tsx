@@ -125,7 +125,7 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* formulario */}
-        <div className="flex flex-1 items-center px-[80px] py-[48px] short:py-[24px] max-lg:px-[20px] max-lg:pt-[32px] max-lg:pb-[48px] md:max-lg:px-[48px]">
+        <div className="flex flex-1 justify-center items-center px-[80px] py-[48px] short:py-[24px] max-lg:px-[20px] max-lg:pt-[32px] max-lg:pb-[48px] md:max-lg:px-[48px]">
           <form
             onSubmit={handleSubmit(onSubmit)}
             noValidate
@@ -261,7 +261,7 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
 
             <div aria-live="polite">
               {error && (
-                <p className="regular text-red-600">
+                <p className="text-center regular text-impulso">
                   No pudimos enviar tus datos. Intenta de nuevo.
                 </p>
               )}
