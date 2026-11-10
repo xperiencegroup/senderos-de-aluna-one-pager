@@ -21,6 +21,7 @@ import GaritaIcon from "@/assets/icons/components/amenidades/garita-icon";
 import JuegosIcon from "@/assets/icons/components/amenidades/juegos-icon";
 import MascotasIcon from "@/assets/icons/components/amenidades/mascotas-icon";
 import SalonIcon from "@/assets/icons/components/amenidades/salon-icon";
+import { TRACK } from "@/analytics/track.constants";
 
 type Amenidad = {
   id: string;
@@ -72,6 +73,12 @@ const amenidades: Amenidad[] = [
 export default function Amenidades() {
   const [selected, setSelected] = useState(amenidades[0]);
 
+  const onSelect = (amenidad: Amenidad) => {
+    if (amenidad.id === selected.id) return; // ya está seleccionada
+    setSelected(amenidad);
+    track(TRACK.amenidades.select, { id: amenidad.id, origen: "amenidades" });
+  };
+
   return (
     <div
       id="amenidades"
@@ -99,10 +106,7 @@ export default function Amenidades() {
                 <PillButton
                   Icon={amenidad.Icon}
                   current={selected.id === amenidad.id}
-                  onClick={() => {
-                    setSelected(amenidad);
-                    track("ver_amenidad", { amenidad: amenidad.id });
-                  }}
+                  onClick={() => onSelect(amenidad)}
                   className="w-full max-lg:w-auto max-lg:whitespace-nowrap"
                 >
                   {amenidad.label}
@@ -122,10 +126,7 @@ export default function Amenidades() {
                     type="button"
                     aria-label={amenidad.label}
                     aria-pressed={isSelected}
-                    onClick={() => {
-                      setSelected(amenidad);
-                      track("ver_amenidad", { amenidad: amenidad.id });
-                    }}
+                    onClick={() => onSelect(amenidad)}
                     className="group flex size-[45px] items-center justify-center rounded-full
             border-[1.5px] border-proposito bg-beige drop-shadow
             transition-colors duration-200 hover:cursor-pointer hover:opacity-80
