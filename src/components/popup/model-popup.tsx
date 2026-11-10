@@ -12,6 +12,8 @@ import CloseIcon from "@/assets/icons/components/close-icon";
 import { track } from "@/lib/track";
 
 import { FICHAS_ACTIVAS } from "@/lib/leads";
+import { useLockBodyScroll } from "@/hooks/use-lock-body-scroll";
+import { TRACK } from "@/analytics/track.constants";
 
 type Props = {
   modelo: Modelo;
@@ -55,6 +57,7 @@ export default function ModelPopup({ modelo, onClose }: Props) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const carouselRef = useRef<ModelCarouselHandle>(null);
   const [index, setIndex] = useState(0);
+  useLockBodyScroll();
 
   // Bloquea el scroll del body mientras el popup está abierto
   useEffect(() => {
@@ -86,6 +89,12 @@ export default function ModelPopup({ modelo, onClose }: Props) {
       previouslyFocused?.focus();
     };
   }, [onClose]);
+
+  const onFicha = () =>
+    track(TRACK.modelos.fichaDownload, {
+      id: modelo.id,
+      origen: "modelo_popup",
+    });
 
   return (
     /* overlay: clic fuera del panel cierra. En < lg el panel ocupa toda la pantalla */
@@ -166,9 +175,7 @@ export default function ModelPopup({ modelo, onClose }: Props) {
               <FillButton
                 href={modelo.ficha}
                 download={`Ficha técnica Aluna ${modelo.numero}.pdf`}
-                onClick={() =>
-                  track("descargar_ficha", { modelo: modelo.numero })
-                }
+                onClick={onFicha}
                 Icon={DownloadIcon}
                 variant="proposito"
                 className="whitespace-nowrap text-proposito border-proposito"
@@ -217,9 +224,7 @@ export default function ModelPopup({ modelo, onClose }: Props) {
                 <FillButton
                   href={modelo.ficha}
                   download={`Ficha técnica Aluna ${modelo.numero}.pdf`}
-                  onClick={() =>
-                    track("descargar_ficha", { modelo: modelo.numero })
-                  }
+                  onClick={onFicha}
                   Icon={DownloadIcon}
                   variant="proposito"
                   className="whitespace-nowrap text-proposito border-proposito"
