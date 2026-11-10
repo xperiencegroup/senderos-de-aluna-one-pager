@@ -1,3 +1,4 @@
+import { TRACK } from "@/analytics/track.constants";
 import senderosAluna from "@/assets/logos/main/logo_and_name.svg";
 import xperience from "@/assets/logos/xperience.svg";
 import { CONTACTO_INFO, NAV_LINKS, SOCIAL_LINKS } from "@/const/nav-links";
@@ -40,7 +41,7 @@ export default function Footer() {
                   key={link.id}
                   href={link.href}
                   onClick={() =>
-                    track("click_nav", { seccion: link.id, origen: "footer" })
+                    track(TRACK.nav.item, { id: link.id, origen: "footer" })
                   }
                   className="group flex items-center px-[20px] py-[8px] gap-[10px] rounded-[30px] button font-medium border transition-colors border-beige text-impulso active:text-beige bg-beige drop-shadow hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-impulso
                   max-lg:w-[calc(50%-6px)]"
@@ -67,8 +68,8 @@ export default function Footer() {
                     key={key}
                     href={data.href}
                     onClick={() =>
-                      track("click_contacto", {
-                        tipo: data.title,
+                      track(TRACK.contact.click, {
+                        id: data.id,
                         origen: "footer",
                       })
                     }
@@ -106,9 +107,12 @@ export default function Footer() {
                     key={index}
                     href={social.href}
                     onClick={() =>
-                      social.title === "WhatsApp"
-                        ? track("click_whatsapp", { origen: "footer" })
-                        : track("click_social", { red: social.title })
+                      social.id === "whatsapp"
+                        ? track(TRACK.contact.whatsapp, { origen: "footer" })
+                        : track(TRACK.social.click, {
+                            id: social.id,
+                            origen: "footer",
+                          })
                     }
                     target="_blank"
                     rel="noopener noreferrer"
