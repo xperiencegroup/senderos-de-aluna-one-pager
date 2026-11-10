@@ -1,12 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSearchParams } from "react-router";
+
+// components
 import PillButton from "@/components/pill-button";
-import CloseIcon from "@/assets/icons/components/close-icon";
-import ArrowIcon from "@/assets/icons/components/arrow-icon";
-import userIcon from "@/assets/icons/form/user-icon.svg";
-import mailIcon from "@/assets/icons/form/mail-icon.svg";
-import imagen from "@/assets/images/forms/form_brochure/form_brochure_image.webp";
-import logo from "@/assets/logos/main/logo_and_name.svg";
 import {
   Field,
   PhoneField,
@@ -16,6 +13,18 @@ import {
   ErrorText,
   apellidosRules,
 } from "@/components/forms/fields";
+
+// icons
+import CloseIcon from "@/assets/icons/components/close-icon";
+import ArrowIcon from "@/assets/icons/components/arrow-icon";
+import userIcon from "@/assets/icons/form/user-icon.svg";
+import mailIcon from "@/assets/icons/form/mail-icon.svg";
+
+// images and logos
+import imagen from "@/assets/images/forms/form_brochure/form_brochure_image.webp";
+import logo from "@/assets/logos/main/logo_and_name.svg";
+
+// logica y tipado
 import {
   AVISO_PRIVACIDAD_URL,
   FOLLETO_URL,
@@ -24,7 +33,12 @@ import {
   getLeadGuardado,
   solicitarFolleto,
 } from "@/lib/leads";
+
+// tracking
 import { track } from "@/lib/track";
+
+// contstantes
+import { CLICK_AND_XPERIENCE_URL } from "@/const/click-and-xperience";
 
 type Values = {
   nombre: string;
@@ -35,6 +49,7 @@ type Values = {
 };
 
 export default function FolletoForm({ onClose }: { onClose: () => void }) {
+  const [params] = useSearchParams();
   const closeRef = useRef<HTMLButtonElement>(null);
   const [error, setError] = useState(false);
   const guardado = getLeadGuardado();
@@ -78,15 +93,25 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
   const onSubmit = async (v: Values) => {
     try {
       setError(false);
+      const sourceForm = params.get("form");
+
       await solicitarFolleto({
         nombre: v.nombre.trim(),
         apellidos: v.apellidos.trim(),
         correo: v.correo.trim(),
         telefono: v.telefono,
       });
-      track("solicitar_folleto");
-      track("descargar_folleto");
-      descargar(FOLLETO_URL, NOMBRE_FOLLETO);
+
+      if (sourceForm === "xperience") {
+        track("recorrido_virtual");
+        // llevar al recorrido virtual
+        window.location.href = CLICK_AND_XPERIENCE_URL;
+      } else if (sourceForm === "folleto") {
+        track("solicitar_folleto");
+        track("descargar_folleto");
+        descargar(FOLLETO_URL, NOMBRE_FOLLETO);
+      }
+
       onClose();
     } catch {
       setError(true);
