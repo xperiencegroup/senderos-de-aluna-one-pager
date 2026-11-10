@@ -10,6 +10,7 @@ import { FOLLETO_URL, NOMBRE_FOLLETO, getLeadGuardado } from "@/lib/leads";
 import { track } from "@/lib/track";
 import { TRACK } from "@/analytics/track.constants";
 
+const ORIGEN = "hero";
 /*
  * Móvil (< lg): la foto pasa a ser un banner arriba (con esquina
  * redondeada, eco de la forma) y el contenido va abajo sobre beige.
@@ -20,14 +21,16 @@ export default function Hero() {
 
   // Con registro previo descarga directo; si no, abre el formulario del folleto
   const onFolleto = (e: MouseEvent) => {
-    track(TRACK.folleto.click, { origen: "hero" });
+    track(TRACK.folleto.click, { origen: ORIGEN });
 
+    // Con registro previo descarga directo (el <a download> sigue su curso)
     if (getLeadGuardado()) {
-      track(TRACK.folleto.download, { origen: "hero" });
+      track(TRACK.folleto.download, { origen: ORIGEN });
       return;
     }
-    setParams({ form: "folleto" });
+
     e.preventDefault();
+    setParams({ form: "folleto" }, { state: { origen: ORIGEN } });
   };
 
   return (
