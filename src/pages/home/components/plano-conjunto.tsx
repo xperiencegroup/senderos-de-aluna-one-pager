@@ -10,6 +10,9 @@ import masterplanImageV from "@/assets/images/materplan-background-v.jpg";
 import formaBackground from "@/assets/images/forma-plano-conjunto.svg";
 import ClickIcon from "@/assets/icons/components/click-icon";
 import AlunaIcon from "@/assets/icons/components/aluna-icon";
+import { TRACK } from "@/analytics/track.constants";
+import { getLeadGuardado } from "@/lib/leads";
+import { CLICK_AND_XPERIENCE_URL } from "@/const/click-and-xperience";
 
 /*
  * Móvil (< lg): el masterplan va completo arriba (sin recorte) y abajo
@@ -18,6 +21,18 @@ import AlunaIcon from "@/assets/icons/components/aluna-icon";
  */
 export default function PlanoConjunto() {
   const [, setSearchParams] = useSearchParams();
+
+  const onRecorrido = () => {
+    track(TRACK.xperience.click, { origen: "plano" });
+
+    // Si ya se registró, va directo al recorrido
+    if (getLeadGuardado()) {
+      window.location.assign(CLICK_AND_XPERIENCE_URL);
+      return;
+    }
+
+    setSearchParams({ form: "xperience" }, { state: { origen: "plano" } });
+  };
 
   return (
     <div
@@ -66,14 +81,7 @@ export default function PlanoConjunto() {
           </h2>
 
           <div>
-            <FillButton
-              Icon={ClickIcon}
-              gap={15}
-              onClick={() => {
-                track("iniciar_recorrido", { origen: "plano" });
-                setSearchParams({ form: "xperience" });
-              }}
-            >
+            <FillButton Icon={ClickIcon} gap={15} onClick={onRecorrido}>
               <span className="flex items-center justify-center gap-[15px]">
                 <AlunaIcon className="size-[20px]" aria-hidden="true" />
                 <span>Iniciar Recorrido Virtual</span>

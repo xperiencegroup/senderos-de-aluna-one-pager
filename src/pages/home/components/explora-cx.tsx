@@ -9,9 +9,26 @@ import AlunaIcon from "@/assets/icons/components/aluna-icon";
 import ClickIcon from "@/assets/icons/components/click-icon";
 import { useSearchParams } from "react-router";
 import { track } from "@/lib/track";
+import { getLeadGuardado } from "@/lib/leads";
+import { CLICK_AND_XPERIENCE_URL } from "@/const/click-and-xperience";
+import { TRACK } from "@/analytics/track.constants";
 
 export default function ExploraCX() {
   const [, setSearchParams] = useSearchParams();
+
+  const ORIGEN = "explora";
+
+  const onRecorrido = () => {
+    track(TRACK.xperience.click, { origen: ORIGEN });
+
+    // Si ya se registró, va directo al recorrido
+    if (getLeadGuardado()) {
+      window.location.assign(CLICK_AND_XPERIENCE_URL);
+      return;
+    }
+
+    setSearchParams({ form: "xperience" }, { state: { origen: ORIGEN } });
+  };
   return (
     <div
       id="xperiencia"
@@ -67,14 +84,7 @@ export default function ExploraCX() {
 
           {/* button */}
           <div>
-            <FillButton
-              Icon={ClickIcon}
-              gap={15}
-              onClick={() => {
-                track("iniciar_recorrido", { origen: "explora" });
-                setSearchParams({ form: "xperience" });
-              }}
-            >
+            <FillButton Icon={ClickIcon} gap={15} onClick={onRecorrido}>
               <span className="flex items-center justify-center gap-[15px]">
                 <AlunaIcon className="size-[20px]" aria-hidden="true" />
                 <span>Iniciar Recorrido Virtual</span>

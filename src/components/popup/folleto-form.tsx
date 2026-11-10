@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "react-router";
+import { useLocation, useSearchParams } from "react-router";
 
 // components
 import PillButton from "@/components/pill-button";
@@ -39,6 +39,7 @@ import { track } from "@/lib/track";
 
 // contstantes
 import { CLICK_AND_XPERIENCE_URL } from "@/const/click-and-xperience";
+import { TRACK } from "@/analytics/track.constants";
 
 type Values = {
   nombre: string;
@@ -50,6 +51,7 @@ type Values = {
 
 export default function FolletoForm({ onClose }: { onClose: () => void }) {
   const [params] = useSearchParams();
+  const location = useLocation();
   const closeRef = useRef<HTMLButtonElement>(null);
   const [error, setError] = useState(false);
   const guardado = getLeadGuardado();
@@ -94,6 +96,8 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
     try {
       setError(false);
       const sourceForm = params.get("form");
+      const origen =
+        (location.state as { origen?: string } | null)?.origen ?? "directo";
 
       await solicitarFolleto({
         nombre: v.nombre.trim(),
@@ -103,15 +107,14 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
       });
 
       if (sourceForm === "xperience") {
-        track("recorrido_virtual");
-        // llevar al recorrido virtual
-        window.location.href = CLICK_AND_XPERIENCE_URL;
-      } else if (sourceForm === "folleto") {
-        track("solicitar_folleto");
-        track("descargar_folleto");
-        descargar(FOLLETO_URL, NOMBRE_FOLLETO);
+        track(TRACK.xperience.submit, { origen });
+        window.location.assign(CLICK_AND_XPERIENCE_URL);
+        return;
       }
 
+      track(TRACK.folleto.submit, { origen });
+      track(TRACK.folleto.download, { origen });
+      descargar(FOLLETO_URL, NOMBRE_FOLLETO);
       onClose();
     } catch {
       setError(true);
