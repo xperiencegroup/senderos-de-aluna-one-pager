@@ -8,6 +8,7 @@ import DownloadIcon from "@/assets/icons/components/download-icon";
 import { useSearchParams } from "react-router";
 import { FOLLETO_URL, NOMBRE_FOLLETO, getLeadGuardado } from "@/lib/leads";
 import { track } from "@/lib/track";
+import { TRACK } from "@/analytics/track.constants";
 
 /*
  * Móvil (< lg): la foto pasa a ser un banner arriba (con esquina
@@ -19,8 +20,10 @@ export default function Hero() {
 
   // Con registro previo descarga directo; si no, abre el formulario del folleto
   const onFolleto = (e: MouseEvent) => {
+    track(TRACK.folleto.click, { origen: "hero" });
+
     if (getLeadGuardado()) {
-      track("descargar_folleto");
+      track(TRACK.folleto.download, { origen: "hero" });
       return;
     }
     setParams({ form: "folleto" });
