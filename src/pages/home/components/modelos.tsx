@@ -5,6 +5,8 @@ import logoIcon from "@/assets/icons/logo-opacity-bg.svg";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import ModeloCard from "./modelo-card/modelo-card";
 import InfiniteCarousel from "@/components/carousel/infinite-carousel";
+import { track } from "@/lib/track";
+import { TRACK } from "@/analytics/track.constants";
 
 export default function Modelos() {
   const [params, setParams] = useSearchParams();
@@ -12,7 +14,7 @@ export default function Modelos() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   const abrirModelo = (modelo: Modelo) => {
-    // track("ver_modelo", { modelo: modelo.id });
+    track(TRACK.modelos.open, { id: modelo.id, origen: "modelos" });
     setParams({ modelo: modelo.id });
   };
 
