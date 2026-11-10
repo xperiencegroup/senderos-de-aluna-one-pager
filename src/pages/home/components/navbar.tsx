@@ -12,6 +12,7 @@ import DropdownArrow from "@/assets/icons/components/dropdown-arrow";
 // íconos
 import isotipo from "@/assets/logos/main/isotipo.svg";
 import { useLockBodyScroll } from "@/hooks/use-lock-body-scroll";
+import { TRACK } from "@/analytics/track.constants";
 
 const mobileLinks = links.flatMap((link) =>
   link.id === "proyecto" ? proyectoLinks : [link],
@@ -94,6 +95,7 @@ export default function Navbar() {
           href="#inicio"
           aria-label="Ir al inicio"
           className="flex shrink-0 items-center"
+          onClick={() => track(TRACK.nav.logo)}
         >
           <img src={isotipo} alt="Isotipo Sendero de Aluna" />
         </a>
@@ -105,9 +107,7 @@ export default function Navbar() {
             <li key={id}>
               <PillButton
                 href={href}
-                onClick={() =>
-                  track("click_nav", { seccion: id, origen: "navbar" })
-                }
+                onClick={() => track(TRACK.nav.item, { id })}
                 Icon={icon}
                 current={active === id}
                 className={
@@ -131,7 +131,14 @@ export default function Navbar() {
               className={`absolute top-0 left-0 w-[160px] xl:w-[210px] min-[1440px]:w-[226px] 2xl:w-[246px] rounded-[30px] drop-shadow border-2 transition-colors duration-200 ${isProyectoSelected ? "text-horizonte bg-proposito border-horizonte" : "text-proposito bg-beige border-proposito"} overflow-hidden`}
             >
               <button
-                onClick={() => setIsProyectoSelected((prev) => !prev)}
+                onClick={() => {
+                  if (!isProyectoSelected)
+                    track(TRACK.nav.dropdown, {
+                      id: "proyecto",
+                      origen: "navbar",
+                    });
+                  setIsProyectoSelected((prev) => !prev);
+                }}
                 className={`relative group flex w-full justify-center items-center button font-medium px-[20px] py-[10px] gap-[10px] hover:cursor-pointer`}
               >
                 <div className="relative flex justify-center items-center size-[20px]">
@@ -159,10 +166,7 @@ export default function Navbar() {
                     <a
                       href={link.href}
                       onClick={() =>
-                        track("click_nav", {
-                          seccion: link.id,
-                          origen: "navbar",
-                        })
+                        track(TRACK.nav.item, { id: link.id, origen: "navbar" })
                       }
                       key={index}
                       className="group flex justify-center items-center font-medium button px-[20px] py-[10px] gap-[10px] rounded-[30px] border-2 transition-colors duration-200 border-proposito text-proposito bg-beige drop-shadow hover:opacity-65 active:opacity-100 active:text-horizonte active:bg-proposito active:border-horizonte hover:cursor-pointer"
@@ -183,9 +187,7 @@ export default function Navbar() {
             <li key={id}>
               <PillButton
                 href={href}
-                onClick={() =>
-                  track("click_nav", { seccion: id, origen: "navbar" })
-                }
+                onClick={() => track(TRACK.nav.item, { id })}
                 Icon={icon}
                 current={active === id}
                 className={
@@ -201,9 +203,7 @@ export default function Navbar() {
         {/* CTA escritorio */}
         <a
           href={contacto.href}
-          onClick={() =>
-            track("click_contacto", { tipo: contacto.label, origen: "navbar" })
-          }
+          onClick={() => track(TRACK.contact.click, { origen: "navbar" })}
           className="hidden lg:inline-flex group w-[160px] min-[1440px]:w-[180px] justify-center items-center gap-[10px] rounded-[30px] bg-impulso border-2 border-beige px-[20px] py-[10px] button font-medium text-beige transition-colors duration-200 hover:bg-impulso hover:opacity-65
           active:text-impulso active:bg-beige active:border-impulso active:opacity-100
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-impulso focus-visible:ring-offset-2 focus-visible:ring-offset-horizonte-4"
@@ -215,7 +215,14 @@ export default function Navbar() {
         {/* Botón hamburguesa (móvil) */}
         <button
           type="button"
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => {
+            if (!open)
+              track(TRACK.nav.mobileMenu, {
+                id: open,
+                origen: "navbar_mobile",
+              });
+            setOpen((v) => !v);
+          }}
           aria-expanded={open}
           aria-controls="menu-movil"
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
@@ -255,10 +262,7 @@ export default function Navbar() {
                   <a
                     href={href}
                     onClick={() => {
-                      track("click_nav", {
-                        seccion: id,
-                        origen: "navbar_movil",
-                      });
+                      track(TRACK.nav.item, { id, origen: "navbar_mobile" });
                       setOpen(false);
                     }}
                     aria-current={active === id ? "page" : undefined}
@@ -274,10 +278,7 @@ export default function Navbar() {
                 <a
                   href={contacto.href}
                   onClick={() => {
-                    track("click_contacto", {
-                      tipo: contacto.label,
-                      origen: "navbar_movil",
-                    });
+                    track(TRACK.contact.click, { origen: "navbar_mobile" });
                     setOpen(false);
                   }}
                   className="inline-flex w-full items-center justify-start gap-[10px] rounded-[30px] border-2 border-impulso bg-impulso px-[20px] py-[10px] button font-medium text-beige transition-opacity duration-200 hover:opacity-65 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-impulso"
@@ -303,8 +304,13 @@ export default function Navbar() {
                     href={social.href}
                     onClick={() =>
                       social.title === "WhatsApp"
-                        ? track("click_whatsapp", { origen: "navbar_movil" })
-                        : track("click_social", { red: social.title })
+                        ? track(TRACK.contact.whatsapp, {
+                            origen: "navbar_mobile",
+                          })
+                        : track(TRACK.social.click, {
+                            id: social.title.toLowerCase(),
+                            origen: "navbar_mobile",
+                          })
                     }
                     target="_blank"
                     rel="noopener noreferrer"
