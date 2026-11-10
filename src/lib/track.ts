@@ -8,7 +8,5 @@ declare global {
 
 /** Envía un evento a GA4. No hace nada si GA4 no cargó (previews, local). */
 export function track(event: string, params?: Params) {
-  console.log(event);
-
   window.gtag?.("event", event, params);
 }
