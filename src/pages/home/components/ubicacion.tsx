@@ -1,7 +1,9 @@
+import { TRACK } from "@/analytics/track.constants";
 import ArrowIcon from "@/assets/icons/components/arrow-icon";
 import backgroundLocation from "@/assets/images/ubicacion-background-v2.jpg";
 import MR2Logo from "@/assets/logos/main/mr2.svg";
 import FillButton from "@/components/fill-button";
+import { track } from "@/lib/track";
 
 export default function Ubicacion() {
   return (
@@ -88,7 +90,19 @@ export default function Ubicacion() {
             />
 
             {/* button */}
-            <FillButton Icon={ArrowIcon}>Visitar Sitio Web</FillButton>
+            <FillButton
+              Icon={ArrowIcon}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() =>
+                track(TRACK.visitWebiste.click, {
+                  id: "mr2",
+                  origen: "ubicacion",
+                })
+              }
+            >
+              Visitar Sitio Web
+            </FillButton>
           </div>
         </div>
       </div>
