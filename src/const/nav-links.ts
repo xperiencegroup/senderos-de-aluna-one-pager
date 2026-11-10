@@ -43,9 +43,14 @@ export const NAV_LINKS = [
 ];
 
 export const proyectoLinks = [
-  { id: "plano", label: "Plano de Conjunto", href: "#plano", icon: PlanoIcon },  
-  { id: "amenidades", label: "Amenidades", href: "#amenidades", icon: AmenidadesIcon },
-  { id: "modelos", label: "Modelos", href: "#modelos", icon: ModelosIcon },  
+  { id: "plano", label: "Plano de Conjunto", href: "#plano", icon: PlanoIcon },
+  {
+    id: "amenidades",
+    label: "Amenidades",
+    href: "#amenidades",
+    icon: AmenidadesIcon,
+  },
+  { id: "modelos", label: "Modelos", href: "#modelos", icon: ModelosIcon },
 ];
 
 export const CONTACTO_DATA = {
@@ -57,37 +62,43 @@ export const CONTACTO_DATA = {
 
 export const CONTACTO_INFO = [
   {
+    id: "telefono",
     title: "Llámanos",
     description: "+502 3025 6073",
     icon: phoneIcon,
     href: "tel:+50230256073",
   },
   {
+    id: "correo",
     title: "Escríbenos",
     description: "alunamr2@gmail.com",
     icon: mailIcon,
     href: "mailto:alunamr2@gmail.com",
   },
   {
+    id: "direccion",
     title: "Dirección",
     description: "Aluna Residencial",
     icon: pinIcon,
-    href: "https://maps.app.goo.gl/1EhnSND8HPDrMoPVA",    
+    href: "https://maps.app.goo.gl/1EhnSND8HPDrMoPVA",
   },
 ];
 
 export const SOCIAL_LINKS = [
   {
+    id: "instagram",
     title: "Instagram",
     icon: instagramIcon,
     href: "https://www.instagram.com/viveenaluna/",
   },
   {
+    id: "whatsapp",
     title: "WhatsApp",
     icon: whatsappIcon,
     href: "https://wa.me/50230256073",
   },
   {
+    id: "facebook",
     title: "Facebook",
     icon: facebookIcon,
     href: "https://www.facebook.com/viveenaluna",
