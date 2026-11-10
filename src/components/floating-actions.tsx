@@ -6,6 +6,7 @@ import AlunaIcon from "@/assets/icons/components/aluna-icon";
 import ClickIcon from "@/assets/icons/components/click-icon";
 import whatsappIcon from "@/assets/icons/footer/whatsapp-button.svg";
 import { track } from "@/lib/track";
+import { TRACK } from "@/analytics/track.constants";
 
 /*
  * Botón compacto con relleno circular en hover:
@@ -24,7 +25,7 @@ export default function FloatingActions() {
       {/* Recorrido virtual */}
       <FillButton
         href="#xperiencia"
-        onClick={() => track("iniciar_recorrido", { origen: "flotante" })}
+        onClick={() => track(TRACK.xperience.jump, { origen: "flotante" })}
         Icon={ClickIcon}
         gap={20}
         style={circleFill}
@@ -39,7 +40,7 @@ export default function FloatingActions() {
       {/* WhatsApp */}
       <a
         href="https://wa.me/50230256073"
-        onClick={() => track("click_whatsapp", { origen: "flotante" })}
+        onClick={() => track(TRACK.contact.whatsapp, { origen: "flotante" })}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Escríbenos por WhatsApp"
