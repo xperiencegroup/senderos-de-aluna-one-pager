@@ -38,7 +38,10 @@ import {
 import { track } from "@/lib/track";
 
 // contstantes
-import { CLICK_AND_XPERIENCE_URL } from "@/const/click-and-xperience";
+import {
+  CLICK_AND_XPERIENCE_URL,
+  CX_DISPONIBLE,
+} from "@/const/click-and-xperience";
 import { TRACK } from "@/analytics/track.constants";
 
 type Values = {
@@ -55,6 +58,7 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const [error, setError] = useState(false);
   const guardado = getLeadGuardado();
+  const [proximamente, setProximamente] = useState(false);
 
   const {
     register,
@@ -108,7 +112,12 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
 
       if (sourceForm === "xperience") {
         track(TRACK.xperience.submit, { origen });
-        window.location.assign(CLICK_AND_XPERIENCE_URL);
+
+        if (CX_DISPONIBLE) {
+          window.location.assign(CLICK_AND_XPERIENCE_URL);
+        } else {
+          setProximamente(true);
+        }
         return;
       }
 
@@ -154,147 +163,197 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
 
         {/* formulario */}
         <div className="flex flex-1 justify-center items-center px-[80px] py-[48px] short:py-[24px] max-lg:px-[20px] max-lg:pt-[32px] max-lg:pb-[48px] md:max-lg:px-[48px]">
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            noValidate
-            className="flex flex-col w-full max-w-[640px] gap-[24px] short:gap-[18px]"
-          >
-            <div className="flex flex-col gap-[16px]">
-              <h2
-                id="folleto-title"
-                className="hero max-md:text-[32px] short:text-[36px]"
+          {proximamente ? (
+            <>
+              <div
+                role="status"
+                className="flex flex-col w-full max-w-[640px] gap-[24px]"
               >
-                <span className="font-semibold text-proposito">
-                  Regístrate para recibir
-                </span>
-                <br />
-                <span className="font-bold italic text-impulso">
-                  más información
-                </span>
-              </h2>
-              <p className="subtitle text-proposito max-md:text-[17px]">
-                Conoce todo lo que{" "}
-                <span className="font-semibold">Senderos de Aluna</span> tiene
-                para ti.
-              </p>
-            </div>
+                <h2
+                  id="folleto-title"
+                  className="hero max-md:text-[32px] short:text-[36px]"
+                >
+                  <span className="font-semibold text-proposito">
+                    ¡Gracias por registrarte!
+                  </span>
+                  <br />
+                  <span className="font-bold italic text-impulso">
+                    Muy pronto
+                  </span>
+                </h2>
 
-            <div className="grid grid-cols-2 gap-[16px] max-md:grid-cols-1 max-md:gap-[24px] short:max-md:gap-[18px]">
-              {/* nombre */}
-              <Field
-                id="fo-nombre"
-                icon={userIcon}
-                error={errors.nombre?.message}
-              >
-                <input
-                  id="fo-nombre"
-                  type="text"
-                  autoComplete="given-name"
-                  placeholder="Nombre"
-                  aria-label="Nombre"
-                  aria-invalid={!!errors.nombre}
-                  aria-describedby={
-                    errors.nombre ? "fo-nombre-error" : undefined
-                  }
-                  className={inputClass}
-                  {...register("nombre", nombreRules)}
-                />
-              </Field>
-
-              {/* apellidos */}
-              <Field
-                id="fo-apellidos"
-                icon={userIcon}
-                error={errors.apellidos?.message}
-              >
-                <input
-                  id="fo-apellidos"
-                  type="text"
-                  autoComplete="family-name"
-                  placeholder="Apellidos"
-                  aria-label="Apellidos"
-                  aria-invalid={!!errors.apellidos}
-                  aria-describedby={
-                    errors.apellidos ? "fo-apellidos-error" : undefined
-                  }
-                  className={inputClass}
-                  {...register("apellidos", apellidosRules)}
-                />
-              </Field>
-            </div>
-
-            {/* correo */}
-            <Field
-              id="fo-correo"
-              icon={mailIcon}
-              error={errors.correo?.message}
-            >
-              <input
-                id="fo-correo"
-                type="email"
-                autoComplete="email"
-                placeholder="Correo electrónico"
-                aria-label="Correo electrónico"
-                aria-invalid={!!errors.correo}
-                aria-describedby={errors.correo ? "fo-correo-error" : undefined}
-                className={inputClass}
-                {...register("correo", correoRules)}
-              />
-            </Field>
-
-            {/* phone */}
-            <PhoneField control={control} name="telefono" id="fo-telefono" />
-
-            {/* aviso de privacidad */}
-            <div className="relative">
-              <label className="flex items-start gap-[16px] cursor-pointer regular text-origen">
-                <input
-                  type="checkbox"
-                  aria-invalid={!!errors.privacidad}
-                  className="mt-[2px] size-[28px] shrink-0 accent-proposito cursor-pointer"
-                  {...register("privacidad", {
-                    required: "Debes aceptar el aviso de privacidad",
-                  })}
-                />
-                <span>
-                  Acepto información sobre Senderos de Aluna de acuerdo con el{" "}
-                  <a
-                    href={AVISO_PRIVACIDAD_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline"
-                  >
-                    aviso de privacidad
-                  </a>
-                </span>
-              </label>
-              {errors.privacidad && (
-                <ErrorText id="fo-privacidad-error">
-                  {errors.privacidad.message}
-                </ErrorText>
-              )}
-            </div>
-
-            <PillButton
-              type="submit"
-              disabled={isSubmitting}
-              iconPosition="end"
-              base="border-beige bg-proposito text-beige focus-visible:ring-proposito"
-              pressed="active:bg-beige active:text-proposito active:border-proposito"
-              className="w-full h-[52px] mt-[12px] short:mt-0"
-            >
-              {isSubmitting ? "Enviando..." : "Enviar información"}
-              <ArrowIcon className="size-[12px]" />
-            </PillButton>
-
-            <div aria-live="polite">
-              {error && (
-                <p className="text-center regular text-impulso">
-                  No pudimos enviar tus datos. Intenta de nuevo.
+                <p className="subtitle text-proposito max-md:text-[17px]">
+                  El recorrido virtual de{" "}
+                  <span className="font-semibold">Click and Xperience</span>{" "}
+                  estará disponible próximamente.
                 </p>
-              )}
-            </div>
-          </form>
+
+                <PillButton
+                  type="button"
+                  onClick={onClose}
+                  iconPosition="end"
+                  base="border-beige bg-proposito text-beige focus-visible:ring-proposito"
+                  pressed="active:bg-beige active:text-proposito active:border-proposito"
+                  className="w-full h-[52px] mt-[12px]"
+                >
+                  Volver al sitio
+                  <ArrowIcon className="size-[12px]" />
+                </PillButton>
+              </div>
+            </>
+          ) : (
+            <>
+              {" "}
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                noValidate
+                className="flex flex-col w-full max-w-[640px] gap-[24px] short:gap-[18px]"
+              >
+                <div className="flex flex-col gap-[16px]">
+                  <h2
+                    id="folleto-title"
+                    className="hero max-md:text-[32px] short:text-[36px]"
+                  >
+                    <span className="font-semibold text-proposito">
+                      Regístrate para recibir
+                    </span>
+                    <br />
+                    <span className="font-bold italic text-impulso">
+                      más información
+                    </span>
+                  </h2>
+                  <p className="subtitle text-proposito max-md:text-[17px]">
+                    Conoce todo lo que{" "}
+                    <span className="font-semibold">Senderos de Aluna</span>{" "}
+                    tiene para ti.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-[16px] max-md:grid-cols-1 max-md:gap-[24px] short:max-md:gap-[18px]">
+                  {/* nombre */}
+                  <Field
+                    id="fo-nombre"
+                    icon={userIcon}
+                    error={errors.nombre?.message}
+                  >
+                    <input
+                      id="fo-nombre"
+                      type="text"
+                      autoComplete="given-name"
+                      placeholder="Nombre"
+                      aria-label="Nombre"
+                      aria-invalid={!!errors.nombre}
+                      aria-describedby={
+                        errors.nombre ? "fo-nombre-error" : undefined
+                      }
+                      className={inputClass}
+                      {...register("nombre", nombreRules)}
+                    />
+                  </Field>
+
+                  {/* apellidos */}
+                  <Field
+                    id="fo-apellidos"
+                    icon={userIcon}
+                    error={errors.apellidos?.message}
+                  >
+                    <input
+                      id="fo-apellidos"
+                      type="text"
+                      autoComplete="family-name"
+                      placeholder="Apellidos"
+                      aria-label="Apellidos"
+                      aria-invalid={!!errors.apellidos}
+                      aria-describedby={
+                        errors.apellidos ? "fo-apellidos-error" : undefined
+                      }
+                      className={inputClass}
+                      {...register("apellidos", apellidosRules)}
+                    />
+                  </Field>
+                </div>
+
+                {/* correo */}
+                <Field
+                  id="fo-correo"
+                  icon={mailIcon}
+                  error={errors.correo?.message}
+                >
+                  <input
+                    id="fo-correo"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="Correo electrónico"
+                    aria-label="Correo electrónico"
+                    aria-invalid={!!errors.correo}
+                    aria-describedby={
+                      errors.correo ? "fo-correo-error" : undefined
+                    }
+                    className={inputClass}
+                    {...register("correo", correoRules)}
+                  />
+                </Field>
+
+                {/* phone */}
+                <PhoneField
+                  control={control}
+                  name="telefono"
+                  id="fo-telefono"
+                />
+
+                {/* aviso de privacidad */}
+                <div className="relative">
+                  <label className="flex items-start gap-[16px] cursor-pointer regular text-origen">
+                    <input
+                      type="checkbox"
+                      aria-invalid={!!errors.privacidad}
+                      className="mt-[2px] size-[28px] shrink-0 accent-proposito cursor-pointer"
+                      {...register("privacidad", {
+                        required: "Debes aceptar el aviso de privacidad",
+                      })}
+                    />
+                    <span>
+                      Acepto información sobre Senderos de Aluna de acuerdo con
+                      el{" "}
+                      <a
+                        href={AVISO_PRIVACIDAD_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline"
+                      >
+                        aviso de privacidad
+                      </a>
+                    </span>
+                  </label>
+                  {errors.privacidad && (
+                    <ErrorText id="fo-privacidad-error">
+                      {errors.privacidad.message}
+                    </ErrorText>
+                  )}
+                </div>
+
+                <PillButton
+                  type="submit"
+                  disabled={isSubmitting}
+                  iconPosition="end"
+                  base="border-beige bg-proposito text-beige focus-visible:ring-proposito"
+                  pressed="active:bg-beige active:text-proposito active:border-proposito"
+                  className="w-full h-[52px] mt-[12px] short:mt-0"
+                >
+                  {isSubmitting ? "Enviando..." : "Enviar información"}
+                  <ArrowIcon className="size-[12px]" />
+                </PillButton>
+
+                <div aria-live="polite">
+                  {error && (
+                    <p className="text-center regular text-impulso">
+                      No pudimos enviar tus datos. Intenta de nuevo.
+                    </p>
+                  )}
+                </div>
+              </form>
+            </>
+          )}
         </div>
       </div>
     </div>
