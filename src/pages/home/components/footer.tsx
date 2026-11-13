@@ -22,9 +22,21 @@ export default function Footer() {
               />
               <div className="w-full h-[2.5px] mt-[20px] bg-impulso" />
             </div>
+
             {/* xperience */}
-            <div className="flex flex-col max-lg:pt-[24px] gap-[6px]">
-              <img src={xperience} alt="Xperience" className="w-[93px]" />
+            <div className="inline-flex items-center gap-[12px] self-center lg:self-start max-lg:mt-[24px] rounded-full bg-impulso px-[16px] py-[8px]">
+              <p className="caption font-medium whitespace-nowrap text-beige">
+                Desarrollo web por
+              </p>
+              <span
+                aria-hidden="true"
+                className="h-[16px] w-px bg-impulso/40"
+              />
+              <img
+                src={xperience}
+                alt="Xperience"
+                className="h-[28px] w-auto"
+              />
             </div>
           </div>
 
