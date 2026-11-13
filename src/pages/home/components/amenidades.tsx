@@ -116,35 +116,53 @@ export default function Amenidades() {
           </ul>
 
           {/* botones mobile */}
-          <ul className="sm:hidden self-center flex flex-wrap justify-center gap-[6px] max-w-[198px] min-[412px]:max-w-none">
-            {amenidades.map((amenidad) => {
-              const isSelected = selected.id === amenidad.id;
+          <div className="sm:hidden flex flex-col items-center gap-[14px]">
+            {/* nombre de la amenidad seleccionada */}
+            <p className="relative h-[28px] w-full overflow-hidden text-center">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={selected.id}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  className="block subtitle font-semibold italic text-proposito"
+                >
+                  {selected.label}
+                </motion.span>
+              </AnimatePresence>
+            </p>
 
-              return (
-                <li key={amenidad.id} className="shrink-0 snap-start">
-                  <button
-                    type="button"
-                    aria-label={amenidad.label}
-                    aria-pressed={isSelected}
-                    onClick={() => onSelect(amenidad)}
-                    className="group flex size-[45px] items-center justify-center rounded-full
+            <ul className="sm:hidden self-center flex flex-wrap justify-center gap-[6px] max-w-[198px] min-[412px]:max-w-none">
+              {amenidades.map((amenidad) => {
+                const isSelected = selected.id === amenidad.id;
+
+                return (
+                  <li key={amenidad.id} className="shrink-0 snap-start">
+                    <button
+                      type="button"
+                      aria-label={amenidad.label}
+                      aria-pressed={isSelected}
+                      onClick={() => onSelect(amenidad)}
+                      className="group flex size-[45px] items-center justify-center rounded-full
             border-[1.5px] border-proposito bg-beige drop-shadow
             transition-colors duration-200 hover:cursor-pointer hover:opacity-80
             active:bg-proposito active:border-horizonte active:opacity-100
             aria-pressed:bg-proposito aria-pressed:border-horizonte aria-pressed:opacity-100"
-                  >
-                    {amenidad.Icon && (
-                      <amenidad.Icon
-                        aria-hidden="true"
-                        className="w-[23px] h-fit text-proposito
+                    >
+                      {amenidad.Icon && (
+                        <amenidad.Icon
+                          aria-hidden="true"
+                          className="w-[23px] h-fit text-proposito
                 group-active:text-horizonte group-aria-pressed:text-horizonte"
-                      />
-                    )}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
+                        />
+                      )}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
 
