@@ -11,7 +11,7 @@ export default function ModeloCard({ modelo, onOpen }: ModeloCardProps) {
   const isGreen = modelo.variant === "green";
 
   return (
-    <div className="relative w-[290px] h-[427px] lg:w-[246.5px] lg:h-[363px] xl:w-[290px] xl:h-[427px] min-[1440px]:w-[340px] min-[1440px]:h-[500px] min-[1920px]:w-[400px] min-[1920px]:h-[590px] max-md:w-[260px] max-md:h-[383px] rounded-t-full overflow-hidden bg-proposito drop-shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-1.5">
+    <div className="@container relative w-[290px] h-[427px] lg:w-[246.5px] lg:h-[363px] xl:w-[290px] xl:h-[427px] min-[1440px]:w-[340px] min-[1440px]:h-[500px] min-[1920px]:w-[400px] min-[1920px]:h-[590px] max-md:w-[260px] max-md:h-[383px] rounded-t-full overflow-hidden bg-proposito drop-shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-1.5">
       <img
         src={modelo.image}
         alt={`Imagen frontal del modelo Aluna ${modelo.numero}`}
@@ -24,9 +24,9 @@ export default function ModeloCard({ modelo, onOpen }: ModeloCardProps) {
           className={`absolute bottom-0 w-full h-auto ${isGreen ? "text-proposito" : "text-beige"}`}
         />
 
-        <div className="relative z-20 flex w-full h-[43px] items-center justify-between px-[20px] lg:px-[8px] xl:px-[20px] mb-[15px]">
+        <div className="relative z-20 flex w-full h-[14.8cqw] items-center justify-between px-[6.9cqw] mb-[5.2cqw]">
           <p
-            className={`modelo-title font-bold uppercase whitespace-nowrap max-md:text-[28px] ${isGreen ? "text-horizonte" : "text-proposito"}`}
+            className={`text-[12cqw] max-md:text-[10.8cqw] leading-none font-bold uppercase whitespace-nowrap ${isGreen ? "text-horizonte" : "text-proposito"}`}
           >
             Aluna {modelo.numero}
           </p>
@@ -35,9 +35,9 @@ export default function ModeloCard({ modelo, onOpen }: ModeloCardProps) {
             type="button"
             aria-label={`Ver modelo Aluna ${modelo.numero}`}
             onClick={() => onOpen(modelo)}
-            className="shrink-0 group flex size-[38px] justify-center items-center rounded-full drop-shadow border-1 border-beige bg-impulso transition-opacity hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-beige active:border-impulso"
+            className="shrink-0 group flex size-[13cqw] justify-center items-center rounded-full drop-shadow border-1 border-beige bg-impulso transition-opacity hover:cursor-pointer hover:opacity-60 active:opacity-100 active:bg-beige active:border-impulso"
           >
-            <ArrowIcon className="size-[15px] text-beige group-active:text-impulso" />
+            <ArrowIcon className="size-[5.2cqw] text-beige group-active:text-impulso" />
           </button>
         </div>
       </div>
