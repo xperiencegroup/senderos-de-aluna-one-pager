@@ -58,7 +58,10 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const [error, setError] = useState(false);
   const guardado = getLeadGuardado();
-  const [proximamente, setProximamente] = useState(false);
+  const [proximamente, setProximamente] = useState(
+    () =>
+      params.get("form") === "xperience" && !CX_DISPONIBLE && guardado !== null,
+  );
 
   const {
     register,

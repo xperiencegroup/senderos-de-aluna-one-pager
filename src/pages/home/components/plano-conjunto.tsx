@@ -12,7 +12,10 @@ import ClickIcon from "@/assets/icons/components/click-icon";
 import AlunaIcon from "@/assets/icons/components/aluna-icon";
 import { TRACK } from "@/analytics/track.constants";
 import { getLeadGuardado } from "@/lib/leads";
-import { CLICK_AND_XPERIENCE_URL } from "@/const/click-and-xperience";
+import {
+  CLICK_AND_XPERIENCE_URL,
+  CX_DISPONIBLE,
+} from "@/const/click-and-xperience";
 
 /*
  * Móvil (< lg): el masterplan va completo arriba (sin recorte) y abajo
@@ -25,12 +28,13 @@ export default function PlanoConjunto() {
   const onRecorrido = () => {
     track(TRACK.xperience.click, { origen: "plano" });
 
-    // Si ya se registró, va directo al recorrido
-    if (getLeadGuardado()) {
+    // Cuando la app esté lista y ya hay lead, va directo al recorrido
+    if (getLeadGuardado() && CX_DISPONIBLE) {
       window.location.assign(CLICK_AND_XPERIENCE_URL);
       return;
     }
 
+    // solución temporal: mostrar popup de proximamente
     setSearchParams({ form: "xperience" }, { state: { origen: "plano" } });
   };
 
