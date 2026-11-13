@@ -167,9 +167,9 @@ export const modelos: Modelo[] = [
         { icon: jardinIcon, label: "Jardín" },
       ],
       nivel2: [
-        { icon: camaIcon, label: "Dormitorio Principal \ncon walk-in closet" },
+        { icon: camaIcon, label: "Dormitorio Principal \ncon walk-in clóset" },
         { icon: camaIcon, label: "Dormitorio Secundario" },
-        { icon: banoIcon, label: "2 Baños Completo" },
+        { icon: banoIcon, label: "2 Baños Completos" },
       ],
     },
   },
@@ -238,7 +238,7 @@ export const modelos: Modelo[] = [
       nivel2: [
         { icon: camaIcon, label: "Dormitorio Principal" },
         { icon: camaIcon, label: "2 Dormitorios Secundarios" },
-        { icon: banoIcon, label: "2 Baños Completo" },
+        { icon: banoIcon, label: "2 Baños Completos" },
       ],
     },
   },
