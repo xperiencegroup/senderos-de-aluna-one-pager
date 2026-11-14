@@ -5,13 +5,18 @@ export default function FHA() {
   return (
     <div className="flex w-full justify-center portrait:min-h-[max(100svh,800px)] bg-impulso overflow-hidden max-lg:rounded-tr-[120px]">
       {/* El alto de la sección lo define la figura */}
-      <div className="flex w-full max-w-[1366px] min-[1440px]:max-w-[1700px] min-[1920px]:max-w-[88vw] landscape:h-[360px] min-[1440px]:h-[440px] min-[1920px]:h-[520px] items-center gap-[30px] lg:gap-[60px] min-[1920px]:gap-[100px] px-[84px] max-lg:flex-col max-lg:min-h-svh max-lg:px-[20px] max-lg:py-[48px] md:max-lg:px-[48px]">
+      <div
+        className="flex w-full max-w-[1366px] min-[1440px]:max-w-[1700px] min-[1920px]:max-w-[88vw]
+        lg:h-[max(50svh,380px)]
+        items-center gap-[30px] lg:gap-[60px] min-[1920px]:gap-[100px] px-[84px]
+        max-lg:flex-col max-lg:min-h-svh max-lg:px-[20px] max-lg:py-[48px] md:max-lg:px-[48px]"
+      >
         {/* image */}
         <img
           src={imageDecoration}
           alt=""
           aria-hidden="true"
-          className="block shrink-0 w-[224px] lg:w-[240px] min-[1440px]:w-[290px] min-[1920px]:w-[340px] h-auto"
+          className="block shrink-0 w-[224px] h-auto lg:h-[125%] lg:w-auto lg:max-w-none"
         />
 
         <div className="flex flex-1 flex-col justify-center items-center gap-[20px] lg:gap-[24px] py-[40px] max-lg:py-0">
