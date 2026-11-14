@@ -108,8 +108,8 @@ export default function Footer() {
           </div>
 
           <div className="max-lg:self-center flex flex-col w-full max-w-[338px] lg:w-[212px] h-[154px] max-lg:items-center justify-center px-[20px] py-[30px] gap-[20px] max-lg:w-full max-lg:h-auto max-lg:p-0">
-            <h3 className="max-lg:text-center subtitle italic">
-              Síguenos <br /> <span className="font-bold ">@viveenaluna</span>
+            <h3 className="flex gap-[6px] max-lg:text-center subtitle italic">
+              Síguenos <span className="font-bold">@viveenaluna</span>
             </h3>
 
             <div className="flex items-center gap-[20px]">
