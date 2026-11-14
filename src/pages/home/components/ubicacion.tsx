@@ -14,7 +14,7 @@ export default function Ubicacion() {
         <img
           src={backgroundLocation}
           alt="Imágen satelital"
-          className="absolute inset-0 w-full h-full object-cover max-lg:object-[53%_0%] md:origin-left lg:object-[80%_50%] landscape:md:scale-150 lg:scale-115 xl:scale-100"
+          className="absolute inset-0 w-full h-full object-cover max-lg:object-[68%_40%] md:origin-center lg:object-[50%_62%] landscape:md:scale-150 lg:scale-115 xl:scale-100"
         />
 
         {/* linear gradient portrait */}
