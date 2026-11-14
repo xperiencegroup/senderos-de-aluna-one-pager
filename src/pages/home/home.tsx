@@ -12,8 +12,9 @@ import PlanoConjunto from "./components/plano-conjunto";
 import Ubicacion from "./components/ubicacion";
 import { modelos } from "@/data/modelos";
 import ModelPopup from "@/components/popup/model-popup";
-import { FORMULARIOS_ACTIVOS } from "@/lib/leads";
+import { FICHAS_ACTIVAS, FORMULARIOS_ACTIVOS } from "@/lib/leads";
 import FolletoForm from "@/components/popup/folleto-form";
+import XperienceForm from "@/components/popup/xperience-form/xperience-form";
 
 export default function Home() {
   const [params, setParams] = useSearchParams();
@@ -21,6 +22,17 @@ export default function Home() {
   const modelo = modelos.find((m) => m.id === modeloId);
 
   const activeForm = params.get("form");
+
+  const cerrarTodo = () => setParams({}, { replace: true });
+  const cerrarForm = () =>
+    setParams(
+      (p) => {
+        const n = new URLSearchParams(p);
+        n.delete("form");
+        return n;
+      },
+      { replace: true },
+    );
 
   // Evento al abrir el popup de un modelo
   useEffect(() => {
@@ -42,13 +54,19 @@ export default function Home() {
       {modelo && (
         <ModelPopup
           modelo={modelo}
-          onClose={() => setParams({}, { replace: true })}
+          onClose={cerrarTodo}
         />
       )}
-      {FORMULARIOS_ACTIVOS &&
-        (activeForm === "xperience" || activeForm === "folleto") && (
-          <FolletoForm onClose={() => setParams({}, { replace: true })} />
-        )}
+      {FORMULARIOS_ACTIVOS && activeForm === "xperience" && (
+        <XperienceForm onClose={cerrarTodo} />
+      )}
+      {FORMULARIOS_ACTIVOS && activeForm === "folleto" && (
+        <FolletoForm modo="folleto" onClose={cerrarTodo} />
+      )}
+      {/* Ficha: se abre sobre el popup del modelo; al cerrar vuelve al modelo */}
+      {FICHAS_ACTIVAS && activeForm === "ficha" && modelo && (
+        <FolletoForm modo="ficha" modelo={modelo} onClose={cerrarForm} />
+      )}
     </>
   );
 }

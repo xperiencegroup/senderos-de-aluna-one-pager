@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { PhoneField } from "@/components/forms/fields";
+import { EVENTO_LEAD_GUARDADO, enviarLead, getLeadGuardado, mensajeError, modeloHS } from "@/lib/leads";
+import { modelos as MODELOS } from "@/data/modelos";
 
 // icons
 import userIcon from "@/assets/icons/form/user-icon.svg";
-import phoneIcon from "@/assets/icons/form/phone-icon.svg";
 import mailIcon from "@/assets/icons/form/mail-icon.svg";
 import modelIcon from "@/assets/icons/form/model-icon.svg";
 import PillButton from "./pill-button";
@@ -13,12 +15,14 @@ import { TRACK } from "@/analytics/track.constants";
 
 type CotizaValues = {
   nombre: string;
-  telefono: string;
+  apellido: string;
+  telefono: string; // E.164 (PhoneField)
   correo: string;
-  modelo: string;
+  modelo: string; // número del modelo ("96"); se envía como "Aluna 96"
 };
 
-const modelos = ["ALUNA 75", "ALUNA 88", "ALUNA 96", "ALUNA 105"];
+// Opciones desde data/modelos (solo modelos base)
+const modelos = MODELOS.map((m) => ({ valor: m.numero, etiqueta: `ALUNA ${m.numero}` }));
 
 /* Clases compartidas.
    - pl-[56px] deja espacio al icono
@@ -56,25 +60,66 @@ function ErrorIcon() {
 
 export default function FormularioCotiza() {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [mensaje, setMensaje] = useState("");
+  const [guardado, setGuardado] = useState(() => getLeadGuardado());
 
   const {
     register,
+    control,
     handleSubmit,
+    setValue,
+    getValues,
     reset,
     formState: { errors, isSubmitting },
   } = useForm<CotizaValues>({
     mode: "onTouched",
-    defaultValues: { nombre: "", telefono: "", correo: "", modelo: "" },
+    // Precarga los datos guardados en este navegador (incluido el teléfono)
+    defaultValues: {
+      nombre: guardado?.nombre ?? "",
+      apellido: guardado?.apellido ?? "",
+      telefono: guardado?.telefono ?? "",
+      correo: guardado?.correo ?? "",
+      modelo: "",
+    },
   });
 
+  // Cotiza está montado desde que carga la página: si el lead se guarda después
+  // (folleto, ficha u onboarding), se precargan los campos que sigan vacíos.
+  useEffect(() => {
+    const alGuardar = () => {
+      const g = getLeadGuardado();
+      if (!g) return;
+      const v = getValues();
+      reset({
+        nombre: v.nombre || g.nombre,
+        apellido: v.apellido || g.apellido,
+        correo: v.correo || g.correo,
+        telefono: v.telefono || g.telefono,
+        modelo: v.modelo,
+      });
+      // Remonta el campo de teléfono con el número guardado solo si estaba vacío
+      if (!v.telefono) setGuardado(g);
+    };
+    window.addEventListener(EVENTO_LEAD_GUARDADO, alGuardar);
+    return () => window.removeEventListener(EVENTO_LEAD_GUARDADO, alGuardar);
+  }, [getValues, reset]);
+
   const onSubmit = async (data: CotizaValues) => {
+    setStatus("idle");
     try {
-      setStatus("idle");
-      console.log(data);
-      track(TRACK.cotizador.submit, { id: data.modelo, origen: "cotizador" });
-      reset();
+      await enviarLead(
+        {
+          nombre: data.nombre.trim(),
+          apellido: data.apellido.trim(),
+          correo: data.correo.trim(),
+          telefono: data.telefono,
+        },
+        { canal: "op_cotiza", modelo: modeloHS(data.modelo) },
+      );
+      track(TRACK.cotizador.submit, { id: modeloHS(data.modelo), origen: "cotizador" });
       setStatus("success");
-    } catch {
+    } catch (e) {
+      setMensaje(mensajeError(e));
       setStatus("error");
     }
   };
@@ -85,59 +130,65 @@ export default function FormularioCotiza() {
       noValidate
       className="flex flex-col gap-[15px] lg:gap-[24px] min-[1920px]:gap-[32px]"
     >
-      {/* nombre */}
-      <div className="relative">
-        <img src={userIcon} alt="" aria-hidden="true" className={icon} />
-        <input
-          id="nombre"
-          type="text"
-          autoComplete="name"
-          placeholder="Nombre completo"
-          aria-label="Nombre completo"
-          aria-invalid={!!errors.nombre}
-          aria-describedby={errors.nombre ? "nombre-error" : undefined}
-          className={input}
-          {...register("nombre", {
-            required: "Escribe tu nombre completo",
-            minLength: { value: 3, message: "El nombre es demasiado corto" },
-          })}
-        />
-        {errors.nombre && (
-          <p id="nombre-error" role="alert" className={error}>
-            <ErrorIcon />
-            {errors.nombre.message}
-          </p>
-        )}
+      {/* nombre y apellido (mismos campos que el registro de CX) */}
+      <div className="grid grid-cols-2 gap-[15px] lg:gap-[24px] max-md:grid-cols-1">
+        <div className="relative">
+          <img src={userIcon} alt="" aria-hidden="true" className={icon} />
+          <input
+            id="nombre"
+            type="text"
+            autoComplete="given-name"
+            placeholder="Nombre"
+            aria-label="Nombre"
+            aria-invalid={!!errors.nombre}
+            aria-describedby={errors.nombre ? "nombre-error" : undefined}
+            className={input}
+            {...register("nombre", {
+              required: "Escribe tu nombre",
+              minLength: { value: 2, message: "Escribe tu nombre completo" },
+            })}
+          />
+          {errors.nombre && (
+            <p id="nombre-error" role="alert" className={error}>
+              <ErrorIcon />
+              {errors.nombre.message}
+            </p>
+          )}
+        </div>
+
+        <div className="relative">
+          <img src={userIcon} alt="" aria-hidden="true" className={icon} />
+          <input
+            id="apellido"
+            type="text"
+            autoComplete="family-name"
+            placeholder="Apellido"
+            aria-label="Apellido"
+            aria-invalid={!!errors.apellido}
+            aria-describedby={errors.apellido ? "apellido-error" : undefined}
+            className={input}
+            {...register("apellido", {
+              required: "Escribe tu apellido",
+              minLength: { value: 2, message: "Escribe tu apellido completo" },
+            })}
+          />
+          {errors.apellido && (
+            <p id="apellido-error" role="alert" className={error}>
+              <ErrorIcon />
+              {errors.apellido.message}
+            </p>
+          )}
+        </div>
       </div>
 
-      {/* teléfono */}
-      <div className="relative">
-        <img src={phoneIcon} alt="" aria-hidden="true" className={icon} />
-        <input
-          id="telefono"
-          type="tel"
-          inputMode="tel"
-          autoComplete="tel"
-          placeholder="Número de teléfono"
-          aria-label="Número de teléfono"
-          aria-invalid={!!errors.telefono}
-          aria-describedby={errors.telefono ? "telefono-error" : undefined}
-          className={input}
-          {...register("telefono", {
-            required: "Escribe tu número de teléfono",
-            pattern: {
-              value: /^[+\d][\d\s-]{7,14}$/,
-              message: "Ingresa un teléfono válido",
-            },
-          })}
-        />
-        {errors.telefono && (
-          <p id="telefono-error" role="alert" className={error}>
-            <ErrorIcon />
-            {errors.telefono.message}
-          </p>
-        )}
-      </div>
+      {/* teléfono: mismo componente que los demás formularios (valida y entrega E.164) */}
+      <PhoneField
+        control={control}
+        name="telefono"
+        id="cotiza-telefono"
+        key={guardado?.telefono ?? "sin-lead"}
+        defaultValue={guardado?.telefono}
+      />
 
       {/* correo */}
       <div className="relative">
@@ -182,8 +233,8 @@ export default function FormularioCotiza() {
             Modelo de interés
           </option>
           {modelos.map((m) => (
-            <option key={m} value={m} className="text-origen">
-              {m}
+            <option key={m.valor} value={m.valor} className="text-origen">
+              {m.etiqueta}
             </option>
           ))}
         </select>
@@ -195,25 +246,38 @@ export default function FormularioCotiza() {
         )}
       </div>
 
-      <PillButton
-        type="submit"
-        disabled={isSubmitting}
-        iconPosition="end"
-        base="border-beige bg-proposito text-beige focus-visible:ring-proposito"
-        pressed="active:bg-beige active:text-proposito active:border-proposito"
-        className="w-full h-[52px] min-[1920px]:h-[64px] min-[1920px]:mt-[36px] lg:mt-[16px] xl:mt-[28px]"
-      >
-        {isSubmitting ? "Enviando..." : "Solicitar información"}
-        <ArrowIcon className="size-[12px]" />
-      </PillButton>
+      {/* Tras un envío exitoso no se puede volver a enviar sin elegir "Cotizar otro modelo" */}
+      {status !== "success" && (
+        <PillButton
+          type="submit"
+          disabled={isSubmitting}
+          iconPosition="end"
+          base="border-beige bg-proposito text-beige focus-visible:ring-proposito"
+          pressed="active:bg-beige active:text-proposito active:border-proposito"
+          className="w-full h-[52px] min-[1920px]:h-[64px] min-[1920px]:mt-[36px] lg:mt-[16px] xl:mt-[28px]"
+        >
+          {isSubmitting ? "Enviando..." : "Solicitar información"}
+          <ArrowIcon className="size-[12px]" />
+        </PillButton>
+      )}
 
       <div aria-live="polite">
         {status === "success" && (
-          <p>¡Gracias! Un asesor se pondrá en contacto contigo pronto.</p>
+          <div className="flex flex-col items-start gap-[12px]">
+            <p>¡Gracias! Un asesor se pondrá en contacto contigo pronto.</p>
+            <button
+              type="button"
+              onClick={() => {
+                setValue("modelo", "");
+                setStatus("idle");
+              }}
+              className="underline cursor-pointer"
+            >
+              Cotizar otro modelo
+            </button>
+          </div>
         )}
-        {status === "error" && (
-          <p>No pudimos enviar tus datos. Intenta de nuevo.</p>
-        )}
+        {status === "error" && <p>{mensaje}</p>}
       </div>
     </form>
   );

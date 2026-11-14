@@ -3,22 +3,36 @@ import CloseIcon from "@/assets/icons/components/close-icon";
 import InitialStep from "./steps/initial-step";
 import StepsLayout from "./steps/steps-layout";
 import TusDatos from "./steps/tus-datos";
-import Interes from "./steps/interes";
 import Confirmacion from "./steps/confirmacion";
-import { getLeadGuardado, registrarOnboarding } from "@/lib/leads";
+import { enviarLead, getLeadGuardado, mensajeError, urlCX } from "@/lib/leads";
 import { track } from "@/lib/track";
-import type { DatosLead, ResultadoRegistro } from "@/types/xperience-form";
+import type { DatosLead } from "@/types/xperience-form";
+
+// Onboarding del one pager, mismo flujo que el registro de CX:
+// Tus datos → (contacto existente) entra directo a CX
+//           → (contacto nuevo) Confirmación con folio → CX.
+// La sesión pasa a CX con #lead=<token>. Interés y perfil quedan para la app de asesores.
 
 type Props = {
   onClose: () => void;
 };
 
+type Paso = "inicio" | "datos" | "confirmacion" | "entrando";
+const PASO_NUM: Record<Paso, number> = { inicio: 0, datos: 1, confirmacion: 2, entrando: 1 };
+
 export default function XperienceForm({ onClose }: Props) {
   const closeRef = useRef<HTMLButtonElement>(null);
-  const [step, setStep] = useState(0);
-  const [datos, setDatos] = useState<DatosLead | null>(null);
-  const [resultado, setResultado] = useState<ResultadoRegistro | null>(null);
+  // Lead ya guardado en este navegador: no se le piden datos otra vez, se envían solos
+  const [guardado] = useState(() => getLeadGuardado());
+  const [paso, setPaso] = useState<Paso>(guardado ? "entrando" : "inicio");
+  const automatico = useRef(false);
+  const [confirmacion, setConfirmacion] = useState<{
+    nombre: string;
+    folio: string | null;
+    token: string;
+  } | null>(null);
   const [enviando, setEnviando] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Bloquea el scroll del body mientras el popup está abierto
   useEffect(() => {
@@ -48,21 +62,37 @@ export default function XperienceForm({ onClose }: Props) {
 
   // Tracking por paso
   useEffect(() => {
-    track("onboarding_paso", { paso: step });
-  }, [step]);
+    track("onboarding_paso", { paso: PASO_NUM[paso] });
+  }, [paso]);
 
-  const enviar = async (interes: boolean) => {
-    if (!datos) return;
+  const enviar = async (datos: DatosLead) => {
+    setError(null);
     setEnviando(true);
     try {
-      const r = await registrarOnboarding({ ...datos, interes });
-      track("onboarding_completo", { interes });
-      setResultado(r);
-      setStep(3);
+      const r = await enviarLead(datos, { canal: "op_onboarding" });
+      track("onboarding_completo", { existente: r.existente });
+      // Sin folio nuevo (ya lo tenía): entra directo a CX con su sesión, igual que en CX.
+      // Con folio (contacto nuevo o primer onboarding de quien llegó por un formulario): confirmación.
+      if (!r.folio) {
+        window.location.assign(urlCX(r.token));
+        return;
+      }
+      setConfirmacion({ nombre: datos.nombre, folio: r.folio, token: r.token });
+      setPaso("confirmacion");
+    } catch (e) {
+      setError(mensajeError(e));
+      setPaso("datos"); // si el envío automático falla, se muestra el formulario con el error
     } finally {
       setEnviando(false);
     }
   };
+
+  useEffect(() => {
+    if (!guardado || automatico.current) return;
+    automatico.current = true;
+    enviar(guardado);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div
@@ -81,24 +111,30 @@ export default function XperienceForm({ onClose }: Props) {
           <CloseIcon className="size-[20px] text-horizonte group-active:text-proposito" />
         </button>
 
-        {step === 0 ? (
-          <InitialStep nextStep={() => setStep(1)} />
+        {paso === "entrando" ? (
+          <div className="flex flex-1 min-h-[50svh] items-center justify-center">
+            <p className="subtitle text-proposito" role="status">
+              Abriendo Click and Xperience…
+            </p>
+          </div>
+        ) : paso === "inicio" ? (
+          <InitialStep nextStep={() => setPaso("datos")} />
         ) : (
-          <StepsLayout step={step}>
-            {step === 1 && (
+          <StepsLayout step={paso === "datos" ? 1 : 3}>
+            {paso === "datos" && (
               <TusDatos
-                defaults={datos ?? getLeadGuardado() ?? undefined}
-                onNext={(d) => {
-                  setDatos(d);
-                  setStep(2);
-                }}
+                defaults={guardado ?? undefined}
+                enviando={enviando}
+                error={error}
+                onEnviar={enviar}
               />
             )}
-            {step === 2 && (
-              <Interes enviando={enviando} onBack={() => setStep(1)} onSubmit={enviar} />
-            )}
-            {step === 3 && datos && resultado && (
-              <Confirmacion nombre={datos.nombre} resultado={resultado} />
+            {paso === "confirmacion" && confirmacion && (
+              <Confirmacion
+                nombre={confirmacion.nombre}
+                folio={confirmacion.folio}
+                token={confirmacion.token}
+              />
             )}
           </StepsLayout>
         )}

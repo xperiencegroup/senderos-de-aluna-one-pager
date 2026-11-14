@@ -1,4 +1,3 @@
-import type { MouseEvent } from "react";
 import heroBg from "@/assets/images/hero-background.jpg";
 import formaAluna from "@/assets/images/fondo-forma-hero.svg";
 import senderosLogo from "@/assets/logos/main/logo_and_name.svg";
@@ -6,7 +5,6 @@ import senderosLogo from "@/assets/logos/main/logo_and_name.svg";
 import FillButton from "@/components/fill-button";
 import DownloadIcon from "@/assets/icons/components/download-icon";
 import { useSearchParams } from "react-router";
-import { FOLLETO_URL, NOMBRE_FOLLETO, getLeadGuardado } from "@/lib/leads";
 import { track } from "@/lib/track";
 import { TRACK } from "@/analytics/track.constants";
 
@@ -19,17 +17,10 @@ const ORIGEN = "hero";
 export default function Hero() {
   const [, setParams] = useSearchParams();
 
-  // Con registro previo descarga directo; si no, abre el formulario del folleto
-  const onFolleto = (e: MouseEvent) => {
+  // Siempre pasa por FolletoForm: con lead guardado envía en segundo plano (op_folleto)
+  // y descarga directo; sin lead muestra el formulario.
+  const onFolleto = () => {
     track(TRACK.folleto.click, { origen: ORIGEN });
-
-    // Con registro previo descarga directo (el <a download> sigue su curso)
-    if (getLeadGuardado()) {
-      track(TRACK.folleto.download, { origen: ORIGEN });
-      return;
-    }
-
-    e.preventDefault();
     setParams({ form: "folleto" }, { state: { origen: ORIGEN } });
   };
 
@@ -86,8 +77,6 @@ export default function Hero() {
           </p>
 
           <FillButton
-            href={FOLLETO_URL}
-            download={NOMBRE_FOLLETO}
             onClick={onFolleto}
             Icon={DownloadIcon}
             className="self-start"

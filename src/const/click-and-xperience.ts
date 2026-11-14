@@ -1,4 +1,7 @@
-export const CLICK_AND_XPERIENCE_URL = "https://www.google.com"; // pendiente cambiar url
+import { CX_URL } from "@/lib/leads";
 
-/** Cambiar a true cuando la app CX esté publicada */
-export const CX_DISPONIBLE = false;
+/** URL pública de la app Click & Xperience (para entrar con sesión, usar urlCX() de lib/leads). */
+export const CLICK_AND_XPERIENCE_URL = CX_URL;
+
+/** La app CX ya está publicada. */
+export const CX_DISPONIBLE = true;

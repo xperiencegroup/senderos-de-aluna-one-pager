@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "react-router";
 import { ModelCarousel } from "./model-carousel";
 
 import FillButton from "../fill-button";
@@ -9,11 +10,8 @@ import type { EmblaCarouselType } from "embla-carousel";
 
 import DownloadIcon from "@/assets/icons/components/download-icon";
 import CloseIcon from "@/assets/icons/components/close-icon";
-import { track } from "@/lib/track";
-
 import { FICHAS_ACTIVAS } from "@/lib/leads";
 import { useLockBodyScroll } from "@/hooks/use-lock-body-scroll";
-import { TRACK } from "@/analytics/track.constants";
 
 type Props = {
   modelo: Modelo;
@@ -90,10 +88,13 @@ export default function ModelPopup({ modelo, onClose }: Props) {
     };
   }, [onClose]);
 
-  const onFicha = () =>
-    track(TRACK.modelos.fichaDownload, {
-      id: modelo.id,
-      origen: "modelo_popup",
+  // La ficha se pide con formulario (?form=ficha); el tracking de la descarga vive en FolletoForm
+  const [, setParams] = useSearchParams();
+  const abrirFicha = () =>
+    setParams((p) => {
+      const n = new URLSearchParams(p);
+      n.set("form", "ficha");
+      return n;
     });
 
   return (
@@ -173,9 +174,7 @@ export default function ModelPopup({ modelo, onClose }: Props) {
           {FICHAS_ACTIVAS && (
             <div className="lg:hidden flex h-[78px] justify-center items-center">
               <FillButton
-                href={modelo.ficha}
-                download={`Ficha técnica Aluna ${modelo.numero}.pdf`}
-                onClick={onFicha}
+                onClick={abrirFicha}
                 Icon={DownloadIcon}
                 variant="proposito"
                 className="whitespace-nowrap text-proposito border-proposito"
@@ -222,9 +221,7 @@ export default function ModelPopup({ modelo, onClose }: Props) {
             {FICHAS_ACTIVAS && (
               <div className="max-lg:hidden flex h-[78px] justify-center items-center">
                 <FillButton
-                  href={modelo.ficha}
-                  download={`Ficha técnica Aluna ${modelo.numero}.pdf`}
-                  onClick={onFicha}
+                  onClick={abrirFicha}
                   Icon={DownloadIcon}
                   variant="proposito"
                   className="whitespace-nowrap text-proposito border-proposito"

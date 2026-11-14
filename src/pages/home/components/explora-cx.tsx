@@ -9,11 +9,6 @@ import AlunaIcon from "@/assets/icons/components/aluna-icon";
 import ClickIcon from "@/assets/icons/components/click-icon";
 import { useSearchParams } from "react-router";
 import { track } from "@/lib/track";
-import { getLeadGuardado } from "@/lib/leads";
-import {
-  CLICK_AND_XPERIENCE_URL,
-  CX_DISPONIBLE,
-} from "@/const/click-and-xperience";
 import { TRACK } from "@/analytics/track.constants";
 
 export default function ExploraCX() {
@@ -24,11 +19,7 @@ export default function ExploraCX() {
   const onRecorrido = () => {
     track(TRACK.xperience.click, { origen: ORIGEN });
 
-    // Cuando la app esté lista y ya hay lead, va directo al recorrido
-    if (getLeadGuardado() && CX_DISPONIBLE) {
-      window.location.assign(CLICK_AND_XPERIENCE_URL);
-      return;
-    }
+    // Siempre por el onboarding: con lead guardado se envía solo (asigna folio si falta) y entra a CX
 
     setSearchParams({ form: "xperience" }, { state: { origen: ORIGEN } });
   };

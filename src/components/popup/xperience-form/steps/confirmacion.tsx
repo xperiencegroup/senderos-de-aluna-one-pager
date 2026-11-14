@@ -1,22 +1,22 @@
 import FillButton from "@/components/fill-button";
 import ArrowIcon from "@/assets/icons/components/arrow-icon";
 import { CheckIcon } from "@/components/forms/fields";
-import { CX_URL } from "@/lib/leads";
+import { urlCX } from "@/lib/leads";
 import { track } from "@/lib/track";
-import type { ResultadoRegistro } from "@/types/xperience-form";
+
+// Mismos textos que PasoConfirmacion de CX. Solo se muestra a contactos nuevos.
 
 type Props = {
   nombre: string;
-  resultado: ResultadoRegistro;
+  folio: string | null;
+  token: string;
 };
 
-export default function Confirmacion({ nombre, resultado }: Props) {
-  const primerNombre = nombre.split(" ")[0];
-
+export default function Confirmacion({ nombre, folio, token }: Props) {
   return (
     <div className="flex flex-col gap-[24px]">
       <p className="subtitle text-impulso">
-        Hola, <span className="font-bold italic">{primerNombre}</span>
+        Hola, <span className="font-bold italic">{nombre}</span>
       </p>
 
       <h3 className="subtitle text-impulso">
@@ -24,38 +24,28 @@ export default function Confirmacion({ nombre, resultado }: Props) {
         esperando
       </h3>
 
-      {/* folio: pendiente la lógica de generación */}
-      <div className="self-start flex flex-col gap-[4px] px-[28px] py-[20px] rounded-[10px] border border-origen bg-white">
-        <span className="regular italic text-origen">Tu folio</span>
-        <span className="regular font-semibold italic text-origen">
-          {resultado.folio ?? "Por asignar"}
-        </span>
-      </div>
-
-      <p className="regular text-origen">
-        Te enviamos tu folio y un brochure con la información completa por
-        WhatsApp y correo. Guárdalo: si visitas el showroom, este código nos
-        permite continuar tu experiencia desde donde la dejaste.
-      </p>
-
-      {/* solo se muestran cuando el envío sea real (workflow de HubSpot) */}
-      {(resultado.whatsappEnviado || resultado.correoEnviado) && (
-        <ul className="flex flex-wrap gap-x-[60px] gap-y-[12px]">
-          {resultado.whatsappEnviado && (
-            <li className="flex items-center gap-[12px] regular text-proposito">
-              <CheckIcon /> WhatsApp enviado
-            </li>
-          )}
-          {resultado.correoEnviado && (
-            <li className="flex items-center gap-[12px] regular text-proposito">
-              <CheckIcon /> Correo enviado
-            </li>
-          )}
-        </ul>
+      {folio && (
+        <div className="self-start flex flex-col gap-[4px] px-[28px] py-[20px] rounded-[10px] border border-origen bg-white">
+          <span className="regular italic text-origen">Tu folio</span>
+          <span className="regular font-semibold italic text-origen select-text">
+            {folio}
+          </span>
+        </div>
       )}
 
+      <p className="regular text-origen">
+        Te enviamos tu folio y el brochure de Senderos de Aluna a tu correo.
+        Guárdalo: si visitas el showroom, con este código continuamos tu
+        experiencia desde donde la dejaste.
+      </p>
+
+      {/* El correo lo envía el workflow de HubSpot al registrarse el folio */}
+      <p className="flex items-center gap-[12px] regular text-proposito">
+        <CheckIcon /> Correo enviado
+      </p>
+
       <FillButton
-        href={CX_URL}
+        href={urlCX(token)}
         onClick={() => track("explorar_cx", { origen: "onboarding" })}
         variant="impulso"
         Icon={ArrowIcon}

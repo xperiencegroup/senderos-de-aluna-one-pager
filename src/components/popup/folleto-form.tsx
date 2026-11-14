@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useLocation, useSearchParams } from "react-router";
+import { useLocation } from "react-router";
 
 // components
 import PillButton from "@/components/pill-button";
 import {
+  AvisoPrivacidad,
   Field,
   PhoneField,
+  apellidoRules,
   correoRules,
   inputClass,
   nombreRules,
-  ErrorText,
-  apellidosRules,
+  privacidadRules,
 } from "@/components/forms/fields";
 
 // icons
@@ -24,44 +25,55 @@ import mailIcon from "@/assets/icons/form/mail-icon.svg";
 import imagen from "@/assets/images/forms/form_brochure/form_brochure_image.webp";
 import logo from "@/assets/logos/main/logo_and_name.svg";
 
-// logica y tipado
+// lógica y tipado
 import {
-  AVISO_PRIVACIDAD_URL,
   FOLLETO_URL,
   NOMBRE_FOLLETO,
   descargar,
+  enviarLead,
   getLeadGuardado,
-  solicitarFolleto,
+  mensajeError,
+  modeloHS,
 } from "@/lib/leads";
+import type { Modelo } from "@/data/modelos";
+import type { DatosLead } from "@/types/xperience-form";
 
 // tracking
 import { track } from "@/lib/track";
-
-// contstantes
-import {
-  CLICK_AND_XPERIENCE_URL,
-  CX_DISPONIBLE,
-} from "@/const/click-and-xperience";
 import { TRACK } from "@/analytics/track.constants";
 
-type Values = {
-  nombre: string;
-  apellidos: string;
-  correo: string;
-  telefono: string;
-  privacidad: boolean;
-};
+// Formulario previo a una descarga: folleto comercial (op_folleto) o ficha técnica de un modelo (op_ficha).
+// Si el lead ya está guardado en este navegador, no se muestra: se envía en segundo plano y se descarga.
 
-export default function FolletoForm({ onClose }: { onClose: () => void }) {
-  const [params] = useSearchParams();
+type Props =
+  | { modo: "folleto"; modelo?: undefined; onClose: () => void }
+  | { modo: "ficha"; modelo: Modelo; onClose: () => void };
+
+type Values = DatosLead & { privacidad: boolean };
+
+export default function FolletoForm({ modo, modelo, onClose }: Props) {
   const location = useLocation();
   const closeRef = useRef<HTMLButtonElement>(null);
-  const [error, setError] = useState(false);
-  const guardado = getLeadGuardado();
-  const [proximamente, setProximamente] = useState(
-    () =>
-      params.get("form") === "xperience" && !CX_DISPONIBLE && guardado !== null,
-  );
+  const [error, setError] = useState<string | null>(null);
+  const [guardado] = useState(() => getLeadGuardado());
+  const automatico = useRef(false);
+
+  const esFicha = modo === "ficha";
+  const canal = esFicha ? "op_ficha" : "op_folleto";
+  const modeloEnvio = esFicha ? modeloHS(modelo.numero) : undefined;
+  const origen =
+    (location.state as { origen?: string } | null)?.origen ??
+    (esFicha ? "modelo_popup" : "directo");
+
+  const descargarArchivo = () => {
+    if (esFicha) {
+      track(TRACK.modelos.fichaDownload, { id: modelo.id, origen });
+      descargar(modelo.ficha, `Ficha técnica Aluna ${modelo.numero}.pdf`);
+    } else {
+      track(TRACK.folleto.download, { origen });
+      descargar(FOLLETO_URL, NOMBRE_FOLLETO);
+    }
+  };
 
   const {
     register,
@@ -71,16 +83,29 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
   } = useForm<Values>({
     mode: "onTouched",
     defaultValues: {
-      nombre: guardado?.nombre ?? "",
-      apellidos: guardado?.apellidos ?? "",
-      correo: guardado?.correo ?? "",
+      nombre: "",
+      apellido: "",
+      correo: "",
       telefono: "",
       privacidad: false,
     },
   });
 
+  // Lead ya guardado: envío silencioso (registra el interés en HubSpot) + descarga directa
+  useEffect(() => {
+    if (!guardado || automatico.current) return;
+    automatico.current = true;
+    enviarLead(guardado, { canal, modelo: modeloEnvio }).catch(() => {
+      // no bloquea la descarga
+    });
+    descargarArchivo();
+    onClose();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Bloqueo de scroll + Escape + foco
   useEffect(() => {
+    if (guardado) return;
     const { overflow, paddingRight } = document.body.style;
     const scrollbar = window.innerWidth - document.documentElement.clientWidth;
     document.body.style.overflow = "hidden";
@@ -97,41 +122,29 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
       document.removeEventListener("keydown", onKeyDown);
       previo?.focus();
     };
-  }, [onClose]);
+  }, [onClose, guardado]);
 
   const onSubmit = async (v: Values) => {
+    setError(null);
     try {
-      setError(false);
-      const sourceForm = params.get("form");
-      const origen =
-        (location.state as { origen?: string } | null)?.origen ?? "directo";
-
-      await solicitarFolleto({
-        nombre: v.nombre.trim(),
-        apellidos: v.apellidos.trim(),
-        correo: v.correo.trim(),
-        telefono: v.telefono,
-      });
-
-      if (sourceForm === "xperience") {
-        track(TRACK.xperience.submit, { origen });
-
-        if (CX_DISPONIBLE) {
-          window.location.assign(CLICK_AND_XPERIENCE_URL);
-        } else {
-          setProximamente(true);
-        }
-        return;
-      }
-
-      track(TRACK.folleto.submit, { origen });
-      track(TRACK.folleto.download, { origen });
-      descargar(FOLLETO_URL, NOMBRE_FOLLETO);
+      await enviarLead(
+        {
+          nombre: v.nombre.trim(),
+          apellido: v.apellido.trim(),
+          correo: v.correo.trim(),
+          telefono: v.telefono,
+        },
+        { canal, modelo: modeloEnvio },
+      );
+      if (!esFicha) track(TRACK.folleto.submit, { origen });
+      descargarArchivo();
       onClose();
-    } catch {
-      setError(true);
+    } catch (e) {
+      setError(mensajeError(e));
     }
   };
+
+  if (guardado) return null;
 
   return (
     <div
@@ -166,197 +179,119 @@ export default function FolletoForm({ onClose }: { onClose: () => void }) {
 
         {/* formulario */}
         <div className="flex flex-1 justify-center items-center px-[80px] py-[48px] short:py-[24px] max-lg:px-[20px] max-lg:pt-[32px] max-lg:pb-[48px] md:max-lg:px-[48px]">
-          {proximamente ? (
-            <>
-              <div
-                role="status"
-                className="flex flex-col w-full max-w-[640px] gap-[24px]"
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+            className="flex flex-col w-full max-w-[640px] gap-[24px] short:gap-[18px]"
+          >
+            <div className="flex flex-col gap-[16px]">
+              <h2
+                id="folleto-title"
+                className="hero max-md:text-[32px] short:text-[36px]"
               >
-                <h2
-                  id="folleto-title"
-                  className="hero max-md:text-[32px] short:text-[36px]"
-                >
-                  <span className="font-semibold text-proposito">
-                    ¡Gracias por registrarte!
-                  </span>
-                  <br />
-                  <span className="font-bold italic text-impulso">
-                    Muy pronto
-                  </span>
-                </h2>
-
-                <p className="subtitle text-proposito max-md:text-[17px]">
-                  El recorrido virtual de{" "}
-                  <span className="font-semibold">Click and Xperience</span>{" "}
-                  estará disponible próximamente.
-                </p>
-
-                <PillButton
-                  type="button"
-                  onClick={onClose}
-                  iconPosition="end"
-                  base="border-beige bg-proposito text-beige focus-visible:ring-proposito"
-                  pressed="active:bg-beige active:text-proposito active:border-proposito"
-                  className="w-full h-[52px] mt-[12px]"
-                >
-                  Volver al sitio
-                  <ArrowIcon className="size-[12px]" />
-                </PillButton>
-              </div>
-            </>
-          ) : (
-            <>
-              {" "}
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                noValidate
-                className="flex flex-col w-full max-w-[640px] gap-[24px] short:gap-[18px]"
-              >
-                <div className="flex flex-col gap-[16px]">
-                  <h2
-                    id="folleto-title"
-                    className="hero max-md:text-[32px] short:text-[36px]"
-                  >
-                    <span className="font-semibold text-proposito">
-                      Regístrate para recibir
-                    </span>
-                    <br />
-                    <span className="font-bold italic text-impulso">
-                      más información
-                    </span>
-                  </h2>
-                  <p className="subtitle text-proposito max-md:text-[17px]">
+                <span className="font-semibold text-proposito">
+                  {esFicha ? "Regístrate para descargar" : "Regístrate para recibir"}
+                </span>
+                <br />
+                <span className="font-bold italic text-impulso">
+                  {esFicha ? "la ficha técnica" : "más información"}
+                </span>
+              </h2>
+              <p className="subtitle text-proposito max-md:text-[17px]">
+                {esFicha ? (
+                  <>
+                    Conoce todos los detalles del{" "}
+                    <span className="font-semibold">Aluna {modelo.numero}</span>.
+                  </>
+                ) : (
+                  <>
                     Conoce todo lo que{" "}
                     <span className="font-semibold">Senderos de Aluna</span>{" "}
                     tiene para ti.
-                  </p>
-                </div>
+                  </>
+                )}
+              </p>
+            </div>
 
-                <div className="grid grid-cols-2 gap-[16px] max-md:grid-cols-1 max-md:gap-[24px] short:max-md:gap-[18px]">
-                  {/* nombre */}
-                  <Field
-                    id="fo-nombre"
-                    icon={userIcon}
-                    error={errors.nombre?.message}
-                  >
-                    <input
-                      id="fo-nombre"
-                      type="text"
-                      autoComplete="given-name"
-                      placeholder="Nombre"
-                      aria-label="Nombre"
-                      aria-invalid={!!errors.nombre}
-                      aria-describedby={
-                        errors.nombre ? "fo-nombre-error" : undefined
-                      }
-                      className={inputClass}
-                      {...register("nombre", nombreRules)}
-                    />
-                  </Field>
-
-                  {/* apellidos */}
-                  <Field
-                    id="fo-apellidos"
-                    icon={userIcon}
-                    error={errors.apellidos?.message}
-                  >
-                    <input
-                      id="fo-apellidos"
-                      type="text"
-                      autoComplete="family-name"
-                      placeholder="Apellidos"
-                      aria-label="Apellidos"
-                      aria-invalid={!!errors.apellidos}
-                      aria-describedby={
-                        errors.apellidos ? "fo-apellidos-error" : undefined
-                      }
-                      className={inputClass}
-                      {...register("apellidos", apellidosRules)}
-                    />
-                  </Field>
-                </div>
-
-                {/* correo */}
-                <Field
-                  id="fo-correo"
-                  icon={mailIcon}
-                  error={errors.correo?.message}
-                >
-                  <input
-                    id="fo-correo"
-                    type="email"
-                    autoComplete="email"
-                    placeholder="Correo electrónico"
-                    aria-label="Correo electrónico"
-                    aria-invalid={!!errors.correo}
-                    aria-describedby={
-                      errors.correo ? "fo-correo-error" : undefined
-                    }
-                    className={inputClass}
-                    {...register("correo", correoRules)}
-                  />
-                </Field>
-
-                {/* phone */}
-                <PhoneField
-                  control={control}
-                  name="telefono"
-                  id="fo-telefono"
+            <div className="grid grid-cols-2 gap-[16px] max-md:grid-cols-1 max-md:gap-[24px] short:max-md:gap-[18px]">
+              {/* nombre */}
+              <Field id="fo-nombre" icon={userIcon} error={errors.nombre?.message}>
+                <input
+                  id="fo-nombre"
+                  type="text"
+                  autoComplete="given-name"
+                  placeholder="Nombre"
+                  aria-label="Nombre"
+                  aria-invalid={!!errors.nombre}
+                  aria-describedby={errors.nombre ? "fo-nombre-error" : undefined}
+                  className={inputClass}
+                  {...register("nombre", nombreRules)}
                 />
+              </Field>
 
-                {/* aviso de privacidad */}
-                <div className="relative">
-                  <label className="flex items-start gap-[16px] cursor-pointer regular text-origen">
-                    <input
-                      type="checkbox"
-                      aria-invalid={!!errors.privacidad}
-                      className="mt-[2px] size-[28px] shrink-0 accent-proposito cursor-pointer"
-                      {...register("privacidad", {
-                        required: "Debes aceptar el aviso de privacidad",
-                      })}
-                    />
-                    <span>
-                      Acepto información sobre Senderos de Aluna de acuerdo con
-                      el{" "}
-                      <a
-                        href={AVISO_PRIVACIDAD_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="underline"
-                      >
-                        aviso de privacidad
-                      </a>
-                    </span>
-                  </label>
-                  {errors.privacidad && (
-                    <ErrorText id="fo-privacidad-error">
-                      {errors.privacidad.message}
-                    </ErrorText>
-                  )}
-                </div>
+              {/* apellido */}
+              <Field id="fo-apellido" icon={userIcon} error={errors.apellido?.message}>
+                <input
+                  id="fo-apellido"
+                  type="text"
+                  autoComplete="family-name"
+                  placeholder="Apellido"
+                  aria-label="Apellido"
+                  aria-invalid={!!errors.apellido}
+                  aria-describedby={errors.apellido ? "fo-apellido-error" : undefined}
+                  className={inputClass}
+                  {...register("apellido", apellidoRules)}
+                />
+              </Field>
+            </div>
 
-                <PillButton
-                  type="submit"
-                  disabled={isSubmitting}
-                  iconPosition="end"
-                  base="border-beige bg-proposito text-beige focus-visible:ring-proposito"
-                  pressed="active:bg-beige active:text-proposito active:border-proposito"
-                  className="w-full h-[52px] mt-[12px] short:mt-0"
-                >
-                  {isSubmitting ? "Enviando..." : "Enviar información"}
-                  <ArrowIcon className="size-[12px]" />
-                </PillButton>
+            {/* correo */}
+            <Field id="fo-correo" icon={mailIcon} error={errors.correo?.message}>
+              <input
+                id="fo-correo"
+                type="email"
+                autoComplete="email"
+                placeholder="Correo electrónico"
+                aria-label="Correo electrónico"
+                aria-invalid={!!errors.correo}
+                aria-describedby={errors.correo ? "fo-correo-error" : undefined}
+                className={inputClass}
+                {...register("correo", correoRules)}
+              />
+            </Field>
 
-                <div aria-live="polite">
-                  {error && (
-                    <p className="text-center regular text-impulso">
-                      No pudimos enviar tus datos. Intenta de nuevo.
-                    </p>
-                  )}
-                </div>
-              </form>
-            </>
-          )}
+            {/* teléfono */}
+            <PhoneField control={control} name="telefono" id="fo-telefono" />
+
+            {/* aviso de privacidad */}
+            <AvisoPrivacidad
+              id="fo-privacidad"
+              registro={register("privacidad", privacidadRules)}
+              error={errors.privacidad?.message}
+            />
+
+            <PillButton
+              type="submit"
+              disabled={isSubmitting}
+              iconPosition="end"
+              base="border-beige bg-proposito text-beige focus-visible:ring-proposito"
+              pressed="active:bg-beige active:text-proposito active:border-proposito"
+              className="w-full h-[52px] mt-[12px] short:mt-0"
+            >
+              {isSubmitting
+                ? "Enviando..."
+                : esFicha
+                  ? "Descargar ficha técnica"
+                  : "Enviar información"}
+              <ArrowIcon className="size-[12px]" />
+            </PillButton>
+
+            <div aria-live="polite">
+              {error && (
+                <p className="text-center regular text-impulso">{error}</p>
+              )}
+            </div>
+          </form>
         </div>
       </div>
     </div>

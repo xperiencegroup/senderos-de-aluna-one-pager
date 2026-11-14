@@ -1,10 +1,9 @@
 import type { ReactNode } from "react";
-import Stepper from "../stepper";
 
 import formaAluna from "@/assets/images/fondo-forma-hero.svg";
 import isotipo from "@/assets/logos/main/isotipo.svg";
 
-// Una foto por paso (Figma)
+// Una foto por paso (Figma). Sin stepper, igual que CX: 1 = Tus datos, 3 = Confirmación
 import fotoPaso1 from "@/assets/images/forms/onboarding/step1_image.jpg";
 import fotoPaso2 from "@/assets/images/forms/onboarding/step2_image.jpg";
 import fotoPaso3 from "@/assets/images/forms/onboarding/step3_image.jpg";
@@ -71,8 +70,6 @@ export default function StepsLayout({ step, children }: StepsLayoutProps) {
       {/* panel del formulario */}
       <div className="flex-1 shrink-0 bg-beige max-lg:flex-none">
         <div className="flex flex-col h-full px-[53px] pt-[41px] pb-[56px] gap-[40px] short:pt-[24px] short:pb-[24px] short:gap-[16px] max-lg:gap-[28px] max-lg:px-[20px] max-lg:pt-[28px] max-lg:pb-[48px] md:max-lg:px-[48px]">
-          <Stepper step={step} />
-
           <div className="flex flex-1 flex-col justify-center w-full max-w-[640px]">
             {children}
           </div>

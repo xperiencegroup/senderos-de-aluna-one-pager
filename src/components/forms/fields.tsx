@@ -4,9 +4,11 @@ import {
   type Control,
   type FieldValues,
   type Path,
+  type UseFormRegisterReturn,
 } from "react-hook-form";
 import IntlTelInput from "@intl-tel-input/react/with-utils";
 import "intl-tel-input/styles";
+import { AVISO_PRIVACIDAD_URL } from "@/lib/leads";
 
 /* Clases compartidas por los formularios nuevos (mismo estilo que el de cotización) */
 export const inputClass = `w-full py-[20px] max-md:py-[16px] short:py-[12px] pl-[55px] pr-[20px] rounded-[10px]
@@ -89,13 +91,16 @@ export function PhoneField<T extends FieldValues>({
   name,
   id,
   label,
+  defaultValue,
 }: {
   control: Control<T>;
   name: Path<T>;
   id: string;
   label?: string;
+  /** Teléfono ya validado (E.164), p. ej. del lead guardado. */
+  defaultValue?: string;
 }) {
-  const valido = useRef(false);
+  const valido = useRef(!!defaultValue);
   const {
     field,
     fieldState: { error },
@@ -117,6 +122,7 @@ export function PhoneField<T extends FieldValues>({
       )}
       <div className="relative">
         <IntlTelInput
+          value={defaultValue}
           onChangeNumber={(n: string) => field.onChange(n)}
           onChangeValidity={(v: boolean) => {
             valido.current = v;
@@ -148,15 +154,55 @@ export const correoRules = {
   },
 };
 
+// Mismas reglas que el registro de CX
 export const nombreRules = {
   required: "Escribe tu nombre",
-  minLength: { value: 3, message: "Demasiado corto" },
+  minLength: { value: 2, message: "Escribe tu nombre completo" },
 };
 
-export const apellidosRules = {
-  required: "Escribe tus apellidos",
-  minLength: { value: 2, message: "Demasiado corto" },
+export const apellidoRules = {
+  required: "Escribe tu apellido",
+  minLength: { value: 2, message: "Escribe tu apellido completo" },
 };
+
+export const privacidadRules = { required: "Debes aceptar el aviso de privacidad" };
+
+/** Casilla obligatoria del aviso de privacidad (solo en el one pager). */
+export function AvisoPrivacidad({
+  id,
+  registro,
+  error,
+}: {
+  id: string;
+  registro: UseFormRegisterReturn;
+  error?: string;
+}) {
+  return (
+    <div className="relative">
+      <label className="flex items-start gap-[16px] cursor-pointer regular text-origen">
+        <input
+          type="checkbox"
+          aria-invalid={!!error}
+          aria-describedby={error ? `${id}-error` : undefined}
+          className="mt-[2px] size-[28px] shrink-0 accent-proposito cursor-pointer"
+          {...registro}
+        />
+        <span>
+          Acepto información sobre Senderos de Aluna de acuerdo con el{" "}
+          <a
+            href={AVISO_PRIVACIDAD_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            aviso de privacidad
+          </a>
+        </span>
+      </label>
+      {error && <ErrorText id={`${id}-error`}>{error}</ErrorText>}
+    </div>
+  );
+}
 
 /** Check informativo (verde) */
 export function CheckIcon() {
