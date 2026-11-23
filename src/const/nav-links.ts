@@ -19,6 +19,9 @@ import AmenidadesIcon from "@/assets/icons/components/amenidades-icon";
 import ModelosIcon from "@/assets/icons/components/modelos-icon";
 import PlanoIcon from "@/assets/icons/components/plano-icon";
 
+// WhatsApp: deshabilitado, el cliente usa su propio widget
+export const WHATSAPP_ACTIVO = false;
+
 export const NAV_LINKS = [
   { id: "nosotros", label: "Nosotros", href: "#nosotros", icon: PeopleIcon },
   {
@@ -103,4 +106,4 @@ export const SOCIAL_LINKS = [
     icon: facebookIcon,
     href: "https://www.facebook.com/viveenaluna",
   },
-];
+].filter((s) => WHATSAPP_ACTIVO || s.id !== "whatsapp");

@@ -91,6 +91,7 @@ export default function Ubicacion() {
 
             {/* button */}
             <FillButton
+              href="https://www.grupomr2.com/"
               Icon={ArrowIcon}
               target="_blank"
               rel="noopener noreferrer"
